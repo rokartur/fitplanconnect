@@ -1,8 +1,9 @@
 {
-  "name": "fitplan-connect-frontend",
+  "name": "fitplanconnect-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
