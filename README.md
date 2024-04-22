@@ -1,1 +1,1 @@
-# fitplan-connect
+# 🏋️‍♂️ FitPlan Connect
