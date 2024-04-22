@@ -1,0 +1,20 @@
+{
+  "name": "fitplanconnect-backend",
+  "version": "1.0.50",
+  "license": "MIT",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.0.2",
+    "elysia": "latest",
+    "logestic": "^1.1.1",
+    "pg": "^8.11.5"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.5",
+    "bun-types": "latest",
+    "prettier": "^3.2.5"
+  },
+  "module": "src/index.js"
+}
