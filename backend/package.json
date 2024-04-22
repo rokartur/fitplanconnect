@@ -3,11 +3,16 @@
   "version": "1.0.50",
   "license": "MIT",
   "scripts": {
-    "dev": "bun run --watch src/index.ts"
+    "dev": "bun run --watch src/app.ts"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.0.2",
+    "@elysiajs/swagger": "^1.0.3",
     "elysia": "latest",
+    "elysia-autoload": "^0.2.3",
+    "elysia-compression": "^0.0.7",
+    "elysia-decorators": "^1.0.0",
+    "elysia-rate-limit": "^3.2.2",
     "logestic": "^1.1.1",
     "pg": "^8.11.5"
   },
