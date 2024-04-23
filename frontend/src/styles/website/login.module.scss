@@ -1,0 +1,129 @@
+@import "@/styles/variables";
+@import "@/styles/mixins";
+
+.mainLoginContainer {
+  width: 100vw;
+  max-height: 100vh;
+
+  overflow: hidden;
+
+  @include flex(row, center, start);
+
+  .loginContainerLeft {
+    width: 100%;
+    @include flex(column, center, center);
+
+    @media (width <= 800px) {
+      display: none;
+    }
+
+    .loginHeading {
+      padding: 48px 76px;
+      width: 100%;
+      height: max-content;
+
+      @include flex(column, center, left);
+      gap: 28px;
+
+      background: $violet-50;
+
+      @media (width <= 1336px) {
+        padding: 48px;
+      }
+
+      .loginHeadingText {
+        max-width: 555px;
+        @include font(800, 40px, 48px, left, -1.2px);
+        color: #6B1B92;
+
+        span {
+          @include gradient-text($branding-gradient);
+        }
+      }
+    }
+
+    .loginImageContainerLeft {
+      width: 100%;
+
+      img {
+        width: 100%;
+        height: calc(100vh - 264px);
+        object-fit: cover;
+        object-position: bottom;
+      }
+    }
+  }
+
+  .loginContainerRight {
+    padding: 112px;
+
+    width: 100%;
+    height: 100%;
+    @include flex(column, left, center);
+    gap: 32px;
+
+    @media (width <= 1336px) {
+      padding: 48px;
+    }
+
+    @media (width <= 800px) {
+      padding: 48px 24px;
+    }
+
+    h2 {
+      @include font(800, 40px, 48px, left, -2%);
+      color: #6B1B92;
+
+      span {
+        @include gradient-text($branding-gradient);
+      }
+    }
+
+    label {
+      max-width: 443px;
+    }
+
+    .loginActions {
+      width: 100%;
+      @include flex(column, center, center);
+      gap: 16px;
+
+      .gradientButton {
+        padding: 12px 0;
+
+        max-width: 443px;
+        width: 100%;
+
+        @include font(500, 16px, 24px, center, unset);
+        color: #FFF;
+        cursor: pointer;
+
+        border-radius: 12px;
+        background: $branding-gradient;
+      }
+
+      .dontHaveAccount {
+        @include font(500, 16px, 24px, center, unset);
+        color: $branding;
+
+        &:is(:hover) {
+          text-decoration: underline;
+        }
+      }
+
+      .termsLinks {
+        @include flex(row, center, center);
+        gap: 16px;
+
+        a {
+          @include font(500, 16px, 24px, center, unset);
+          color: $neutral-400;
+
+          &:is(:hover) {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}

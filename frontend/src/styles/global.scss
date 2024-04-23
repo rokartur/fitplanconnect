@@ -9,7 +9,8 @@
   -moz-osx-font-smoothing: grayscale;
 
   ::selection {
-    background: var(--shilo)
+    background: rgba(205, 102, 255, .08);
+    color: #CD66FF;
   }
 }
 

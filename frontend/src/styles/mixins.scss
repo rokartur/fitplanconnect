@@ -1,6 +1,24 @@
+@import "variables";
+
 @mixin flex($direction: row, $justify: left, $align: start) {
   display: flex;
   flex-direction: $direction;
   justify-content: $justify;
   align-items: $align;
+}
+
+@mixin font($weight: 400, $size: 16px, $line: 24px, $align: left, $spacing: unset) {
+  font-family: $font-family;
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $line;
+  text-align: $align;
+  letter-spacing: $spacing;
+}
+
+@mixin gradient-text($color) {
+  background: $color;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

@@ -1,0 +1,52 @@
+@import "@/styles/variables";
+@import "@/styles/mixins";
+
+.input {
+  position: relative;
+
+  width: 100%;
+  height: max-content;
+
+  @include flex(column, left, start);
+  gap: 8px;
+
+  p {
+    @include font(500, 16px, 20px, start, unset);
+  }
+
+  input {
+    padding: 8px 12px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    border-radius: 12px;
+    border: 1px solid $neutral-200;
+    outline: 4px solid transparent;
+
+    @include font(500, 14px, 20px, start, unset);
+    color: $neutral-900;
+
+    transition: outline-color .2s, border .2s;
+
+    &::placeholder {
+      color: $neutral-400;
+    }
+
+    &:is(:focus) {
+      border: 1px solid $branding;
+      outline: 4px solid $branding-18;
+    }
+  }
+}
+
+.errorMessageForm {
+  @include flex(row, left, start);
+  @include font(500, 14px, 20px, start, unset);
+  color: $red-500;
+
+  transform-origin: top left;
+  transform-style: preserve-3d;
+  animation: scale .4s forwards;
+}
