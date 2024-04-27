@@ -23,12 +23,13 @@
 
     border-radius: 12px;
     border: 1px solid $neutral-200;
-    outline: 4px solid transparent;
+    outline: none;
+    box-shadow: 0 0 0 4px transparent;
 
     @include font(500, 14px, 20px, start, unset);
     color: $neutral-900;
 
-    transition: outline-color .2s, border .2s;
+    transition: box-shadow .2s, border .2s;
 
     &::placeholder {
       color: $neutral-400;
@@ -36,7 +37,7 @@
 
     &:is(:focus) {
       border: 1px solid $branding;
-      outline: 4px solid $branding-18;
+      box-shadow: 0 0 0 4px $branding-18;
     }
   }
 }

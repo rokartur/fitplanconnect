@@ -9,7 +9,8 @@ import { useScrollTop } from './hooks/useScrollTop.ts'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
-const Login = lazy(() => import('@/views/website/login.tsx'))
+const SignIn = lazy(() => import('@/views/website/signIn.tsx'))
+// const SignUp = lazy(() => import('@/views/website/signUp.tsx'))
 
 export default function App() {
 	useScrollTop()
@@ -20,7 +21,8 @@ export default function App() {
 				<BrowserRouter>
 					<Routes>
 						<Route path={'/'} element={<h1>siema</h1>} />
-						<Route path={'/login'} element={<Login/>} />
+						<Route path={'/sign-in'} element={<SignIn/>} />
+						{/*<Route path={'/sign-up'} element={<SignUp/>} />*/}
 					</Routes>
 				</BrowserRouter>
 			</Suspense>
