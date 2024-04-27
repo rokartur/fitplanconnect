@@ -1,4 +1,4 @@
-import styles from '@/styles/website/login.module.scss'
+import styles from '@/styles/website/sign.module.scss'
 import inputStyles from '@/components/input/input.module.scss'
 import { Image } from '@/components/image.tsx'
 import { useForm } from 'react-hook-form'
@@ -6,7 +6,7 @@ import { ErrorMessage } from '@hookform/error-message'
 import LoginImage from '@/assets/images/login.png'
 import { Link } from 'react-router-dom'
 
-export default function Login() {
+export default function SignIn() {
 	const { register, formState: { errors }, handleSubmit } = useForm({ criteriaMode: 'all' })
 
 	return (
@@ -78,7 +78,7 @@ export default function Login() {
 						Login
 					</button>
 
-					<Link to={'/register'} className={styles.dontHaveAccount}>
+					<Link to={'/sign-up'} className={styles.dontHaveAccount}>
 						I don't have an account yet
 					</Link>
 
