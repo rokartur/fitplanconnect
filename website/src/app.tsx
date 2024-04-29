@@ -9,8 +9,8 @@ import { useScrollTop } from './hooks/useScrollTop.ts'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
-const SignIn = lazy(() => import('@/views/website/signIn.tsx'))
-const SignUp = lazy(() => import('@/views/website/signUp.tsx'))
+const SignIn = lazy(() => import('@/pages/signIn.tsx'))
+const SignUp = lazy(() => import('@/pages/signUp.tsx'))
 
 export default function App() {
 	useScrollTop()
