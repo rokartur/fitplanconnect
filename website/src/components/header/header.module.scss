@@ -1,0 +1,381 @@
+.main {
+  position: relative;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: auto;
+}
+
+.container {
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.component {
+  z-index: 898;
+
+  padding: 14px 2.5rem 14px;
+
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+
+  transition: padding .2s;
+
+  @media (width <= 850px) {
+    padding: 15px 1rem 14px;
+  }
+}
+
+.content {
+  margin: 0 auto;
+
+  width: 100%;
+  max-width: 80rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+}
+
+.links {
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  text-align: center;
+  color: var(--neutral-700);
+  text-transform: uppercase;
+
+  transition: color .4s;
+
+  &:is(:hover) {
+    color: var(--gray-500);
+  }
+}
+
+.linkHamburger {
+  @extend .link;
+
+  padding: 12px 0;
+  width: 100%;
+  justify-content: left;
+}
+
+.linksHamburger {
+  z-index: 1;
+
+  padding: 86px 24px 24px 24px;
+
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  width: 100vw;
+
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 12px;
+
+  background-color: rgba(255, 255, 255, .9);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+
+  transition: background .4s, border .4s, transform .4s;
+}
+
+.componentHamburger {
+  z-index: 888;
+
+  position: fixed;
+
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: auto;
+
+  width: 100vw;
+  padding: 14px 2.5rem 14px;
+
+  background-color: rgba(255, 255, 255, .8);
+
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+
+  transition: padding .4s, background .4s, border .4s;
+
+  @media screen and (max-width: 575px) {
+    padding: 15px 1rem 14px;
+  }
+}
+
+.contentHamburger {
+  z-index: 898;
+
+  margin: 0 auto;
+
+  width: 100%;
+
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.mobileLogo {
+  z-index: 999;
+}
+
+.actionsHamburger {
+  width: 100%;
+
+  display: flex;
+  justify-content: right;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.hamburgerIcon,
+.hamburgerIconActive {
+  z-index: 999;
+
+  padding: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+  background-color: white;
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  cursor: pointer;
+
+  transition: all .4s;
+
+  svg line {
+    transition: all .4s;
+  }
+}
+
+.hamburgerIconSVG {
+  padding: 5px 2px;
+
+  width: 20px;
+  height: 20px;
+
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+}
+
+@mixin hamburgerIconStroke {
+  position: absolute;
+
+  width: 16px;
+  height: 2px !important;
+
+  transition: background .4s;
+  background-color: #404040;
+}
+
+.hamburgerStroke1 {
+  @include hamburgerIconStroke;
+  top: 3px;
+}
+
+.hamburgerStroke2 {
+  @include hamburgerIconStroke;
+}
+
+.hamburgerStroke3 {
+  @include hamburgerIconStroke;
+  width: 9px;
+  bottom: 3px;
+}
+
+.hamburgerIconActive {
+  background-color: var(--gray-100);
+}
+
+.dropdown {
+  position: relative;
+}
+
+@mixin dropdownMenuStyle {
+  min-width: max-content;
+  position: absolute;
+  right: 0;
+  top: 150%;
+  padding: 10px;
+  border-radius: 12px;
+
+  background-color: var(--gray-50);
+  color: var(--gray-500);
+}
+
+.dropdownMenu {
+  @include dropdownMenuStyle;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8%);
+
+  transition: transform .2s;
+}
+
+.dropdownMenuAcitve {
+  @include dropdownMenuStyle;
+
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+
+  transition: transform .2s;
+}
+
+.hamburgerDropdownMenu {
+  display: none;
+}
+
+.hamburgerDropdownMenuActive {
+  display: unset;
+}
+
+.dropdownLink {
+  padding: 8px;
+
+  border-radius: 8px;
+
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex-direction: row;
+  gap: 8px;
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--gray-50);
+
+  transition-duration: .3s;
+
+  &:is(:hover) {
+    background: #141C28;
+  }
+}
+
+.dropdownEventsList {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdownEventButton {
+  padding: 10px;
+
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+
+  border-radius: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--gray-800);
+
+  transition: background-color .4s;
+
+  &:is(:hover) {
+    background-color: white;
+  }
+
+  &:nth-child(2),
+  &:nth-child(3) {
+    color: var(--red-500);
+    display: none;
+  }
+
+  &:nth-child(4) {
+    color: var(--red-500);
+  }
+
+  @media screen and (max-width: 875px) {
+    &:nth-child(2),
+    &:nth-child(3) {
+      color: var(--gray-800);
+      display: flex;
+    }
+
+    &:nth-child(2) {
+      color: var(--gray-800);
+    }
+  }
+}
+
+.modalHeading {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 100%;
+  color: var(--neutral-900);
+}
+
+.modalContactLinks {
+  padding: 12px;
+
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 12px;
+
+  border-radius: 12px;
+
+  transition: background-color .4s;
+
+  &:is(:hover) {
+    background-color: var(--gray-200);
+  }
+}
+
+.profilePicture {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}

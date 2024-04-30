@@ -8,6 +8,6 @@ export default {
 	dbCredentials: {
 		connectionString: process.env.DB_URL as string,
 	},
-	// verbose: true,
+	verbose: true,
 	strict: true,
 } satisfies Config;

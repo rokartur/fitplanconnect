@@ -1,0 +1,32 @@
+@import "@/styles/variables";
+
+.headerLink {
+  min-width: fit-content;
+
+  padding: 8px 12px;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+
+  background-color: #FFF;
+  border: 1px solid $gray-200;
+  border-radius: 10px;
+  cursor: pointer;
+
+  font: 500 14px/20px $font-family;
+  color: $gray-500;
+
+  transition: border .2s, background-color .2s;
+
+  &:is(:hover) {
+    background-color: $gray-50;
+    border: 1px solid $gray-300;
+  }
+
+  @media screen and (max-width: 875px) {
+    display: none;
+  }
+}
