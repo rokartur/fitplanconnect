@@ -9,7 +9,15 @@ import { rateLimit } from 'elysia-rate-limit'
 const app = new Elysia()
 	.use(Logestic.preset('common'))
 	.use(cors())
-	.use(swagger())
+	.use(swagger({
+		path: '/docs',
+		documentation: {
+			info: {
+				title: 'FitPlan Connect API Documentation',
+				version: '1.0.0'
+			},
+		}
+	}))
 	.use(compression())
 	// .use(
 	// 	rateLimit({
