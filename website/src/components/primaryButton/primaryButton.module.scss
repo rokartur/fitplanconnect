@@ -1,0 +1,30 @@
+@import "@/styles/variables";
+@import "@/styles/mixins";
+
+
+.primaryButton {
+  padding: 10px 16px;
+
+  width: max-content;
+  height: max-content;
+
+  border: none;
+  background: $branding-gradient;
+  border-radius: 10px;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+
+  @include font(500, 14px, 20px, left, 1px);
+  color: white;
+
+  &:is(:disabled) {
+    pointer-events: none;
+    user-focus: none;
+    opacity: .75;
+  }
+}

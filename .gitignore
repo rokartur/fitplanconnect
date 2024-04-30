@@ -9,3 +9,5 @@
 *.njsproj
 *.sln
 *.sw?
+backend/.env
+backend/.env.exmaple

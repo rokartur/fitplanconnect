@@ -1,0 +1,181 @@
+@import "@/styles/variables";
+
+.emptyAvatar {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font: 600 12px/100% $font-family;
+  color: $gray-700;
+
+  border-radius: 100%;
+  background-color: #E6E8EB;
+}
+
+.selectImage {
+  width: 40px;
+  height: 40px;
+
+  outline: 2px solid $branding;
+  border: 2px solid white;
+  border-radius: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.selectWrapper {
+  width: 100%;
+  height: max-content;
+
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  gap: 24px;
+
+  p {
+    font: 600 18px/28px $font-family;
+    color: $gray-900;
+  }
+
+  .selectContainer {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+
+    .selectContent {
+      position: relative;
+      order: 0;
+
+      background-color: white;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      cursor: pointer;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+
+      transition: transform .2s, opacity .2s;
+
+      .selectPlaceholder {
+        display: flex;
+        justify-content: left;
+        flex-direction: column;
+        align-items: start;
+
+        p:nth-child(1) {
+          font: 600 14px/20px $font-family;
+          color: $gray-700;
+        }
+
+        p:nth-child(2) {
+          font: 500 14px/20px $font-family;
+          color: $gray-500;
+        }
+      }
+    }
+
+    .selectContentFocus {
+      @extend .selectContent;
+
+      transform: scale(.97);
+      opacity: .7;
+    }
+
+    .selectOptions {
+      padding: 8px;
+
+      max-height: 0;
+      width: 230px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      opacity: 0;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: $drop-shadow-large;
+
+      order: 1;
+      overflow: hidden;
+      position: absolute;
+      top: 53px;
+      right: -15px;
+
+      transform: scale(.5);
+      transform-origin: 90% top;
+
+      transition: max-height .2s, opacity .2s, transform .2s;
+
+      .selectOption {
+        padding: 8px 12px;
+
+        width: 100%;
+        height: 36px;
+
+        border-radius: 8px;
+        cursor: pointer;
+
+        font: 600 16px/20px $font-family;
+        color: $gray-700;
+
+        transition: background-color .2s, color .2s, transform .2s;
+
+        &:last-child {
+          color: $red-500;
+
+          &:is(:hover) {
+            background-color: $red-100;
+          }
+        }
+
+        &:is(:hover) {
+          background-color: #ECEEF0;
+
+          transform: scale(1.01);
+        }
+
+        &:is(:active) {
+          background-color: #ECEEF0;
+
+          transform: scale(.98);
+        }
+
+        .selectContentRadio {
+          display: none;
+        }
+      }
+
+      .selectOptionActive {
+        @extend .selectOption;
+
+        @media screen and (max-width: 900px) {
+          color: $branding;
+          background-color: $branding-8;
+
+          &:is(:hover) {
+            transform: scale(1);
+            background-color: $branding-18;
+          }
+        }
+      }
+    }
+
+    .selectOptionsActive {
+      @extend .selectOptions;
+
+      max-height: max-content;
+      opacity: 1;
+      transform: scale(1);
+      overflow-y: scroll;
+    }
+  }
+}

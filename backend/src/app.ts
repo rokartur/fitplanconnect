@@ -5,26 +5,19 @@ import { swagger } from '@elysiajs/swagger'
 import { compression } from 'elysia-compression'
 import { autoload } from 'elysia-autoload'
 import { rateLimit } from 'elysia-rate-limit'
-// import { db } from './utils/db'
-
-// db.connect(error => {
-// 	if (error) {
-// 		console.error('dbError', error)
-// 	}
-// })
 
 const app = new Elysia()
 	.use(Logestic.preset('common'))
 	.use(cors())
 	.use(swagger())
 	.use(compression())
-	.use(
-		rateLimit({
-			max: 20,
-			duration: 300000,
-			responseMessage: 'Too many requests, please try again later.',
-		}),
-	)
+	// .use(
+	// 	rateLimit({
+	// 		max: 20,
+	// 		duration: 300000,
+	// 		responseMessage: 'Too many requests, please try again later.',
+	// 	}),
+	// )
 	.use(
 		autoload({
 			prefix: '/api',
