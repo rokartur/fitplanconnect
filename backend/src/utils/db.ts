@@ -1,9 +1,6 @@
-import { Client } from 'pg'
+import { drizzle } from 'drizzle-orm/postgres-js'
+import * as schema from '@/db/schema'
+import postgres from 'postgres'
 
-export const db = new Client({
-	host: process.env.SERVER_IP,
-	user: process.env.DB_USER,
-	port: Number(process.env.DB_PORT),
-	password: process.env.DB_PASSWORD,
-	database: process.env.DB_NAME,
-})
+const client = postgres(process.env.DB_URL as string)
+export const db = drizzle(client, { schema, logger: true })

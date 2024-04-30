@@ -5,13 +5,6 @@ import { swagger } from '@elysiajs/swagger'
 import { compression } from 'elysia-compression'
 import { autoload } from 'elysia-autoload'
 import { rateLimit } from 'elysia-rate-limit'
-// import { db } from './utils/db'
-
-// db.connect(error => {
-// 	if (error) {
-// 		console.error('dbError', error)
-// 	}
-// })
 
 const app = new Elysia()
 	.use(Logestic.preset('common'))

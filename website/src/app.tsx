@@ -4,28 +4,31 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { HelmetProvider } from 'react-helmet-async'
+import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { useScrollTop } from './hooks/useScrollTop.ts'
+import { useScrollTop } from '@/hooks/useScrollTop.ts'
+import { store } from '@/utils/store.ts'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
-const SignIn = lazy(() => import('@/pages/signIn.tsx'))
-const SignUp = lazy(() => import('@/pages/signUp.tsx'))
+const Login = lazy(() => import('@/pages/login.tsx'))
 
 export default function App() {
 	useScrollTop()
 
 	return (
-		<HelmetProvider>
-			<Suspense fallback={<p>loading...</p>}>
-				<BrowserRouter>
-					<Routes>
-						<Route path={'/'} element={<h1>siema</h1>} />
-						<Route path={'/sign-in'} element={<SignIn/>} />
-						<Route path={'/sign-up'} element={<SignUp/>} />
-					</Routes>
-				</BrowserRouter>
-			</Suspense>
-		</HelmetProvider>
+		<Suspense fallback={<p>loading...</p>}>
+			<Provider store={store}>
+				<HelmetProvider>
+					<BrowserRouter>
+						<Routes>
+							<Route path={'/'} element={<h1>siema</h1>} />
+							<Route path={'/login'} element={<Login />} />
+							<Route path={'/app'} element={<h1>app</h1>} />
+						</Routes>
+					</BrowserRouter>
+				</HelmetProvider>
+			</Provider>
+		</Suspense>
 	)
 }
