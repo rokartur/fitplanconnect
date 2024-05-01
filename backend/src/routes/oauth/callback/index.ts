@@ -100,6 +100,7 @@ export default (app: ElysiaApp) => app
 			set.status = 302
 			set.headers.location = '/app'
 		} catch (error: any) {
+			set.status = 500
 			return { status: 500, error: error.message }
 		}
 	})
