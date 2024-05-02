@@ -2,7 +2,6 @@ import styles from './header.module.scss';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import wretch from 'wretch';
-import { PrimaryButton } from '@/components/primaryButton/primaryButton.tsx';
 import { UserDropdown } from '@/components/userDropdown/userDropdown.tsx';
 import { useLocalStorage } from '@/hooks/useLocalStorage.ts';
 import { setUser } from '@/utils/slices/userSlice.ts';
