@@ -1,28 +1,16 @@
-import { Link } from 'react-router-dom';
-import styles from './headerLink.module.scss';
-
+import styles from './headerLink.module.scss'
+import { FC } from 'react'
+import { Link } from 'react-router-dom'
 
 type HeaderLinkTypes = {
-	label: string;
-	href: string;
-	icon: JSX.Element;
-	inNewCard?: boolean;
+	label: string
+	href: string
+	icon: JSX.Element
 }
 
-export const HeaderLink = ({ label, href, icon, inNewCard = false }: HeaderLinkTypes) => {
-	if (inNewCard) {
-		return (
-			<a className={styles.headerLink} href={href} target={'_blank'}>
-				{icon}
-				{label}
-			</a>
-		)
-	} else {
-		return (
-			<Link className={styles.headerLink} to={href}>
-				{icon}
-				{label}
-			</Link>
-		)
-	}
-}
+export const HeaderLink: FC<HeaderLinkTypes> = ({ label, href, icon }) => (
+	<Link className={styles.headerLink} to={href}>
+		{icon}
+		{label}
+	</Link>
+)

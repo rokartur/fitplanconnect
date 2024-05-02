@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-type ImageProps = {
+type ImageTypes = {
 	className?: string;
 	id?: string;
 	source: string;
@@ -8,14 +8,6 @@ type ImageProps = {
 	height?: string | number;
 }
 
-export const Image: FC<ImageProps> = ({ className, id, source, width, height }) => (
-	<img
-		className={className}
-		id={id}
-		src={source}
-		width={width}
-		height={height}
-		loading={'lazy'}
-		alt={''}
-	/>
+export const Image: FC<ImageTypes> = ({ className, id, source, width, height }) => (
+	<img className={className} id={id} src={source} width={width} height={height} loading={'lazy'} alt={''} />
 )

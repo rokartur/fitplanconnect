@@ -1,12 +1,25 @@
 import styles from './header.module.scss';
-import { useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import wretch from 'wretch';
 import { PrimaryButton } from '@/components/primaryButton/primaryButton.tsx';
 import { UserDropdown } from '@/components/userDropdown/userDropdown.tsx';
+import { useLocalStorage } from '@/hooks/useLocalStorage.ts';
 import { setUser } from '@/utils/slices/userSlice.ts';
 import { useAppDispatch, useAppSelector } from '@/utils/store.ts';
 
+type OAuthResponse = {
+	error?: string
+	url?: string
+}
+
+type UserTypes = {
+	username: string
+	email: string
+	profile_picture_url: string
+	selected_trainer_id: string
+	subscription_expiration_date: string
+}
 
 export const Header = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -14,16 +27,21 @@ export const Header = () => {
 	const user = useAppSelector(state => state.user.data)
 	const navigate = useNavigate()
 	const { pathname: url } = useLocation()
+	const { setItem, getItem, removeItem } = useLocalStorage('is_logged')
 
 	useEffect(() => {
-		const fetchUser = async () => {
-			const data = await wretch('/api/user').get().json()
-			dispatch(setUser(data))
+		if (getItem() === 'true') {
+			const fetchUser = async () => {
+				try {
+					const data: UserTypes = await wretch('/api/user').get().json()
+					dispatch(setUser(data))
+				} catch {}
+			}
+
+			fetchUser().then()
 		}
 
-		fetchUser().then()
-
-		if (url === '/app' && user.username) {
+		if (url === '/app' && user?.username) {
 			navigate('/')
 		}
 	}, [])
@@ -55,7 +73,7 @@ export const Header = () => {
 										x2='8.12711'
 										y2='20.5879'
 										gradientUnits='userSpaceOnUse'
-									>s
+									>
 										<stop stopColor='#CD66FF' />
 										<stop offset='1' stopColor='#FFB3FF' />
 									</linearGradient>
@@ -79,16 +97,19 @@ export const Header = () => {
 								<UserDropdown
 									name={user.username || ''}
 									image={user.profile_picture_url || ''}
-									onClick={async (event) => {
+									onClick={async event => {
 										if (event.target.value === 'logout') {
 											await wretch('/api/oauth/logout').get().res()
-											dispatch(setUser({
-												username: null,
-												email: null,
-												profile_picture_url: null,
-												selected_trainer_id: null,
-												subscription_expiration_date: null,
-											}))
+											removeItem()
+											dispatch(
+												setUser({
+													username: null,
+													email: null,
+													profile_picture_url: null,
+													selected_trainer_id: null,
+													subscription_expiration_date: null,
+												}),
+											)
 											navigate('/')
 										}
 									}}
@@ -108,21 +129,24 @@ export const Header = () => {
 									]}
 								/>
 							) : (
-								<PrimaryButton
-									asButton
-									label={'Login with GitHub'}
-									disabled={isLoading}
+								<button
+									className={styles.githubButton}
+									disabled={isLoading || getItem() === 'true'}
 									onClick={async () => {
 										setIsLoading(true)
-										const response = await wretch('/api/oauth').get().json()
-										console.log(response)
-										if (response.error) {
-											console.error(response.error)
-										} else if (response.url) {
-											window.location.href = response.url
+										const response: OAuthResponse = await wretch('/api/oauth').get().json()
+										if (response) {
+											if (response.error) {
+												console.error(response.error)
+											} else if (response.url) {
+												setItem('true')
+												window.location.href = response.url
+											}
 										}
 									}}
-								/>
+								>
+									Login with GitHub
+								</button>
 							)}
 						</nav>
 					</div>

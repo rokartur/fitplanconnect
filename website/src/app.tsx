@@ -10,7 +10,6 @@ import { Header } from '@/components/header/header.tsx'
 import { useScrollTop } from '@/hooks/useScrollTop.ts';
 import { store } from '@/utils/store.ts';
 
-
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 const AppSettings = lazy(() => import('@/pages/app.settings.tsx'))
@@ -24,7 +23,6 @@ export default function App() {
 				<Suspense fallback={<p>loading...</p>}>
 					<BrowserRouter>
 						<Header />
-
 						<Routes>
 							<Route path={'/'} element={<h1>siema</h1>} />
 							<Route path={'/app'} element={<AppSettings />} />
