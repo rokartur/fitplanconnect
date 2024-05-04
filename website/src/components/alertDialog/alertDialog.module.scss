@@ -1,0 +1,113 @@
+@import "@/styles/variables";
+
+.alertDialogBackground {
+  position: fixed;
+  z-index: 900;
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgb(255, 255, 255, .8);
+  backdrop-filter: $blur-small;
+
+  animation: fadeShowModalBackground .15s ease-out backwards;
+}
+
+@keyframes fadeShowModalBackground {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+}
+
+.alertDialog {
+  padding: 24px;
+
+  width: 100%;
+  max-width: 512px;
+
+  border-radius: 16px;
+  background-color: #FFF;
+  box-shadow: $drop-shadow-medium;
+
+  animation: showModalScaleUp .15s ease-out backwards;
+
+  .alertDialogContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+
+    .alertDialogContent {
+      width: 100%;
+
+      position: relative;
+
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+
+      .alertDialogClose {
+        position: absolute;
+        inset: 0 0 auto auto;
+        cursor: pointer;
+      }
+
+      .alertDialogIcon {
+        padding: 8px;
+
+        width: 48px;
+        height: 48px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        border-radius: 24px;
+
+        background-color: $primary-50;
+      }
+
+      .alertDialogText {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        p:nth-child(1) {
+          color: $neutral-900;
+        }
+
+        p:nth-child(2) {
+          color: $neutral-500;
+        }
+      }
+    }
+
+    .alertDialogActions {
+      width: 100%;
+
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      gap: 12px;
+    }
+  }
+}
+
+@keyframes showModalScaleUp {
+  from {
+    transform: scale(.9)
+  }
+  to {
+    transform: scale(1)
+  }
+}

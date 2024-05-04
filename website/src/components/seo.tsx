@@ -9,9 +9,9 @@ type SEOProps = {
 
 export const SEO = ({ url = 'https://fitplanconnect.site', title = 'Home', description, path }: SEOProps) => (
 	<Helmet>
-		<title>{title} | GETOCLOUD - Agency specializing in designing outstanding websites for new businesses</title>
-		<meta property='title' content={`${title} | `} />
-		<meta property='og:title' content={`${title} | `} />
+		<title>{title} | FitPlan Connect</title>
+		<meta property='title' content={`${title} | FitPlan Connect`} />
+		<meta property='og:title' content={`${title} | FitPlan Connect`} />
 		<meta property='description' content={description} />
 		<meta property='og:description' content={description} />
 		<meta property='og:url' content={url + path} />

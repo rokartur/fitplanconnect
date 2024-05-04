@@ -1,0 +1,59 @@
+.large {
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.medium {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.small {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.xsmall {
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.overline-large {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.overline-small {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.regular-weight {
+  font-weight: 400;
+}
+
+.medium-weight {
+  font-weight: 500;
+}
+
+.semibold-weight {
+  font-weight: 600;
+}
+
+.underline {
+  text-decoration-line: underline;
+}
+
+.strikethrough {
+  text-decoration-line: line-through;
+}
+
+.italics {
+  font-style: italic;
+}

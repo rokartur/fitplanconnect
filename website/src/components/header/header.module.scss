@@ -26,6 +26,7 @@
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 
+  background: rgba(255, 255, 255, 0.9);
   border-bottom: 1px solid $neutral-200;
 
   transition: padding .2s;
@@ -69,6 +70,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media (width <= 530px) {
+      display: none;
+    }
 
     .link {
       all: unset;
@@ -132,6 +137,59 @@
 
       &::before {
         background: $branding;
+      }
+    }
+  }
+}
+
+.linksRight {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  gap: 24px;
+  
+  .linksGroup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (width <= 530px) {
+      display: none;
+    }
+
+    div:nth-child(1) a {
+      border-radius: 8px 0 0 8px;
+      border-right: none;
+    }
+
+    div:nth-child(2) a {
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .linkGroup {
+      padding: 6px 12px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      border: 1px solid $neutral-200;
+
+      transition: background .2s, border .2s;
+
+      svg path {
+        transition: fill .2s;
+      }
+    }
+
+    .linkGroupActive {
+      @extend .linkGroup;
+
+      background: $branding-8;
+      border-color: $branding-18;
+
+      svg path {
+        fill: $branding;
       }
     }
   }

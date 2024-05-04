@@ -1,0 +1,79 @@
+.medium {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.semibold {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.bold {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.extrabold {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.one {
+  font-size: 40px;
+  line-height: 48px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 36px;
+    line-height: 44px;
+  }
+}
+
+.two {
+  font-size: 36px;
+  line-height: 44px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+.three {
+  font-size: 32px;
+  line-height: 40px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 28px;
+    line-height: 36px;
+  }
+}
+
+.four {
+  font-size: 28px;
+  line-height: 36px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 24px;
+    line-height: 32px;
+  }
+}
+
+.five {
+  font-size: 24px;
+  line-height: 32px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+
+.six {
+  font-size: 20px;
+  line-height: 28px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
