@@ -12,7 +12,7 @@ import { store } from '@/utils/store.ts';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
-const AppSettings = lazy(() => import('@/pages/app.settings.tsx'))
+const AppSettings = lazy(() => import('@/pages/app/app.settings.tsx'))
 
 export default function App() {
 	useScrollTop()
@@ -20,12 +20,15 @@ export default function App() {
 	return (
 		<Provider store={store}>
 			<HelmetProvider>
-				<Suspense fallback={<p>loading...</p>}>
+				<Suspense fallback={<p>loading</p>}>
 					<BrowserRouter>
 						<Header />
 						<Routes>
-							<Route path={'/'} element={<h1>siema</h1>} />
-							<Route path={'/app/calendar'} element={<AppSettings />} />
+							<Route path={'/'} element={<h1>landing</h1>} />
+							<Route path={'/app/calendar'} element={<h1>calendar</h1>} />
+							<Route path={'/app/trainers'} element={<h1>trainers</h1>} />
+							<Route path={'/app/billing'} element={<h1>billing</h1>} />
+							<Route path={'/app/settings'} element={<AppSettings />} />
 						</Routes>
 					</BrowserRouter>
 				</Suspense>

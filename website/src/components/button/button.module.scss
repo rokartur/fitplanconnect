@@ -1,0 +1,343 @@
+@import '@/styles/variables.scss';
+
+.button {
+  all: unset;
+
+  width: fit-content;
+
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  gap: 8px;
+
+  border-radius: 12px;
+  cursor: pointer;
+
+  transition: color .2s, background-color .2s, border .2s, box-shadow .2s;
+
+  .buttonIcon {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+}
+
+.large {
+  padding: 14px 20px;
+  box-shadow: $drop-shadow-small;
+}
+
+.medium {
+  padding: 10px 16px;
+  box-shadow: $drop-shadow-xsmall;
+}
+
+.small {
+  padding: 8px 12px;
+  box-shadow: $drop-shadow-xsmall;
+}
+
+@mixin primary($isDestructive) {
+  color: #FFF;
+
+  @if $isDestructive {
+    border: 1px solid $red-600;
+    background-color: $red-500;
+    box-shadow: $drop-shadow-small;
+
+    &:is(:hover) {
+      border-color: $red-600;
+      background-color: $red-600;
+    }
+
+    &:is(:active) {
+      border-color: $red-400;
+      background-color: $red-600;
+    }
+
+    &:is(:focus) {
+      border-color: $red-400;
+      background-color: $red-600;
+      box-shadow: $focus-ring-2px-destructive-100;
+    }
+
+    &:is(:disabled) {
+      pointer-events: none;
+      touch-action: none;
+      color: $red-200;
+      border-color: $red-400;
+      background-color: $red-300;
+    }
+  } @else {
+    border: 1px solid $branding;
+    background-color: $branding;
+
+    &:is(:hover) {
+      background-color: $fuchsia-600;
+    }
+
+    &:is(:active) {
+      color: $fuchsia-200;
+      border-color: $primary-700;
+    }
+
+    &:is(:focus) {
+      color: $fuchsia-50;
+      background-color: $fuchsia-600;
+    }
+
+    &:is(:disabled) {
+      pointer-events: none;
+      touch-action: none;
+      color: $fuchsia-100;
+      border-color: $fuchsia-400;
+      background-color: $fuchsia-300;
+    }
+  }
+}
+.primary.isNotDestructive { @include primary(false) }
+.primary.isDestructive { @include primary(true) }
+
+@mixin secondary($isDestructive) {
+  @if $isDestructive {
+    color: $red-500;
+    border: 1px solid $red-200;
+    background-color: $red-50;
+    box-shadow: $drop-shadow-small;
+
+    &:is(:hover) {
+      color: $red-600;
+      border: 1px solid $red-200;
+      background-color: $red-100;
+    }
+
+    &:is(:active) {
+      border-color: $red-200;
+      background-color: $red-100;
+    }
+
+    &:is(:focus) {
+      border-color: $red-200;
+      background-color: $red-100;
+      box-shadow: $focus-ring-2px-destructive-100;
+    }
+
+    &:is(:disabled) {
+      pointer-events: none;
+      touch-action: none;
+      color: $red-300;
+      border-color: $red-200;
+      background-color: $red-50;
+    }
+  } @else {
+    color: $branding;
+    border: 1px solid $fuchsia-100;
+    background-color: $fuchsia-50;
+
+    &:is(:hover) {
+      color: $fuchsia-600;
+      background-color: $fuchsia-100;
+    }
+
+    &:is(:active) {
+      border-color: $fuchsia-200;
+      background-color: $fuchsia-100;
+    }
+
+    &:is(:focus) {
+      border-color: $fuchsia-200;
+      background-color: $fuchsia-100;
+      box-shadow: $focus-ring-2px-primary-100;
+    }
+
+    &:is(:disabled) {
+      pointer-events: none;
+      touch-action: none;
+      color: $fuchsia-300;
+      border-color: $fuchsia-100;
+      background-color: $fuchsia-50;
+    }
+  }
+}
+.secondary.isNotDestructive {@include secondary(false)}
+.secondary.isDestructive {@include secondary(true)}
+
+@mixin tertiary($isDestructive) {
+  @if $isDestructive {
+    color: $red-500;
+    border: 1px solid $red-200;
+    background-color: #FFF;
+    box-shadow: $drop-shadow-small;
+
+    &:is(:hover) {
+      border-color: $red-300;
+      background-color: $red-50;
+    }
+
+    &:is(:active) {
+      color: $red-400;
+      border-color: $red-300;
+      background-color: $red-50;
+    }
+
+    &:is(:focus) {
+      border-color: $red-300;
+      background-color: $red-50;
+      box-shadow: $focus-ring-2px-destructive-100;
+    }
+
+    &:is(:disabled) {
+      pointer-events: none;
+      touch-action: none;
+      color: $red-300;
+      border-color: $red-200;
+      background-color: #FFF;
+    }
+  } @else {
+    color: $neutral-700;
+    border: 1px solid $neutral-100;
+    background-color: #FFF;
+
+    &:is(:hover) {
+      border-color: $neutral-300;
+      background-color: $neutral-50;
+    }
+
+    &:is(:active) {
+      color: $neutral-500;
+      border-color: $neutral-300;
+      background-color: $neutral-50;
+    }
+
+    &:is(:focus) {
+      border-color: $neutral-300;
+      background-color: $neutral-50;
+      box-shadow: $focus-ring-2px-neutral-100;
+    }
+
+    &:is(:disabled) {
+      pointer-events: none;
+      touch-action: none;
+      color: $neutral-300;
+      border-color: $neutral-200;
+      background-color: #FFF;
+    }
+  }
+}
+.tertiary.isNotDestructive {@include tertiary(false)}
+.tertiary.isDestructive {@include tertiary(true)}
+
+@mixin outlined($isDestructive) {
+  @if $isDestructive {
+    color: $red-500;
+    border: 1px solid $red-500;
+    background-color: #FFF;
+    box-shadow: $drop-shadow-small;
+
+    &:is(:hover) {
+      border-color: $red-400;
+    }
+
+    &:is(:active) {
+      color: $red-400;
+      border-color: $red-400;
+    }
+
+    &:is(:focus) {
+      color: $red-500;
+      box-shadow: 0 0 0 3px $red-400;
+    }
+
+    &:is(:disabled) {
+      pointer-events: none;
+      touch-action: none;
+      color: $red-300;
+      border-color: $red-300;
+    }
+  } @else {
+    color: $branding;
+    border: 1px solid $branding;
+    background-color: #FFF;
+
+    &:is(:hover) {
+      border-color: $fuchsia-400;
+      background-color: #FFF;
+    }
+
+    &:is(:active) {
+      color: $fuchsia-400;
+      border-color: $fuchsia-400;
+      background-color: $fuchsia-50;
+    }
+
+    &:is(:focus) {
+      box-shadow: 0 0 0 3px $fuchsia-400;
+      background-color: #FFF;
+    }
+
+    &:is(:disabled) {
+      pointer-events: none;
+      touch-action: none;
+      color: $fuchsia-300;
+      border-color: $fuchsia-300;
+      background-color: #FFF;
+    }
+  }
+}
+.outlined.isNotDestructive {@include outlined(false)}
+.outlined.isDestructive {@include outlined(true)}
+
+@mixin link($isDestructive) {
+  @if $isDestructive {
+    color: $red-500;
+    border: 1px solid transparent;
+    background-color: #FFF;
+    box-shadow: none;
+
+    &:is(:hover) {
+      color: $red-600;
+    }
+
+    &:is(:active) {
+      color: $red-400;
+    }
+
+    &:is(:focus) {
+      color: $red-500;
+      border-color: $red-500;
+    }
+
+    &:is(:disabled) {
+      pointer-events: none;
+      touch-action: none;
+      color: $red-300;
+    }
+  } @else {
+    color: $branding;
+    border: 1px solid transparent;
+    background-color: #FFF;
+    box-shadow: none;
+
+    &:is(:hover) {
+      color: $fuchsia-600;
+    }
+
+    &:is(:active) {
+      color: $fuchsia-400;
+    }
+
+    &:is(:focus) {
+      color: $branding;
+      border-color: $branding;
+      box-shadow: $drop-shadow-small;
+    }
+
+    &:is(:disabled) {
+      pointer-events: none;
+      touch-action: none;
+      color: $fuchsia-300;
+    }
+  }
+}
+.link.isNotDestructive {@include link(false)}
+.link.isDestructive {@include link(true)}

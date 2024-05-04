@@ -1,0 +1,72 @@
+@import "@/styles/variables";
+
+.tooltipWrapper {
+  width: max-content;
+  height: max-content;
+  position: relative;
+
+  &:is(:hover) {
+    .tooltipContent {
+      opacity: 1;
+      transform: scale(1) translate(-50%, 0);
+    }
+
+    .tooltipContentLeft {
+      opacity: 1;
+      transform: scale(1) translate(-5%, -4%);
+    }
+  }
+
+  .tooltipContent {
+    padding: 6px 12px;
+
+    width: max-content;
+    max-width: 200px;
+    word-wrap: break-word;
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 50%;
+    z-index: 3;
+
+    border: 1px solid $gray-100;
+    background-color: $gray-900;
+    border-radius: 12px;
+    box-shadow: $drop-shadow-medium;
+
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(.4) translateX(-50%);
+    transform-origin: left top;
+
+    font: 500 14px/20px 'SF Pro Display', sans-serif; color: white;
+
+    transition: opacity .15s, transform .15s;
+  }
+
+  .tooltipContentLeft {
+    padding: 6px 12px;
+
+    width: max-content;
+    max-width: 200px;
+    word-wrap: break-word;
+    position: absolute;
+    top: 0;
+    right: 100%;
+    z-index: 3;
+
+    border: 1px solid $gray-100;
+    background-color: $gray-900;
+    border-radius: 12px;
+    box-shadow: $drop-shadow-medium;
+
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(.4);
+    transform-origin: right;
+
+    font: 500 14px/20px 'SF Pro Display', sans-serif; color: white;
+
+    transition: opacity .15s, transform .15s;
+  }
+
+}

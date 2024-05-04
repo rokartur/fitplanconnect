@@ -1,0 +1,63 @@
+@import 'variables';
+@import 'mixins';
+
+.content {
+  position: relative;
+  @include flex(column, center, start);
+  gap: 48px;
+}
+
+.dataColumn {
+  max-width: 512px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+
+  @include flex(column, left, start);
+  gap: 16px;
+
+  h1, h2 {
+    @include font(500, 24px, 32px, left, unset);
+  }
+
+  .supportingText {
+    @include font(400, 16px, 24px, left, unset);
+    color: $neutral-500;
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  label {
+    width: 100%;
+    max-width: 330px;
+
+    color: $neutral-600;
+
+    @include flex(column, left, start);
+    gap: 8px;
+
+    @include font(500, 16px, 24px, left, unset);
+
+    p {
+      padding: 12px 16px;
+      min-width: 100%;
+      height: 40px;
+
+      @include flex(row, left, center);
+
+      color: $neutral-900;
+      border-radius: 12px;
+      background: #FFF;
+      border: 1px solid $gray-200;
+    }
+  }
+}
+
+.backgroundIcon {
+  position: absolute;
+  bottom: -90%;
+  right: 0;
+  z-index: 0;
+}

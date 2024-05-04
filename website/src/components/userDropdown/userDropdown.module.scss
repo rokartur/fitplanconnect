@@ -74,10 +74,10 @@
     }
 
     .selectOptions {
-      padding: 8px;
+      padding: 6px;
 
       max-height: 0;
-      width: 200px;
+      width: 128px;
 
       display: flex;
       flex-direction: column;
@@ -93,7 +93,7 @@
       overflow: hidden;
       position: absolute;
       top: 53px;
-      right: -15px;
+      right: 0;
 
       transform: scale(.5);
       transform-origin: 90% top;

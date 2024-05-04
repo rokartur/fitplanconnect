@@ -47,7 +47,7 @@ export const UserDropdown: FC<UserDropdownTypes> = ({ options, image, onClick })
 				<div className={isOpen ? styles.selectOptionsActive : styles.selectOptions}>
 					{options.map(
 						({ id, name, value, showOnDesktop = true }) =>
-							[showOnDesktop && width > 850, width <= 850].some(x => x) && (
+							[showOnDesktop && width > 530, width <= 530].some(x => x) && (
 								<label
 									key={id}
 									className={`${styles.selectOption}${url === value ? ` ${styles.selectOptionActive}` : ''}${
@@ -61,15 +61,7 @@ export const UserDropdown: FC<UserDropdownTypes> = ({ options, image, onClick })
 									onClick={() => setIsOpen(false)}
 								>
 									{name}
-
-									<input
-										type={'radio'}
-										className={styles.selectContentRadio}
-										id={id}
-										name={name}
-										value={value}
-										onClick={onClick}
-									/>
+									<input type={'radio'} className={styles.selectContentRadio} id={id} name={name} value={value} onClick={onClick} />
 								</label>
 							),
 					)}
