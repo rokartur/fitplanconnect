@@ -44,7 +44,8 @@ export default (app: ElysiaApp) => app
 						.insert(users)
 						.values({
 							id: githubData.id.toString(),
-							username: githubData.name || githubData.login,
+							name: githubData.name || '',
+							username: githubData.login,
 							email: githubData.email,
 							profilePictureUrl: githubData.avatar_url,
 						})
@@ -98,7 +99,7 @@ export default (app: ElysiaApp) => app
 			})
 
 			set.status = 302
-			set.headers.location = '/app'
+			set.headers.location = '/app/calendar'
 		} catch (error: any) {
 			set.status = 500
 			return { status: 500, error: error.message }

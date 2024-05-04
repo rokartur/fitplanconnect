@@ -54,14 +54,21 @@ export default (app: ElysiaApp) =>
 		const { user, session } = await validateRequest()
 
 		if (user && session && userSession) {
-			const accessToken = await db.query.users.findFirst({ where: eq(users.id, userSession.userId) })
+			const userData = await db.query.users.findFirst({ where: eq(users.id, userSession.userId) })
+
+			if (!userData) {
+				set.status = 401
+				return { message: 'unauthorized' }
+			}
+
 			set.status = 200
 			return {
-				username: accessToken?.username,
-				email: accessToken?.email,
-				profile_picture_url: accessToken?.profilePictureUrl || '',
-				selected_trainer_id: accessToken?.selectedTrainerId || '',
-				subscription_expiration_date: accessToken?.subscriptionExpirationDate || '',
+				name: userData.name,
+				username: userData.username,
+				email: userData.email,
+				profile_picture_url: userData.profilePictureUrl || '',
+				selected_trainer_id: userData.selectedTrainerId || '',
+				subscription_expiration_date: userData.subscriptionExpirationDate || '',
 			}
 		} else {
 			set.status = 401
