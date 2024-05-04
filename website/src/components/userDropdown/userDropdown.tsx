@@ -1,11 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useWindowDimensions } from '@/hooks/useWindowDimensions.ts'
 import styles from './userDropdown.module.scss'
 
 type UserDropdownTypes = {
-	name: string
-	description?: string
 	options: {
 		id: string
 		name: string
@@ -16,7 +14,7 @@ type UserDropdownTypes = {
 	onClick: (event: any) => void
 }
 
-export const UserDropdown = ({ name, description, options, image, onClick }: UserDropdownTypes) => {
+export const UserDropdown: FC<UserDropdownTypes> = ({ options, image, onClick }) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const select = useRef<HTMLButtonElement | null>(null)
 	const { pathname: url } = useLocation()
@@ -43,18 +41,7 @@ export const UserDropdown = ({ name, description, options, image, onClick }: Use
 					onClick={() => setIsOpen(isOpen => !isOpen)}
 					ref={select}
 				>
-					{image ? (
-						<img src={image} className={styles.selectImage} alt={''} />
-					) : (
-						<div className={styles.emptyAvatar}>
-							{name ? name.split(' ')[0].charAt(0) + name.split(' ')[1].charAt(0) : ''}
-						</div>
-					)}
-
-					<div className={styles.selectPlaceholder}>
-						<p>{name}</p>
-						{description ? <p>{description}</p> : null}
-					</div>
+					<img src={image} className={styles.selectImage} alt={''} />
 				</button>
 
 				<div className={isOpen ? styles.selectOptionsActive : styles.selectOptions}>

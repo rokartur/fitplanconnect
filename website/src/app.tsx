@@ -25,7 +25,7 @@ export default function App() {
 						<Header />
 						<Routes>
 							<Route path={'/'} element={<h1>siema</h1>} />
-							<Route path={'/app'} element={<AppSettings />} />
+							<Route path={'/app/calendar'} element={<AppSettings />} />
 						</Routes>
 					</BrowserRouter>
 				</Suspense>

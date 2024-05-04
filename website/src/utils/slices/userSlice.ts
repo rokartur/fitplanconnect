@@ -1,13 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
+export type UserTypes = {
 	data: {
-		username: null,
-		email: null,
-		profile_picture_url: null,
-		selected_trainer_id: null,
-		subscription_expiration_date: null,
-	}
+		name: string
+		username: string
+		email: string
+		profile_picture_url: string
+		selected_trainer_id: string
+		subscription_expiration_date: string
+	} | null
+}
+
+const initialState: UserTypes = {
+	data: null
 }
 
 export const userSlice = createSlice({
