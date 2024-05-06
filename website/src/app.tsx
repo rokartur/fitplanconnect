@@ -20,9 +20,9 @@ export default function App() {
 	return (
 		<Provider store={store}>
 			<HelmetProvider>
-				<Suspense fallback={<p>loading</p>}>
-					<BrowserRouter>
-						<Header />
+				<BrowserRouter>
+					<Header />
+					<Suspense fallback={<p>loading</p>}>
 						<Routes>
 							<Route path={'/'} element={<h1>landing</h1>} />
 							<Route path={'/app/calendar'} element={<h1>calendar</h1>} />
@@ -30,8 +30,8 @@ export default function App() {
 							<Route path={'/app/billing'} element={<h1>billing</h1>} />
 							<Route path={'/app/settings'} element={<AppSettings />} />
 						</Routes>
-					</BrowserRouter>
-				</Suspense>
+					</Suspense>
+				</BrowserRouter>
 			</HelmetProvider>
 		</Provider>
 	)
