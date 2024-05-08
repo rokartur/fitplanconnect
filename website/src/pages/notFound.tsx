@@ -2,6 +2,7 @@ import { useScrollTop } from '@/hooks/useScrollTop'
 
 export default function NotFound() {
 	useScrollTop()
+  
 	return (
 		<div>
 			<h1>404</h1>
