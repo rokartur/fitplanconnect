@@ -8,50 +8,22 @@ import { lucia } from '@/utils/lucia'
 
 export default (app: ElysiaApp) => app
 	.get('/', async ({ set, query, cookie: { github_oauth_state, auth_session, state: state_cookie } }) => {
-		const clearGitHubCookie = () => {
-			github_oauth_state.set({
-				value: '',
-				httpOnly: true,
-				secure: true,
-				sameSite: 'strict',
-				path: '/',
-				maxAge: 0,
-			})
-		}
-
-		const clearAuthSessionCookie = () => {
-			auth_session.set({
-				value: '',
-				httpOnly: true,
-				secure: true,
-				sameSite: 'strict',
-				path: '/',
-				maxAge: 0,
-			})
-		}
-
 		try {
 			const code = query.code
 			const state = query.state
 			const savedState = github_oauth_state?.value
 
 			if (!code || !state) {
-				clearGitHubCookie()
-				clearAuthSessionCookie()
 				set.status = 400
 				return { status: 400, error: 'Invalid request' }
 			}
 
 			if (!savedState) {
-				clearGitHubCookie()
-				clearAuthSessionCookie()
 				set.status = 400
 				return { status: 400, error: `saved state doesn't exist` }
 			}
 
 			if (savedState !== state) {
-				clearGitHubCookie()
-				clearAuthSessionCookie()
 				set.status = 400
 				return { status: 400, error: 'State does not match' }
 			}
@@ -65,9 +37,7 @@ export default (app: ElysiaApp) => app
 			const githubData = (await githubRes.json()) as any
 
 			if (!githubData.email) {
-				clearGitHubCookie()
-				clearAuthSessionCookie()
-				set.status = 302
+				set.status = 400
 				set.headers.location = '/'
 			}
 
@@ -131,10 +101,8 @@ export default (app: ElysiaApp) => app
 			})
 
 			set.status = 302
-			set.headers.location = '/app/calendar'
+			set.headers.location = '/app'
 		} catch (error: any) {
-			clearGitHubCookie()
-			clearAuthSessionCookie()
 			set.status = 500
 			return { status: 500, error: error.message }
 		}
