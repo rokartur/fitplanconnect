@@ -23,6 +23,7 @@ jobs:
         with:
           node-version: "20"
           cache: "yarn"
+        working-directory: ./website
 
       - name: Install dependencies
         run: yarn
@@ -63,10 +64,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Remove old files from server
-        run: |
-          ssh -p ${{ secrets.SSH_SERVER_PORT }} ${{ secrets.SSH_SERVER_USERNAME }}@${{ secrets.SSH_SERVER_NAME }} "rm -rf ${{ secrets.SSH_SERVER_BACKEND_PATH }}*"
-        env:
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_SERVER_NAME }}
+          username: ${{ secrets.SSH_SERVER_USERNAME }}
+          password: ${{ secrets.SSH_SERVER_PASS }}
+          port: ${{ secrets.SSH_SERVER_PORT }}
+          script: |
+            rm -rf ${{ secrets.SSH_SERVER_BACKEND_PATH }}*
 
       - name: Deploy backend to server
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
