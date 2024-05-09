@@ -10,9 +10,12 @@ import { t } from 'elysia'
 export default (app: ElysiaApp) =>
 	app.get(
 		'/',
-		async ({ set, query: { code, state }, cookie: { github_oauth_state, auth_session, state: state_cookie } }) => {
+		async ({ set, query, cookie: { github_oauth_state, auth_session, state: state_cookie } }) => {
 			try {
+				const code = query.code
+				const state = query.state
 				const savedState = github_oauth_state?.value
+				console.log(query)
 
 				if (!code || !state) {
 					set.status = 400
