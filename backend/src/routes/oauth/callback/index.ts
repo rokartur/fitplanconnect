@@ -15,6 +15,7 @@ export default (app: ElysiaApp) =>
 				const code = query.code
 				const state = query.state
 				const savedState = github_oauth_state?.value
+				console.log(query)
 
 				if (!code || !state) {
 					set.status = 400
@@ -108,8 +109,8 @@ export default (app: ElysiaApp) =>
 		},
 		{
 			query: t.Object({
-				code: t.String(),
-				state: t.String(),
+				code: t.Optional(t.String()),
+				state: t.Optional(t.String()),
 			}),
 		},
 	)
