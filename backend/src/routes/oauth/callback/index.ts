@@ -36,26 +36,17 @@ export default (app: ElysiaApp) =>
 			const savedState = github_oauth_state?.value
 
 			if (!code || !state) {
-				clearGitHubCookie()
-				clearAuthSessionCookie()
-				set.status = 302
-				set.headers.location = '/'
+				set.status = 400
 				return { status: 400, error: 'Invalid request' }
 			}
 
 			if (!savedState) {
-				clearGitHubCookie()
-				clearAuthSessionCookie()
-				set.status = 302
-				set.headers.location = '/'
+				set.status = 400
 				return { status: 400, error: `saved state doesn't exist` }
 			}
 
 			if (savedState !== state) {
-				clearGitHubCookie()
-				clearAuthSessionCookie()
-				set.status = 302
-				set.headers.location = '/'
+				set.status = 400
 				return { status: 400, error: 'State does not match' }
 			}
 
