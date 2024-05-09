@@ -52,7 +52,7 @@ jobs:
           username: ${{ secrets.SSH_SERVER_USERNAME }}
           server: ${{ secrets.SSH_SERVER_NAME }}
           port: ${{ secrets.SSH_SERVER_PORT }}
-          ssh_private_key: ${{ secrets.DEPLOY_KEY }}
+          password: ${{ secrets.SSH_SERVER_PASS }}
           local_path: "./website/dist/*"
           remote_path: ${{ secrets.SSH_SERVER_FRONTEND_PATH }}
 
