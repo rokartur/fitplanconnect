@@ -12,6 +12,7 @@ jobs:
   deploy-frontend:
     name: Deploy Frontend
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
       - name: Checkout code
@@ -55,6 +56,7 @@ jobs:
   deploy-backend:
     name: Deploy Backend
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
       - name: Checkout code
