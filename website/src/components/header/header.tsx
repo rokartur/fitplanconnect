@@ -187,6 +187,7 @@ export const Header = () => {
 											console.error(response.error)
 										}
 
+										console.log(response.url)
 										window.location.href = response.url as string
 									}}
 								>
