@@ -72,6 +72,16 @@ export default (app: ElysiaApp) =>
 						profilePictureUrl: userData.profilePictureUrl
 					})
 					.where(eq(users.accessToken, userData?.accessToken));
+
+				set.status = 200
+				return {
+					name: userData.name,
+					username: userData.username,
+					email: userData.email,
+					profile_picture_url: userData.profilePictureUrl,
+					selected_trainer_id: userData.selectedTrainerId || '',
+					subscription_expiration_date: userData.subscriptionExpirationDate || '',
+				}
 			}
 
 			if (!userData) {
@@ -84,7 +94,7 @@ export default (app: ElysiaApp) =>
 				name: userData.name,
 				username: userData.username,
 				email: userData.email,
-				profile_picture_url: userData.profilePictureUrl || '',
+				profile_picture_url: userData.profilePictureUrl,
 				selected_trainer_id: userData.selectedTrainerId || '',
 				subscription_expiration_date: userData.subscriptionExpirationDate || '',
 			}
