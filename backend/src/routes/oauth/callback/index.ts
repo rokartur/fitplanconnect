@@ -38,18 +38,21 @@ export default (app: ElysiaApp) => app
 			if (!code || !state) {
 				clearGitHubCookie()
 				clearAuthSessionCookie()
+				set.status = 400
 				return { status: 400, error: 'Invalid request' }
 			}
 
 			if (!savedState) {
 				clearGitHubCookie()
 				clearAuthSessionCookie()
+				set.status = 400
 				return { status: 400, error: `saved state doesn't exist` }
 			}
 
 			if (savedState !== state) {
 				clearGitHubCookie()
 				clearAuthSessionCookie()
+				set.status = 400
 				return { status: 400, error: 'State does not match' }
 			}
 
@@ -66,7 +69,6 @@ export default (app: ElysiaApp) => app
 				clearAuthSessionCookie()
 				set.status = 302
 				set.headers.location = '/'
-				return { status: 400, error: 'Set public email in your account https://github.com/settings/profile' }
 			}
 
 			await db.transaction(async (trx) => {
@@ -133,8 +135,7 @@ export default (app: ElysiaApp) => app
 		} catch (error: any) {
 			clearGitHubCookie()
 			clearAuthSessionCookie()
-			set.status = 302
-			set.headers.location = '/'
+			set.status = 500
 			return { status: 500, error: error.message }
 		}
 	})
