@@ -44,7 +44,7 @@ const AppSettings = () => {
 										</label>
 										<label>
 											Email address
-											<p>{user.email}</p>
+											<p>{user.email || <a href='https://github.com/settings/profile' target={'_blank'}>Not selected public email</a>}</p>
 										</label>
 									</>
 								) : null}

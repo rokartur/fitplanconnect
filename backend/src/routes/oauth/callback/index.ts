@@ -13,6 +13,8 @@ export default (app: ElysiaApp) => app
 			const state = query.state
 			const savedState = github_oauth_state?.value
 
+			console.log(code, state)
+
 			if (!code || !state) {
 				set.status = 400
 				return { status: 400, error: 'Invalid request' }
@@ -36,11 +38,6 @@ export default (app: ElysiaApp) => app
 
 			const githubData = (await githubRes.json()) as any
 
-			if (!githubData.email) {
-				set.status = 400
-				set.headers.location = '/'
-			}
-
 			await db.transaction(async (trx) => {
 				const user = await trx.query.users.findFirst({ where: eq(users.id, githubData.id) })
 
@@ -51,7 +48,7 @@ export default (app: ElysiaApp) => app
 							id: githubData.id.toString(),
 							name: githubData.name || '',
 							username: githubData.login,
-							email: githubData.email,
+							email: githubData.email || '',
 							profilePictureUrl: githubData.avatar_url,
 						})
 						.returning({ id: users.id })
@@ -101,7 +98,7 @@ export default (app: ElysiaApp) => app
 			})
 
 			set.status = 302
-			set.headers.location = '/app'
+			set.headers.location = '/app/calendar'
 		} catch (error: any) {
 			set.status = 500
 			return { status: 500, error: error.message }

@@ -4,6 +4,15 @@ import { eq } from 'drizzle-orm'
 import { sessions, users } from '@/db/schema'
 import { lucia } from '@/utils/lucia'
 
+type UserResponse = {
+	name: string
+	username: string
+	email: string
+	profile_picture_url: string
+	selected_trainer_id: string
+	subscription_expiration_date: string
+}
+
 export default (app: ElysiaApp) =>
 	app.get('/', async ({ set, cookie: { auth_session } }) => {
 		const validateRequest = async () => {
@@ -64,23 +73,26 @@ export default (app: ElysiaApp) =>
 
 				const githubData = (await githubRes.json()) as any
 
-				await db.update(users)
+				await db
+					.update(users)
 					.set({
-						name: githubData.name || '',
+						name: githubData.name ? githubData.name : '',
 						username: githubData.username,
-						email: githubData.email,
-						profilePictureUrl: userData.profilePictureUrl
+						email: githubData.email || '',
+						profilePictureUrl: githubData.profilePictureUrl,
 					})
-					.where(eq(users.accessToken, userData?.accessToken));
+					.where(eq(users.accessToken, userData?.accessToken))
+
+				const userNewData = await db.query.users.findFirst({ where: eq(users.id, userSession.userId) })
 
 				set.status = 200
 				return {
-					name: userData.name,
-					username: userData.username,
-					email: userData.email,
-					profile_picture_url: userData.profilePictureUrl,
-					selected_trainer_id: userData.selectedTrainerId || '',
-					subscription_expiration_date: userData.subscriptionExpirationDate || '',
+					name: userNewData?.name,
+					username: userNewData?.username,
+					email: userNewData?.email,
+					profile_picture_url: userNewData?.profilePictureUrl,
+					selected_trainer_id: userNewData?.selectedTrainerId || '',
+					subscription_expiration_date: userNewData?.subscriptionExpirationDate || '',
 				}
 			}
 
