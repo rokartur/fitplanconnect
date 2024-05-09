@@ -21,14 +21,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          architecture: "x64"
+          cache: "yarn"
 
       - name: Install dependencies
-        run: npm run install
+        run: yarn
         working-directory: ./website
 
       - name: Build
-        run: npm run build
+        run: yarn build
         working-directory: ./website
         env:
           OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
