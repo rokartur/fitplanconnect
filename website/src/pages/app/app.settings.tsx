@@ -1,6 +1,5 @@
 import styles from '@/styles/app.settings.module.scss'
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import wretch from 'wretch'
 import { AlertDialog } from '@/components/alertDialog/alertDialog.tsx'
 import { AnimateWrapper } from '@/components/animateWrapper/animateWrapper.tsx'
@@ -8,7 +7,6 @@ import { Button } from '@/components/button/button.tsx'
 import { Container } from '@/components/container/container.tsx'
 import { Overlay } from '@/components/overlay/overlay.tsx'
 import { SEO } from '@/components/seo.tsx'
-import { useLocalStorage } from '@/hooks/useLocalStorage.ts'
 import { useAppSelector } from '@/utils/store.ts'
 
 const metaData = {
@@ -20,14 +18,6 @@ const metaData = {
 const AppSettings = () => {
 	const user = useAppSelector(state => state.user.data)
 	const [isOpenConfirmDeleteAccountAlertDialog, setIsOpenConfirmDeleteAccountAlertDialog] = useState(false)
-	const navigate = useNavigate()
-	const { getItem } = useLocalStorage('isLogged')
-
-	useEffect(() => {
-		if (getItem() !== 'true') {
-			navigate('/')
-		}
-	}, [])
 
 	return (
 		<>

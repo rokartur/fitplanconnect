@@ -6,7 +6,6 @@ import { UserDropdown } from '@/components/userDropdown/userDropdown.tsx';
 import { setUser, UserTypes } from '@/utils/slices/userSlice.ts'
 import { useAppDispatch, useAppSelector } from '@/utils/store.ts';
 import { Tooltip } from '@/components/tooltip/tooltip.tsx'
-import { useLocalStorage } from '@/hooks/useLocalStorage.ts'
 
 type OAuthResponse = {
 	error?: string
@@ -19,7 +18,6 @@ export const Header = () => {
 	const user = useAppSelector(state => state.user.data)
 	const navigate = useNavigate()
 	const { pathname: url } = useLocation()
-	const { setItem, removeItem } = useLocalStorage('isLogged')
 
 	useEffect(() => {
 		const fetchUser = async () => {
@@ -137,7 +135,6 @@ export const Header = () => {
 											onClick={async event => {
 												if (event.target.value === 'logout') {
 													await wretch('/api/oauth/logout').get().res()
-													removeItem()
 													dispatch(setUser(null))
 													navigate('/')
 												} else {
@@ -190,7 +187,6 @@ export const Header = () => {
 											if (response.error) {
 												console.error(response.error)
 											} else if (response.url) {
-												setItem('true')
 												window.location.href = response.url
 											}
 										}
