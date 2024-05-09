@@ -183,12 +183,10 @@ export const Header = () => {
 									onClick={async () => {
 										setIsLoading(true)
 										const response: OAuthResponse = await wretch('/api/oauth').get().json()
-										if (response) {
-											if (response.error) {
-												console.error(response.error)
-											} else if (response.url) {
-												window.location.href = response.url
-											}
+										if (response.error) {
+											console.error(response.error)
+										} else if (response.url) {
+											window.location.href = response.url
 										}
 									}}
 								>
