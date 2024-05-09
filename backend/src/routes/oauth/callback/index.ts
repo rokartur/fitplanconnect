@@ -6,8 +6,8 @@ import { eq } from 'drizzle-orm'
 import { users } from '@/db/schema'
 import { lucia } from '@/utils/lucia'
 
-export default (app: ElysiaApp) =>
-	app.get('/', async ({ set, query, cookie: { github_oauth_state, auth_session, state: state_cookie } }) => {
+export default (app: ElysiaApp) => app
+	.get('/', async ({ set, query, cookie: { github_oauth_state, auth_session, state: state_cookie } }) => {
 		const clearGitHubCookie = () => {
 			github_oauth_state.set({
 				value: '',
@@ -36,25 +36,27 @@ export default (app: ElysiaApp) =>
 			const savedState = github_oauth_state?.value
 
 			if (!code || !state) {
-				set.status = 400
+				clearGitHubCookie()
+				clearAuthSessionCookie()
 				return { status: 400, error: 'Invalid request' }
 			}
 
 			if (!savedState) {
-				set.status = 400
+				clearGitHubCookie()
+				clearAuthSessionCookie()
 				return { status: 400, error: `saved state doesn't exist` }
 			}
 
 			if (savedState !== state) {
-				set.status = 400
+				clearGitHubCookie()
+				clearAuthSessionCookie()
 				return { status: 400, error: 'State does not match' }
 			}
 
 			const { accessToken } = await github.validateAuthorizationCode(code)
 
 			const githubRes = await fetch('https://api.github.com/user', {
-				headers: { Authorization: `Bearer ${accessToken}` },
-				method: 'GET',
+				headers: { Authorization: `Bearer ${accessToken}` }, method: 'GET',
 			})
 
 			const githubData = (await githubRes.json()) as any
@@ -67,7 +69,7 @@ export default (app: ElysiaApp) =>
 				return { status: 400, error: 'Set public email in your account https://github.com/settings/profile' }
 			}
 
-			await db.transaction(async trx => {
+			await db.transaction(async (trx) => {
 				const user = await trx.query.users.findFirst({ where: eq(users.id, githubData.id) })
 
 				if (!user) {
@@ -84,21 +86,27 @@ export default (app: ElysiaApp) =>
 
 					if (createdUserRes.length === 0) {
 						trx.rollback()
-						return { status: 500, error: 'Failed to create user' }
+						return { status: 500, error: "Failed to create user" }
 					}
 
-					const createdOAuthAccountRes = await trx.update(users).set({ accessToken }).where(eq(users.id, githubData.id))
+					const createdOAuthAccountRes = await trx
+						.update(users)
+						.set({ accessToken })
+						.where(eq(users.id, githubData.id))
 
 					if (createdOAuthAccountRes.count === 0) {
 						trx.rollback()
-						return { status: 500, error: 'Failed to create OAuthAccountRes' }
+						return { status: 500, error: "Failed to create OAuthAccountRes" }
 					}
 				} else {
-					const updatedOAuthAccountRes = await trx.update(users).set({ accessToken }).where(eq(users.id, githubData.id))
+					const updatedOAuthAccountRes = await trx
+						.update(users)
+						.set({ accessToken })
+						.where(eq(users.id, githubData.id))
 
 					if (updatedOAuthAccountRes.count === 0) {
 						trx.rollback()
-						return { status: 500, error: 'Failed to update OAuthAccountRes' }
+						return { status: 500, error: "Failed to update OAuthAccountRes" }
 					}
 				}
 			})
