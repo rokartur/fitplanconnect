@@ -56,6 +56,24 @@ export default (app: ElysiaApp) =>
 		if (user && session && userSession) {
 			const userData = await db.query.users.findFirst({ where: eq(users.id, userSession.userId) })
 
+			if (userData?.accessToken) {
+				const githubRes = await fetch('https://api.github.com/user', {
+					headers: { Authorization: `Bearer ${userData?.accessToken}` },
+					method: 'GET',
+				})
+
+				const githubData = (await githubRes.json()) as any
+
+				await db.update(users)
+					.set({
+						name: githubData.name || '',
+						username: githubData.username,
+						email: githubData.email,
+						profilePictureUrl: userData.profilePictureUrl
+					})
+					.where(eq(users.accessToken, userData?.accessToken));
+			}
+
 			if (!userData) {
 				set.status = 401
 				return { message: 'unauthorized' }
