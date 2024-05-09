@@ -94,7 +94,7 @@ jobs:
           port: ${{ secrets.SSH_SERVER_PORT }}
           script: |
             cd ${{ secrets.SSH_SERVER_BACKEND_PATH }}
-            echo 'OAUTH_CLIENT_ID="${{ secrets.OAUTH_CLIENT_ID }}"\nOAUTH_CLIENT_SECRET="${{ secrets.OAUTH_CLIENT_SECRET }}"\nOAUTH_REDIRECT_URI="${{ secrets.OAUTH_REDIRECT_URI }}"\nDB_URL="${{ secrets.DB_URL }}"' > .env
+            echo -e 'OAUTH_CLIENT_ID="${{ secrets.OAUTH_CLIENT_ID }}"\nOAUTH_CLIENT_SECRET="${{ secrets.OAUTH_CLIENT_SECRET }}"\nOAUTH_REDIRECT_URI="${{ secrets.OAUTH_REDIRECT_URI }}"\nDB_URL="${{ secrets.DB_URL }}"' > .env
 
       - name: Run backend
         uses: appleboy/ssh-action@v1.0.3
