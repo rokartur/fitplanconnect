@@ -102,4 +102,5 @@ jobs:
           script: |
             cd ${{ secrets.SSH_SERVER_BACKEND_PATH }}
             bun install
-            screen -S fitplanconnect-backend -X quit && screen -S fitplanconnect-backend -d -m bun run dev
+            screen -S fitplanconnect-backend
+            bun run dev
