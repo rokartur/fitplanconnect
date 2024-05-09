@@ -13,6 +13,8 @@ export default (app: ElysiaApp) => app
 			const state = query.state
 			const savedState = github_oauth_state?.value
 
+			console.log(code, state, savedState)
+
 			if (!code || !state) {
 				set.status = 400
 				return { status: 400, error: 'Invalid request' }
