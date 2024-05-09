@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Change working directory
-        run: cd ./website
+        run: ls
 
       - name: Checkout code
         uses: actions/checkout@v4
