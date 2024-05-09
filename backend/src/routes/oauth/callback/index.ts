@@ -36,6 +36,7 @@ export default (app: ElysiaApp) =>
 				const githubRes = await fetch('https://api.github.com/user', {
 					headers: { Authorization: `Bearer ${accessToken}` },
 					method: 'GET',
+					mode: 'cors',
 				})
 
 				const githubData = (await githubRes.json()) as any

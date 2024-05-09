@@ -7,7 +7,9 @@ import { Button } from '@/components/button/button.tsx'
 import { Container } from '@/components/container/container.tsx'
 import { Overlay } from '@/components/overlay/overlay.tsx'
 import { SEO } from '@/components/seo.tsx'
-import { useAppSelector } from '@/utils/store.ts'
+import { useAppDispatch, useAppSelector } from '@/utils/store.ts'
+import { useNavigate } from 'react-router-dom'
+import { setUser } from '@/utils/slices/userSlice.ts'
 
 const metaData = {
 	title: 'Settings',
@@ -16,8 +18,10 @@ const metaData = {
 }
 
 const AppSettings = () => {
+	const dispatch = useAppDispatch()
 	const user = useAppSelector(state => state.user.data)
 	const [isOpenConfirmDeleteAccountAlertDialog, setIsOpenConfirmDeleteAccountAlertDialog] = useState(false)
+	const navigate = useNavigate()
 
 	return (
 		<>
@@ -90,7 +94,12 @@ const AppSettings = () => {
 							onClose={() => setIsOpenConfirmDeleteAccountAlertDialog(false)}
 							onCancel={() => setIsOpenConfirmDeleteAccountAlertDialog(false)}
 							onConfirm={async () => {
-								await wretch('/api/user/delete').get().json()
+								const response: { status: number } = await wretch('/api/user/delete').get().json()
+								if (response.status === 200) {
+									dispatch(setUser(null))
+									navigate('/')
+								}
+
 								setIsOpenConfirmDeleteAccountAlertDialog(false)
 							}}
 							closeWhenClickEscape
