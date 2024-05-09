@@ -10,12 +10,9 @@ import { t } from 'elysia'
 export default (app: ElysiaApp) =>
 	app.get(
 		'/',
-		async ({ set, query, cookie: { github_oauth_state, auth_session, state: state_cookie } }) => {
+		async ({ set, query: { code, state }, cookie: { github_oauth_state, auth_session, state: state_cookie } }) => {
 			try {
-				const code = query.code
-				const state = query.state
 				const savedState = github_oauth_state?.value
-				console.log(query)
 
 				if (!code || !state) {
 					set.status = 400
@@ -109,8 +106,8 @@ export default (app: ElysiaApp) =>
 		},
 		{
 			query: t.Object({
-				code: t.Optional(t.String()),
-				state: t.Optional(t.String()),
+				code: t.String(),
+				state: t.String(),
 			}),
 		},
 	)
