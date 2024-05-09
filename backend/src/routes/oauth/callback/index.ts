@@ -6,37 +6,77 @@ import { eq } from 'drizzle-orm'
 import { users } from '@/db/schema'
 import { lucia } from '@/utils/lucia'
 
-export default (app: ElysiaApp) => app
-	.get('/', async ({ set, query, cookie: { github_oauth_state, auth_session, state: state_cookie } }) => {
+export default (app: ElysiaApp) =>
+	app.get('/', async ({ set, query, cookie: { github_oauth_state, auth_session, state: state_cookie } }) => {
+		const clearGitHubCookie = () => {
+			github_oauth_state.set({
+				value: '',
+				httpOnly: true,
+				secure: true,
+				sameSite: 'strict',
+				path: '/',
+				maxAge: 0,
+			})
+		}
+
+		const clearAuthSessionCookie = () => {
+			auth_session.set({
+				value: '',
+				httpOnly: true,
+				secure: true,
+				sameSite: 'strict',
+				path: '/',
+				maxAge: 0,
+			})
+		}
+
 		try {
 			const code = query.code
 			const state = query.state
 			const savedState = github_oauth_state?.value
 
 			if (!code || !state) {
-				set.status = 400
+				clearGitHubCookie()
+				clearAuthSessionCookie()
+				set.status = 302
+				set.headers.location = '/'
 				return { status: 400, error: 'Invalid request' }
 			}
 
 			if (!savedState) {
-				set.status = 400
+				clearGitHubCookie()
+				clearAuthSessionCookie()
+				set.status = 302
+				set.headers.location = '/'
 				return { status: 400, error: `saved state doesn't exist` }
 			}
 
 			if (savedState !== state) {
-				set.status = 400
+				clearGitHubCookie()
+				clearAuthSessionCookie()
+				set.status = 302
+				set.headers.location = '/'
 				return { status: 400, error: 'State does not match' }
 			}
 
 			const { accessToken } = await github.validateAuthorizationCode(code)
 
 			const githubRes = await fetch('https://api.github.com/user', {
-				headers: { Authorization: `Bearer ${accessToken}` }, method: 'GET',
+				headers: { Authorization: `Bearer ${accessToken}` },
+				method: 'GET',
 			})
 
 			const githubData = (await githubRes.json()) as any
 
-			await db.transaction(async (trx) => {
+			if (!githubData.email) {
+				clearGitHubCookie()
+				clearAuthSessionCookie()
+				set.status = 302
+				set.headers.location = '/'
+				return { status: 400, error: 'Set public email in your account https://github.com/settings/profile' }
+			}
+
+			await db.transaction(async trx => {
 				const user = await trx.query.users.findFirst({ where: eq(users.id, githubData.id) })
 
 				if (!user) {
@@ -53,32 +93,23 @@ export default (app: ElysiaApp) => app
 
 					if (createdUserRes.length === 0) {
 						trx.rollback()
-						return { status: 500, error: "Failed to create user" }
+						return { status: 500, error: 'Failed to create user' }
 					}
 
-					const createdOAuthAccountRes = await trx
-						.update(users)
-						.set({ accessToken })
-						.where(eq(users.id, githubData.id))
+					const createdOAuthAccountRes = await trx.update(users).set({ accessToken }).where(eq(users.id, githubData.id))
 
 					if (createdOAuthAccountRes.count === 0) {
 						trx.rollback()
-						return { status: 500, error: "Failed to create OAuthAccountRes" }
+						return { status: 500, error: 'Failed to create OAuthAccountRes' }
 					}
 				} else {
-					const updatedOAuthAccountRes = await trx
-						.update(users)
-						.set({ accessToken })
-						.where(eq(users.id, githubData.id))
+					const updatedOAuthAccountRes = await trx.update(users).set({ accessToken }).where(eq(users.id, githubData.id))
 
 					if (updatedOAuthAccountRes.count === 0) {
 						trx.rollback()
-						return { status: 500, error: "Failed to update OAuthAccountRes" }
+						return { status: 500, error: 'Failed to update OAuthAccountRes' }
 					}
 				}
-
-				set.status = 302
-				set.headers.location = '/app'
 			})
 
 			const session = await lucia.createSession(githubData.id, { expiresIn: 60 * 60 * 24 * 30 })
@@ -101,7 +132,10 @@ export default (app: ElysiaApp) => app
 			set.status = 302
 			set.headers.location = '/app/calendar'
 		} catch (error: any) {
-			set.status = 500
+			clearGitHubCookie()
+			clearAuthSessionCookie()
+			set.status = 302
+			set.headers.location = '/'
 			return { status: 500, error: error.message }
 		}
 	})
