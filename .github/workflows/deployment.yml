@@ -15,9 +15,6 @@ jobs:
     environment: production
 
     steps:
-      - name: Change working directory
-        run: ls
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -28,6 +25,7 @@ jobs:
 
       - name: Install dependencies
         run: yarn
+        working-directory: ./website
 
       - name: Build
         run: yarn build
@@ -36,6 +34,7 @@ jobs:
           OAUTH_CLIENT_SECRET: ${{ secrets.OAUTH_CLIENT_SECRET }}
           OAUTH_REDIRECT_URI: ${{ secrets.OAUTH_REDIRECT_URI }}
           DB_URL: ${{ secrets.DB_URL }}
+        working-directory: ./website
 
       - name: Remove old files from server
         run: |
@@ -102,4 +101,5 @@ jobs:
           port: ${{ secrets.SSH_SERVER_PORT }}
           script: |
             cd ${{ secrets.SSH_SERVER_BACKEND_PATH }}
+            bun install
             screen -S fitplanconnect-backend -X quit && screen -S fitplanconnect-backend -d -m bun run dev
