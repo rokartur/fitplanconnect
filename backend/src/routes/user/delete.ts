@@ -77,7 +77,7 @@ export default (app: ElysiaApp) =>
 			await db.delete(users).where(eq(users.id, user.id)).returning()
 
 			set.status = 200
-			set.headers.location = '/'
+			return { status: 200, message: 'account deleted' }
 		} else {
 			set.status = 401
 			return { message: 'unauthorized' }

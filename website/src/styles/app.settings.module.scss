@@ -51,6 +51,10 @@
       border-radius: 12px;
       background: #FFF;
       border: 1px solid $gray-200;
+
+      a {
+        text-decoration: underline;
+      }
     }
   }
 }

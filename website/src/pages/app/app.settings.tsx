@@ -1,6 +1,5 @@
 import styles from '@/styles/app.settings.module.scss'
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import wretch from 'wretch'
 import { AlertDialog } from '@/components/alertDialog/alertDialog.tsx'
 import { AnimateWrapper } from '@/components/animateWrapper/animateWrapper.tsx'
@@ -8,8 +7,9 @@ import { Button } from '@/components/button/button.tsx'
 import { Container } from '@/components/container/container.tsx'
 import { Overlay } from '@/components/overlay/overlay.tsx'
 import { SEO } from '@/components/seo.tsx'
-import { useLocalStorage } from '@/hooks/useLocalStorage.ts'
-import { useAppSelector } from '@/utils/store.ts'
+import { useAppDispatch, useAppSelector } from '@/utils/store.ts'
+import { useNavigate } from 'react-router-dom'
+import { setUser } from '@/utils/slices/userSlice.ts'
 
 const metaData = {
 	title: 'Settings',
@@ -18,16 +18,10 @@ const metaData = {
 }
 
 const AppSettings = () => {
+	const dispatch = useAppDispatch()
 	const user = useAppSelector(state => state.user.data)
 	const [isOpenConfirmDeleteAccountAlertDialog, setIsOpenConfirmDeleteAccountAlertDialog] = useState(false)
 	const navigate = useNavigate()
-	const { getItem } = useLocalStorage('isLogged')
-
-	useEffect(() => {
-		if (getItem() !== 'true') {
-			navigate('/')
-		}
-	}, [])
 
 	return (
 		<>
@@ -54,7 +48,7 @@ const AppSettings = () => {
 										</label>
 										<label>
 											Email address
-											<p>{user.email}</p>
+											<p>{user.email || <a href='https://github.com/settings/profile' target={'_blank'}>Not selected public email</a>}</p>
 										</label>
 									</>
 								) : null}
@@ -100,7 +94,12 @@ const AppSettings = () => {
 							onClose={() => setIsOpenConfirmDeleteAccountAlertDialog(false)}
 							onCancel={() => setIsOpenConfirmDeleteAccountAlertDialog(false)}
 							onConfirm={async () => {
-								await wretch('/api/user/delete').get().json()
+								const response: { status: number } = await wretch('/api/user/delete').get().json()
+								if (response.status === 200) {
+									dispatch(setUser(null))
+									navigate('/')
+								}
+
 								setIsOpenConfirmDeleteAccountAlertDialog(false)
 							}}
 							closeWhenClickEscape

@@ -1,5 +1,5 @@
 import styles from './heading.module.scss'
-import { ComponentChildren } from 'preact'
+import { ReactNode } from 'react'
 
 type Weight = 'medium' | 'semibold' | 'bold' | 'extrabold'
 
@@ -7,7 +7,7 @@ type HeadingTypes = {
 	className?: string
 	h: number
 	weight: Weight
-	children?: ComponentChildren
+	children?: ReactNode
 	style?: any
 }
 
