@@ -1,0 +1,38 @@
+@import "variables.scss";
+@import "mixins.scss";
+
+.notFoundMainContainer {
+  height: calc(100vh - 64px - 73px - 100px);
+  @include flex(column, center, center);
+
+  h1 {
+    @include font(700, 112px, 100%, center);
+    color: $neutral-900;
+  }
+
+  p {
+    margin: 0 0 24px 0;
+    font: 500 16px/24px $font-family;
+    color: $neutral-500
+  }
+
+  a {
+    padding: 8px 16px;
+    border-radius: 12px;
+    border: 1px solid $neutral-200;
+    font: 500 14px/20px $font-family;
+    background-color: $white;
+    box-shadow: $drop-shadow-small;
+
+    transition: background-color .2s;
+
+    img {
+      width: 100%;
+      max-width: 400px;
+    }
+    &:is(:hover, :focus) {
+      background-color: $neutral-100;
+    }
+  }
+
+}
