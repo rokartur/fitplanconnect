@@ -26,13 +26,17 @@
 
     transition: background-color .2s;
 
-    img {
-      width: 100%;
-      max-width: 400px;
-    }
     &:is(:hover, :focus) {
       background-color: $neutral-100;
     }
   }
 
+  img {
+    margin: 24px 0 0 0;
+    width: 100%;
+    max-width: 256px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: $drop-shadow-medium;
+  }
 }

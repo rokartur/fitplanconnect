@@ -5,6 +5,8 @@ import { Overlay } from '@/components/overlay/overlay'
 import { SEO } from '@/components/seo'
 import { useScrollTop } from '@/hooks/useScrollTop'
 import { Link } from 'react-router-dom'
+import photo404 from '@/assets/images/404_photo.jpg'
+import { Image } from '@/components/image'
 
 const metaData = {
 	title: 'Not Found',
@@ -28,6 +30,7 @@ export default function NotFound() {
 							<Link to={'/'}>
 								Back to home page
 							</Link>
+							<Image source={photo404}/>
 						</div>
 					</Container>
 				</AnimateWrapper>
