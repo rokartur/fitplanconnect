@@ -5,7 +5,6 @@ import { Overlay } from '@/components/overlay/overlay'
 import { SEO } from '@/components/seo'
 import { useScrollTop } from '@/hooks/useScrollTop'
 import { Link } from 'react-router-dom'
-import { symlink } from 'fs'
 
 const metaData = {
 	title: 'Not Found',
