@@ -1,4 +1,4 @@
-import styles from '@/styles/app.settings.module.scss'
+import styles from '@/styles/settings.module.scss'
 import { useState } from 'react'
 import wretch from 'wretch'
 import { AlertDialog } from '@/components/alertDialog/alertDialog.tsx'
@@ -17,7 +17,7 @@ const metaData = {
 	path: '/app/settings',
 }
 
-const AppSettings = () => {
+export default function Settings() {
 	const dispatch = useAppDispatch()
 	const user = useAppSelector(state => state.user.data)
 	const [isOpenConfirmDeleteAccountAlertDialog, setIsOpenConfirmDeleteAccountAlertDialog] = useState(false)
@@ -112,5 +112,3 @@ const AppSettings = () => {
 		</>
 	)
 }
-
-export default AppSettings

@@ -12,7 +12,8 @@ import { store } from '@/utils/store.ts'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
-const AppSettings = lazy(() => import('@/pages/app/app.settings.tsx'))
+const Settings = lazy(() => import('@/pages/app/settings.tsx'))
+const Calendar = lazy(() => import('@/pages/app/calendar.tsx'))
 const NotFound = lazy(() => import('@/pages/notFound'))
 
 export default function App() {
@@ -26,10 +27,10 @@ export default function App() {
 					<Suspense fallback={<p>loading</p>}>
 						<Routes>
 							<Route path={'/'} element={<h1>landing</h1>} />
-							<Route path={'/app/calendar'} element={<h1>calendar</h1>} />
+							<Route path={'/app/calendar'} element={<Calendar/>} />
 							<Route path={'/app/trainers'} element={<h1>trainers</h1>} />
 							<Route path={'/app/billing'} element={<h1>billing</h1>} />
-							<Route path={'/app/settings'} element={<AppSettings />} />
+							<Route path={'/app/settings'} element={<Settings />} />
 							<Route path={'*'} element={<NotFound />} />
 						</Routes>
 					</Suspense>

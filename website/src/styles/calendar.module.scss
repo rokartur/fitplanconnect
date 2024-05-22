@@ -1,0 +1,133 @@
+@import 'variables';
+@import 'mixins';
+
+.content {
+  position: relative;
+  @include flex(row, center, start);
+  gap: 48px;
+  font-family: $font-family;
+}
+
+.scheduleMeeting {
+  height: max-content;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 16px;
+
+  border: 1px solid $gray-200;
+  border-radius: 12px;
+  background: $white;
+
+  .calenMain {
+    display: flex;
+    align-items: start;
+    gap: 16px;
+
+    @media (width <= 680px) {
+      flex-direction: column;
+    }
+  }
+
+  .actions {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: end;
+    gap: 24px;
+  }
+
+  .scheduleMeetingDivider {
+    height: 400px;
+    width: 1px;
+    background-color: $gray-200;
+  }
+
+  .selectedDayHoursContainer {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .headingDisplayDate {
+      padding: 4px 0 0 0;
+
+      width: 100%;
+
+      font: 700 24px/32px $font-family;
+      color: $gray-900;
+      text-align: center;
+    }
+
+    .hoursListPerDay {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+
+
+
+      .hourListError {
+        width: 100%;
+        height: 112px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        p {
+          padding: 8px 16px;
+
+          border: 1px solid $gray-200;
+          border-radius: 50px;
+          font: 500 14px/20px $font-family;
+          color: $gray-500;
+        }
+      }
+
+      .hourButton {
+        padding: 12px 18px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1 0;
+
+        border: 1px solid transparent;
+        border-radius: 12px;
+        background-color: $branding-8;
+        cursor: pointer;
+
+        font: 600 16px/24px $font-family;
+        color: $branding;
+
+        transition: border .2s, transform .2s, background-color .2s;
+
+        &:is(:hover) {
+          transform: scale(1.03);
+          border: 1px solid $branding;
+        }
+
+        &:is(:disabled) {
+          opacity: .4;
+          background-color: $branding-18;
+          pointer-events: none;
+        }
+      }
+
+      .hourButtonActive {
+        @extend .hourButton;
+
+        color: $white;
+        background-color: $branding;
+
+        &:is(:hover) {
+          transform: scale(1);
+          border: 1px solid transparent;
+        }
+      }
+    }
+  }
+}
