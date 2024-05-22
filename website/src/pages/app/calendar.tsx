@@ -6,13 +6,13 @@ import { useNavigate } from 'react-router-dom'
 import { ScheduleMeeting } from 'react-schedule-meeting'
 import wretch from 'wretch'
 import { AnimateWrapper } from '@/components/animateWrapper/animateWrapper.tsx'
+import { Button } from '@/components/button/button.tsx'
 import { Container } from '@/components/container/container.tsx'
 import { Overlay } from '@/components/overlay/overlay.tsx'
 import { SEO } from '@/components/seo.tsx'
 import { Tooltip } from '@/components/tooltip/tooltip.tsx'
 import { UserTypes } from '@/utils/slices/userSlice.ts'
 import { useAppSelector } from '@/utils/store.ts'
-import { Button } from '@/components/button/button.tsx'
 
 const metaData = {
 	title: 'Calendar',
@@ -68,8 +68,8 @@ export default function Calendar() {
 	const eventDuration: number = 60
 	const eventGap: number = 0
 	const [selectedTimeSlot, setSelectedTimeSlot] = useState<number[]>([])
-	const [allHoursPerDay, setAllHoursPerDay] = useState([])
-	const [allGapsPerDay, setAllGapsPerDay] = useState([])
+	const [allHoursPerDay, setAllHoursPerDay] = useState<number[]>([])
+	const [allGapsPerDay, setAllGapsPerDay] = useState<Date[]>([])
 	const [dayData, setDayData] = useState<DayData | null>(null)
 
 	const changeDayData = (
@@ -86,7 +86,7 @@ export default function Calendar() {
 
 		setDayData({ displayDate, selectedDate: date })
 
-		const allHoursPerDay = meetings.available.reduce((hours, meet) => {
+		const allHoursPerDay = meetings.available.reduce((hours: number[], meet) => {
 			if (moment(meet.startTime).isSame(date, 'day')) {
 				const startDay = Number(moment(meet.startTime).format('HH'))
 				const endDay = Number(moment(meet.endTime).format('HH')) + 1
@@ -97,7 +97,7 @@ export default function Calendar() {
 
 		setAllHoursPerDay(allHoursPerDay)
 
-		const allGapsPerDay = meetings.unavailable.reduce((gaps, meet) => {
+		const allGapsPerDay = meetings.unavailable.reduce((gaps: Date[], meet) => {
 			if (moment(meet.startTime).startOf('day').isSame(date)) {
 				return [...gaps, meet.startTime]
 			}
@@ -157,13 +157,11 @@ export default function Calendar() {
 														<p>No available hours</p>
 													</div>
 												) : (
-													allHoursPerDay.map(hour => {
+													allHoursPerDay.map((hour, index) => {
 														const buttonTime = Number(moment(dayData.selectedDate).set('hour', hour).format('HH'))
-														const isUnavailable = allGapsPerDay.some(
-															day => buttonTime === Number(day.split(' ')[1].split(':')[0]),
-														)
-
-														const isPast = moment(dayData.selectedDate).add(buttonTime, 'hour').unix() <= moment().unix()
+														const isUnavailable = allGapsPerDay.some((day: Date) => buttonTime === day.getHours())
+														const isPast =
+															moment(dayData.selectedDate).add(buttonTime, 'hour').unix() <= moment().unix()
 														const isSelected =
 															selectedTimeSlot[0] === moment(dayData.selectedDate).set('hour', hour).unix()
 
@@ -175,7 +173,7 @@ export default function Calendar() {
 															])
 
 														return (
-															<Tooltip title={isUnavailable || isPast ? 'Hour is unavailable' : ''}>
+															<Tooltip key={index} title={isUnavailable || isPast ? 'Hour is unavailable' : ''}>
 																<button
 																	className={buttonClass}
 																	disabled={isUnavailable || isPast}
