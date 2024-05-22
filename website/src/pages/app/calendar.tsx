@@ -11,7 +11,6 @@ import { Container } from '@/components/container/container.tsx'
 import { Overlay } from '@/components/overlay/overlay.tsx'
 import { SEO } from '@/components/seo.tsx'
 import { Tooltip } from '@/components/tooltip/tooltip.tsx'
-import { UserTypes } from '@/utils/slices/userSlice.ts'
 import { useAppSelector } from '@/utils/store.ts'
 
 const metaData = {
@@ -60,8 +59,7 @@ export default function Calendar() {
 			}),
 		[],
 	)
-	const [unavailableTimeslots, setUnavailableTimeslots] = useState(null)
-	const [meetings] = useReducer((prev: Meetings, next: Meetings) => ({ ...prev, ...next }), {
+	const [meetings, setMeetings] = useReducer((prev: Meetings, next: Meetings) => ({ ...prev, ...next }), {
 		available: availableTimeslots,
 		unavailable: [],
 	})
@@ -120,7 +118,14 @@ export default function Calendar() {
 
 		const fetchMeetings = async () => {
 			const data: AllMeetings = await wretch('/api/meetings').get().json()
-			console.log(data)
+			setMeetings({
+				available: availableTimeslots,
+				unavailable: data.map(meeting => ({
+					id: Number(meeting.id),
+					startTime: new Date(meeting.start_time),
+					endTime: new Date(meeting.end_time),
+				})),
+			})
 		}
 
 		fetchMeetings().then()
