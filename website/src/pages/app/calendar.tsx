@@ -200,7 +200,11 @@ export default function Calendar() {
 								</div>
 							</div>
 
-							<div></div>
+							<div>
+							{/*
+							TODO list of upcoming and past meetings
+							*/}
+							</div>
 						</div>
 					</Container>
 				</AnimateWrapper>
