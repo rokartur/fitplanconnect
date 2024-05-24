@@ -15,8 +15,6 @@ FitPlan Connect is a scheduling app that has earned recognition as one of the be
 
 ## Installation
 
-Ensure you have Node.js and npm/yarn installed on your machine.
-
 1. Install the latest LTS version of [Node.js](https://nodejs.org/en/download/)
 2. Install [yarn](https://yarnpkg.com/en/docs/install), run the following command:
     ```bash
