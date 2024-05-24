@@ -1,6 +1,5 @@
 import styles from '@/styles/calendar.module.scss'
 import { useEffect, useMemo, useReducer, useState } from 'react'
-import { range } from 'lodash-es'
 import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
 import { ScheduleMeeting } from 'react-schedule-meeting'
@@ -91,7 +90,9 @@ export default function Calendar() {
 			if (moment(meet.startTime).isSame(date, 'day')) {
 				const startDay = Number(moment(meet.startTime).format('HH'))
 				const endDay = Number(moment(meet.endTime).format('HH')) + 1
-				return [...hours, ...range(startDay, endDay)]
+				for (let i = startDay; i < endDay; i++) {
+					hours.push(i)
+				}
 			}
 			return hours
 		}, [])
@@ -377,7 +378,9 @@ export default function Calendar() {
 															</div>
 
 															<div className={styles.rightSide}>
-																<p>{moment(startTime).format('DD.MM.YYYY, HH:mm')} -{' '}{moment(endTime).format('HH:mm')}</p>
+																<p>
+																	{moment(startTime).format('DD.MM.YYYY, HH:mm')} - {moment(endTime).format('HH:mm')}
+																</p>
 																<p>&nbsp;</p>
 															</div>
 														</div>
@@ -390,14 +393,19 @@ export default function Calendar() {
 											{user?.meetings.map(({ trainerID, startTime, endTime }, index) => {
 												if (moment(endTime).unix() < moment().unix()) {
 													return (
-														<div key={index} className={`${styles.meeting} ${view === 'held' ? styles.meetingDisable : ''}`}>
+														<div
+															key={index}
+															className={`${styles.meeting} ${view === 'held' ? styles.meetingDisable : ''}`}
+														>
 															<div className={styles.leftSide}>
 																<p>Training</p>
 																<p>w/ {trainers?.find(trainer => trainer.id === trainerID)?.name}</p>
 															</div>
 
 															<div className={styles.rightSide}>
-																<p>{moment(startTime).format('DD.MM.YYYY, HH:mm')} -{' '}{moment(endTime).format('HH:mm')}</p>
+																<p>
+																	{moment(startTime).format('DD.MM.YYYY, HH:mm')} - {moment(endTime).format('HH:mm')}
+																</p>
 																<p>&nbsp;</p>
 															</div>
 														</div>
