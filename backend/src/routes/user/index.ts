@@ -87,6 +87,7 @@ export default (app: ElysiaApp) =>
 
 				set.status = 200
 				return {
+					id: userNewData?.id,
 					name: userNewData?.name,
 					username: userNewData?.username,
 					email: userNewData?.email,
@@ -103,6 +104,7 @@ export default (app: ElysiaApp) =>
 
 			set.status = 200
 			return {
+				id: userData.id,
 				name: userData.name,
 				username: userData.username,
 				email: userData.email,

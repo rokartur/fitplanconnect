@@ -4,6 +4,7 @@ import { range } from 'lodash-es'
 import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
 import { ScheduleMeeting } from 'react-schedule-meeting'
+import Swal from 'sweetalert2'
 import wretch from 'wretch'
 import { AnimateWrapper } from '@/components/animateWrapper/animateWrapper.tsx'
 import { Button } from '@/components/button/button.tsx'
@@ -37,10 +38,10 @@ type DayData = {
 
 type AllMeetings = {
 	id: string
-	user_id: string
-	trainer_id: string
-	start_time: string
-	end_time: string
+	userId: string
+	trainerID: string
+	startTime: string
+	endTime: string
 }[]
 
 export default function Calendar() {
@@ -115,21 +116,35 @@ export default function Calendar() {
 				navigate('/app/billing')
 			}
 		}
-
-		const fetchMeetings = async () => {
-			const data: AllMeetings = await wretch('/api/meetings').get().json()
-			setMeetings({
-				available: availableTimeslots,
-				unavailable: data.map(meeting => ({
-					id: Number(meeting.id),
-					startTime: new Date(meeting.start_time),
-					endTime: new Date(meeting.end_time),
-				})),
-			})
-		}
-
-		fetchMeetings().then()
 	}, [])
+
+	useEffect(() => {
+		const controller = new AbortController()
+		const signal = controller.signal
+
+		wretch('/api/meetings')
+			.options({ signal })
+			.get()
+			.json<AllMeetings>()
+			.then(data =>
+				setMeetings({
+					available: availableTimeslots,
+					unavailable: data.map(({ startTime, endTime }, index) => ({
+						id: index,
+						startTime: new Date(startTime),
+						endTime: new Date(endTime),
+					})),
+				}),
+			)
+			.catch(() => [])
+
+		return () => {
+			controller.abort()
+		}
+	}, [availableTimeslots])
+
+	console.log(meetings)
+	console.log(selectedTimeSlot)
 
 	return (
 		<>
@@ -196,12 +211,60 @@ export default function Calendar() {
 								</div>
 
 								<div className={styles.actions}>
-									<Button size={'medium'} label={'Book your training'} />
+									<Button
+										size={'medium'}
+										label={'Book your training'}
+										onClick={async () => {
+											if (selectedTimeSlot.length === 0) {
+												await Swal.fire({
+													title: 'Please select a time slot',
+													icon: 'error',
+												})
+												return
+											}
+
+											if (!user) return
+
+											if (user.selected_trainer_id === '' || !user.selected_trainer_id) {
+												await Swal.fire({
+													title: 'Please select a trainer',
+													icon: 'error',
+												})
+												navigate('/app/trainers')
+												return
+											}
+
+											await wretch('/api/meetings')
+												.post({
+													userId: user.id,
+													trainerID: user.selected_trainer_id,
+													startTime: new Date(selectedTimeSlot[0] * 1000),
+													endTime: new Date(selectedTimeSlot[1] * 1000),
+												})
+												.json(json => console.log(json))
+												.then(() => {
+													Swal.fire({
+														title: 'Meeting scheduled',
+														icon: 'success',
+													}).then(() => {
+														location.reload()
+													})
+												})
+												.catch(() => {
+													Swal.fire({
+														title: 'An error occurred',
+														icon: 'error',
+													}).then(() => {
+														location.reload()
+													})
+												})
+										}}
+									/>
 								</div>
 							</div>
 
 							<div>
-							{/*
+								{/*
 							TODO list of upcoming and past meetings
 							*/}
 							</div>

@@ -6,6 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { HelmetProvider } from 'react-helmet-async'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Header } from '@/components/header/header.tsx'
 import { useScrollTop } from '@/hooks/useScrollTop.ts'
 import { store } from '@/utils/store.ts'
@@ -24,10 +26,11 @@ export default function App() {
 			<HelmetProvider>
 				<BrowserRouter>
 					<Header />
+					<ToastContainer />
 					<Suspense fallback={<p>loading</p>}>
 						<Routes>
 							<Route path={'/'} element={<h1>landing</h1>} />
-							<Route path={'/app/calendar'} element={<Calendar/>} />
+							<Route path={'/app/calendar'} element={<Calendar />} />
 							<Route path={'/app/trainers'} element={<h1>trainers</h1>} />
 							<Route path={'/app/billing'} element={<h1>billing</h1>} />
 							<Route path={'/app/settings'} element={<Settings />} />

@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export type UserTypes = {
 	data: {
+		id: string
 		name: string
 		username: string
 		email: string
