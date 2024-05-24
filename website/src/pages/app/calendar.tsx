@@ -154,7 +154,7 @@ export default function Calendar() {
 										eventDurationInMinutes={eventDuration}
 										eventStartTimeSpreadInMinutes={eventGap}
 										availableTimeslots={meetings.available}
-										onSelectedDayChange={date => changeDayData(date)}
+										onSelectedDayChange={(date: Date) => changeDayData(date)}
 										startTimeListStyle={'grid'}
 									/>
 
