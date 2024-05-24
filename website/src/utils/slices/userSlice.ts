@@ -9,6 +9,13 @@ export type UserTypes = {
 		profile_picture_url: string
 		selected_trainer_id: string
 		subscription_expiration_date: string
+		meetings: {
+			id: string
+			user_id: string
+			trainer_id: string
+			start_time: string
+			end_time: string
+		}[]
 	} | null
 }
 
