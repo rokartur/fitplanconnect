@@ -1,8 +1,7 @@
 import { ElysiaApp } from '@/app'
 import { db } from '@/utils/db'
 import { eq } from 'drizzle-orm'
-import { sessions, users } from '@/db/schema'
-import { lucia } from '@/utils/lucia'
+import { meetings, sessions, users } from '@/db/schema'
 import { validateRequest } from '@/utils/validateRequest'
 
 export default (app: ElysiaApp) =>
@@ -32,7 +31,7 @@ export default (app: ElysiaApp) =>
 					.where(eq(users.accessToken, userData?.accessToken))
 
 				const userNewData = await db.query.users.findFirst({ where: eq(users.id, userSession.userId) })
-				const userMeetings = await db.query.meetings.findMany({ where: eq(users.id, userSession.userId) })
+				const userMeetings = await db.query.meetings.findMany({ where: eq(meetings.userId, userSession.userId) })
 
 				set.status = 200
 				return {

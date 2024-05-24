@@ -11,16 +11,16 @@ export type UserTypes = {
 		subscription_expiration_date: string
 		meetings: {
 			id: string
-			user_id: string
-			trainer_id: string
-			start_time: string
-			end_time: string
+			userId: string
+			trainerID: string
+			startTime: Date
+			endTime: Date
 		}[]
 	} | null
 }
 
 const initialState: UserTypes = {
-	data: null
+	data: null,
 }
 
 export const userSlice = createSlice({

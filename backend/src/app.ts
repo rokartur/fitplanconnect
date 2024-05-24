@@ -19,13 +19,13 @@ const app = new Elysia()
 		}
 	}))
 	.use(compression())
-	.use(
-		rateLimit({
-			max: 20,
-			duration: 300000,
-			responseMessage: 'Too many requests, please try again later.',
-		}),
-	)
+	// .use(
+	// 	rateLimit({
+	// 		max: 20,
+	// 		duration: 300000,
+	// 		responseMessage: 'Too many requests, please try again later.',
+	// 	}),
+	// )
 	.use(
 		autoload({
 			prefix: '/api',
