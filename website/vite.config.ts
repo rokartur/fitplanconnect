@@ -1,7 +1,6 @@
 import react from '@vitejs/plugin-react'
 import svgr from '@svgr/rollup'
 import path from 'path'
-import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig, loadEnv } from 'vite'
 
 export default defineConfig(({ mode }) => {
@@ -19,7 +18,6 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       svgr({ icon: false, svgo: false }),
-      visualizer({ gzipSize: true }),
     ],
     publicDir: 'src/public',
     define: processEnvValues,

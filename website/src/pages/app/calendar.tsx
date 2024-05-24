@@ -1,17 +1,18 @@
-import styles from '@/styles/calendar.module.scss'
-import { useEffect, useMemo, useReducer, useState } from 'react'
-import moment from 'moment'
-import { useNavigate } from 'react-router-dom'
-import { ScheduleMeeting } from 'react-schedule-meeting'
-import Swal from 'sweetalert2'
-import wretch from 'wretch'
-import { AnimateWrapper } from '@/components/animateWrapper/animateWrapper.tsx'
-import { Button } from '@/components/button/button.tsx'
-import { Container } from '@/components/container/container.tsx'
-import { Overlay } from '@/components/overlay/overlay.tsx'
-import { SEO } from '@/components/seo.tsx'
-import { Tooltip } from '@/components/tooltip/tooltip.tsx'
-import { useAppSelector } from '@/utils/store.ts'
+import styles from '@/styles/calendar.module.scss';
+import { useEffect, useMemo, useReducer, useState } from 'react';
+import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
+import { ScheduleMeeting } from 'react-schedule-meeting';
+import Swal from 'sweetalert2';
+import wretch from 'wretch';
+import { AnimateWrapper } from '@/components/animateWrapper/animateWrapper.tsx';
+import { Button } from '@/components/button/button.tsx';
+import { Container } from '@/components/container/container.tsx';
+import { Overlay } from '@/components/overlay/overlay.tsx';
+import { SEO } from '@/components/seo.tsx';
+import { Tooltip } from '@/components/tooltip/tooltip.tsx';
+import { useAppSelector } from '@/utils/store.ts';
+
 
 const metaData = {
 	title: 'Calendar',
