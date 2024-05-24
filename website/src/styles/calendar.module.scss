@@ -1,0 +1,259 @@
+@import 'variables';
+@import 'mixins';
+
+.content {
+  padding: 0 0 64px 0;
+
+  position: relative;
+  @include flex(row, center, start);
+  gap: 24px;
+  font-family: $font-family;
+
+  @media (width <= 1000px) {
+    flex-direction: column-reverse;
+  }
+}
+
+.scheduleMeeting {
+  height: max-content;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 16px;
+
+  border: 1px solid $gray-200;
+  border-radius: 12px;
+  background: $white;
+
+  .calenMain {
+    display: flex;
+    align-items: start;
+    gap: 16px;
+
+    @media (width <= 680px) {
+      flex-direction: column;
+    }
+  }
+
+  .actions {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: end;
+    gap: 24px;
+  }
+
+  .scheduleMeetingDivider {
+    height: 400px;
+    width: 1px;
+    background-color: $gray-200;
+
+    @media (width <= 680px) {
+      display: none;
+    }
+  }
+
+  .selectedDayHoursContainer {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .headingDisplayDate {
+      padding: 4px 0 0 0;
+
+      width: 100%;
+
+      font: 700 24px/32px $font-family;
+      color: $gray-900;
+      text-align: center;
+    }
+
+    .hoursListPerDay {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+
+
+
+      .hourListError {
+        width: 100%;
+        height: 112px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        p {
+          padding: 12px 16px;
+
+          border: 1px solid $gray-200;
+          border-radius: 50px;
+          font: 500 14px/20px $font-family;
+          color: $gray-500;
+        }
+      }
+
+      .hourButton {
+        padding: 12px 18px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1 0;
+
+        border: 1px solid transparent;
+        border-radius: 12px;
+        background-color: $branding-18;
+        cursor: pointer;
+
+        font: 600 16px/24px $font-family;
+        color: $branding;
+
+        transition: border .2s, transform .2s, background-color .2s;
+
+        &:is(:hover) {
+          transform: scale(1.03);
+          border: 1px solid $branding;
+        }
+
+        &:is(:disabled) {
+          opacity: .4;
+          background-color: $branding-18;
+          pointer-events: none;
+        }
+      }
+
+      .hourButtonActive {
+        @extend .hourButton;
+
+        color: $white;
+        background-color: $branding;
+
+        &:is(:hover) {
+          transform: scale(1);
+          border: 1px solid transparent;
+        }
+      }
+    }
+  }
+}
+
+.scheduleRightPanel {
+  max-width: 352px;
+  width: 100%;
+  min-width: 352px;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+
+  @media (width <= 1000px) {
+    max-width: 100%;
+  }
+
+  .scheduleRightPanelActions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .rightPanelButton:nth-child(1) {
+      border-radius: 8px 0 0 8px;
+      border-right: none;
+    }
+
+    .rightPanelButton:nth-child(2) {
+      border-radius: 0 8px 8px 0;
+    }
+
+    .rightPanelButton {
+      width: 100%;
+      padding: 6px 12px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+
+      border: 1px solid $gray-200;
+      background: $white;
+      font: 500 14px/16px $font-family;
+      color: $gray-700;
+      cursor: pointer;
+
+      transition: background .2s, border .2s;
+
+      span {
+        @include flex(row, center, center);
+        gap: 12px;
+      }
+    }
+
+    .rightPanelButtonActive {
+      @extend .rightPanelButton;
+
+      background: $branding-8;
+      border-color: $branding-18;
+
+      svg path {
+        fill: $branding;
+      }
+    }
+  }
+
+  .scheduleRightPanelActionsMeetings {
+    max-height: 448px;
+    height: 100%;
+    min-height: 448px;
+
+    @media (width <= 1000px) {
+      min-height: fit-content;
+    }
+
+    border-radius: 12px;
+    border: 1px solid $gray-200;
+    background: $white;
+    overflow-y: auto;
+
+    .meeting {
+      padding: 16px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      border-bottom: 1px solid $gray-200;
+
+      .leftSide {
+        display: flex;
+        flex-direction: column;
+
+        p:nth-child(1) {
+          font: 500 16px/24px $font-family;
+          color: $gray-900;
+        }
+
+        p:nth-child(2) {
+          font: 500 16px/24px $font-family;
+          color: $gray-500;
+        }
+      }
+
+      .rightSide {
+        @extend .leftSide;
+
+        align-items: end;
+      }
+    }
+
+    .meetingDisable {
+      @extend .meeting;
+      opacity: .5;
+    }
+  }
+}

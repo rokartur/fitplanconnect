@@ -28,10 +28,12 @@
     "pg": "^8.11.5",
     "postgres": "^3.4.4",
     "react": "^18.3.1",
-    "studio": "^0.13.5"
+    "studio": "^0.13.5",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/pg": "^8.11.5",
+    "@types/uuid": "^9.0.8",
     "bun-types": "latest",
     "drizzle-kit": "^0.20.17",
     "prettier": "^3.2.5",

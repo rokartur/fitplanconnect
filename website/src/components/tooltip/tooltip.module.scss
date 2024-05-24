@@ -29,7 +29,7 @@
     z-index: 3;
 
     border: 1px solid $gray-100;
-    background-color: $gray-900;
+    background-color: $white;
     border-radius: 12px;
     box-shadow: $drop-shadow-medium;
 
@@ -38,7 +38,8 @@
     transform: scale(.4) translateX(-50%);
     transform-origin: left top;
 
-    font: 500 14px/20px 'SF Pro Display', sans-serif; color: white;
+    font: 500 14px/20px $font-family;
+    color: $gray-700;
 
     transition: opacity .15s, transform .15s;
   }

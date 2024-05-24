@@ -6,6 +6,7 @@ import { UserDropdown } from '@/components/userDropdown/userDropdown.tsx';
 import { setUser, UserTypes } from '@/utils/slices/userSlice.ts'
 import { useAppDispatch, useAppSelector } from '@/utils/store.ts';
 import { Tooltip } from '@/components/tooltip/tooltip.tsx'
+import { setTrainers } from '@/utils/slices/trainersSlice.ts'
 
 type OAuthResponse = {
 	error?: string
@@ -24,6 +25,8 @@ export const Header = () => {
 			try {
 				const data: UserTypes = await wretch('/api/user').get().json()
 				dispatch(setUser(data))
+				const trainers = await wretch('/api/trainers').get().json()
+				dispatch(setTrainers(trainers))
 			} catch {}
 		}
 

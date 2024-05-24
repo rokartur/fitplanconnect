@@ -10,7 +10,7 @@ const app = new Elysia()
 	.use(Logestic.preset('common'))
 	.use(cors())
 	.use(swagger({
-		path: '/docs',
+		path: '/api/docs',
 		documentation: {
 			info: {
 				title: 'FitPlan Connect API Documentation',
