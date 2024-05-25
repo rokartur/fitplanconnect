@@ -186,7 +186,7 @@
       color: $gray-700;
       cursor: pointer;
 
-      transition: background .2s, border .2s;
+      transition: background-color .2s, border .2s;
 
       span {
         @include flex(row, center, center);

@@ -1,22 +1,21 @@
-import styles from '@/styles/calendar.module.scss';
-import { useEffect, useMemo, useReducer, useState } from 'react';
-import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
-import { ScheduleMeeting } from 'react-schedule-meeting';
-import Swal from 'sweetalert2';
-import wretch from 'wretch';
-import { AnimateWrapper } from '@/components/animateWrapper/animateWrapper.tsx';
-import { Button } from '@/components/button/button.tsx';
-import { Container } from '@/components/container/container.tsx';
-import { Overlay } from '@/components/overlay/overlay.tsx';
-import { SEO } from '@/components/seo.tsx';
-import { Tooltip } from '@/components/tooltip/tooltip.tsx';
-import { useAppSelector } from '@/utils/store.ts';
-
+import styles from '@/styles/calendar.module.scss'
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
+import moment from 'moment'
+import { useNavigate } from 'react-router-dom'
+import { ScheduleMeeting } from 'react-schedule-meeting'
+import Swal from 'sweetalert2'
+import wretch from 'wretch'
+import { AnimateWrapper } from '@/components/animateWrapper/animateWrapper.tsx'
+import { Button } from '@/components/button/button.tsx'
+import { Container } from '@/components/container/container.tsx'
+import { Overlay } from '@/components/overlay/overlay.tsx'
+import { SEO } from '@/components/seo.tsx'
+import { Tooltip } from '@/components/tooltip/tooltip.tsx'
+import { useAppSelector } from '@/utils/store.ts'
+import { Virtuoso } from 'react-virtuoso'
 
 const metaData = {
 	title: 'Calendar',
-	description: '',
 	path: '/app/calendar',
 }
 
@@ -49,19 +48,17 @@ export default function Calendar() {
 	const user = useAppSelector(state => state.user.data)
 	const trainers = useAppSelector(state => state.trainers.data)
 	const [view, setView] = useState<string>('upcoming')
-	const availableTimeslots: Timeslot[] = useMemo(
-		() =>
-			Array.from({ length: 30 }, (_, i) => {
-				const date = new Date()
-				date.setDate(date.getDate() + i)
-				return {
-					id: i,
-					startTime: new Date(new Date(date).setHours(8, 0, 0, 0)),
-					endTime: new Date(new Date(date).setHours(17, 0, 0, 0)),
-				}
-			}),
-		[],
-	)
+	const availableTimeslots: Timeslot[] = useMemo(() => {
+		return Array.from({ length: 30 }, (_, i) => {
+			const date = new Date()
+			date.setDate(date.getDate() + i)
+			return {
+				id: i,
+				startTime: new Date(new Date(date).setHours(8, 0, 0, 0)),
+				endTime: new Date(new Date(date).setHours(17, 0, 0, 0)),
+			}
+		})
+	}, [])
 	const [meetings, setMeetings] = useReducer((prev: Meetings, next: Meetings) => ({ ...prev, ...next }), {
 		available: availableTimeslots,
 		unavailable: [],
@@ -140,9 +137,55 @@ export default function Calendar() {
 		fetchMeetings().then()
 	}, [])
 
+	const bookMeeting = useCallback(async () => {
+		if (selectedTimeSlot.length === 0) {
+			await Swal.fire({
+				title: 'Please select a time slot',
+				icon: 'error',
+			})
+			return
+		}
+
+		if (!user) return
+
+		if (user.selected_trainer_id === '' || !user.selected_trainer_id) {
+			await Swal.fire({
+				title: 'Please select a trainer',
+				icon: 'error',
+			})
+			navigate('/app/trainers')
+			return
+		}
+
+		await wretch('/api/meetings')
+			.post({
+				userId: user.id,
+				trainerID: user.selected_trainer_id,
+				startTime: new Date(selectedTimeSlot[0] * 1000),
+				endTime: new Date(selectedTimeSlot[1] * 1000),
+			})
+			.json(json => console.log(json))
+			.then(() => {
+				Swal.fire({
+					title: 'Meeting scheduled',
+					icon: 'success',
+				}).then(() => {
+					location.reload()
+				})
+			})
+			.catch(() => {
+				Swal.fire({
+					title: 'An error occurred',
+					icon: 'error',
+				}).then(() => {
+					location.reload()
+				})
+			})
+	}, [selectedTimeSlot, user]);
+
 	return (
 		<>
-			<SEO title={metaData.title} description={metaData.description} path={metaData.path} />
+			<SEO title={metaData.title} path={metaData.path} />
 
 			<Overlay>
 				<AnimateWrapper>
@@ -205,55 +248,7 @@ export default function Calendar() {
 								</div>
 
 								<div className={styles.actions}>
-									<Button
-										size={'medium'}
-										label={'Book your training'}
-										onClick={async () => {
-											if (selectedTimeSlot.length === 0) {
-												await Swal.fire({
-													title: 'Please select a time slot',
-													icon: 'error',
-												})
-												return
-											}
-
-											if (!user) return
-
-											if (user.selected_trainer_id === '' || !user.selected_trainer_id) {
-												await Swal.fire({
-													title: 'Please select a trainer',
-													icon: 'error',
-												})
-												navigate('/app/trainers')
-												return
-											}
-
-											await wretch('/api/meetings')
-												.post({
-													userId: user.id,
-													trainerID: user.selected_trainer_id,
-													startTime: new Date(selectedTimeSlot[0] * 1000),
-													endTime: new Date(selectedTimeSlot[1] * 1000),
-												})
-												.json(json => console.log(json))
-												.then(() => {
-													Swal.fire({
-														title: 'Meeting scheduled',
-														icon: 'success',
-													}).then(() => {
-														location.reload()
-													})
-												})
-												.catch(() => {
-													Swal.fire({
-														title: 'An error occurred',
-														icon: 'error',
-													}).then(() => {
-														location.reload()
-													})
-												})
-										}}
-									/>
+									<Button size={'medium'} label={'Book your training'} onClick={bookMeeting} />
 								</div>
 							</div>
 
@@ -368,52 +363,59 @@ export default function Calendar() {
 
 								<div className={styles.scheduleRightPanelActionsMeetings}>
 									{view === 'upcoming' ? (
-										<>
-											{user?.meetings.map(({ trainerID, startTime, endTime }, index) => {
-												if (moment(startTime).unix() > moment().unix()) {
+										<Virtuoso
+											style={{ height: 448 }}
+											totalCount={user?.meetings.length}
+											itemContent={(index) => {
+												const meeting = user?.meetings[index]
+												if (meeting && moment(meeting.startTime).unix() > moment().unix()) {
 													return (
 														<div key={index} className={styles.meeting}>
 															<div className={styles.leftSide}>
 																<p>Training</p>
-																<p>w/ {trainers?.find(trainer => trainer.id === trainerID)?.name}</p>
+																<p>w/ {trainers?.find(trainer => trainer.id === meeting.trainerID)?.name}</p>
 															</div>
 
 															<div className={styles.rightSide}>
-																<p>
-																	{moment(startTime).format('DD.MM.YYYY, HH:mm')} - {moment(endTime).format('HH:mm')}
-																</p>
+																<p>{moment(meeting.startTime).format('DD.MM.YYYY, HH:mm')} - {moment(meeting.endTime).format('HH:mm')}</p>
 																<p>&nbsp;</p>
 															</div>
 														</div>
 													)
-												}
-											})}
-										</>
-									) : (
-										<>
-											{user?.meetings.map(({ trainerID, startTime, endTime }, index) => {
-												if (moment(endTime).unix() < moment().unix()) {
+												} else {
 													return (
-														<div
-															key={index}
-															className={`${styles.meeting} ${view === 'held' ? styles.meetingDisable : ''}`}
-														>
+														<div key={index} style={{ minHeight: '1px' }} />
+													)
+												}
+											}}
+										/>
+									) : (
+										<Virtuoso
+											style={{ height: 448 }}
+											totalCount={user?.meetings.length}
+											itemContent={(index) => {
+												const meeting = user?.meetings[index]
+												if (meeting && moment(meeting.endTime).unix() < moment().unix()) {
+													return (
+														<div key={index} className={`${styles.meeting} ${view === 'held' ? styles.meetingDisable : ''}`}>
 															<div className={styles.leftSide}>
 																<p>Training</p>
-																<p>w/ {trainers?.find(trainer => trainer.id === trainerID)?.name}</p>
+																<p>w/ {trainers?.find(trainer => trainer.id === meeting.trainerID)?.name}</p>
 															</div>
 
 															<div className={styles.rightSide}>
-																<p>
-																	{moment(startTime).format('DD.MM.YYYY, HH:mm')} - {moment(endTime).format('HH:mm')}
-																</p>
+																<p>{moment(meeting.startTime).format('DD.MM.YYYY, HH:mm')} - {moment(meeting.endTime).format('HH:mm')}</p>
 																<p>&nbsp;</p>
 															</div>
 														</div>
 													)
+												} else {
+													return (
+														<div key={index} style={{ minHeight: '1px' }} />
+													)
 												}
-											})}
-										</>
+											}}
+										/>
 									)}
 								</div>
 							</div>

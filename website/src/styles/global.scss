@@ -2,16 +2,6 @@
 
 * {
   box-sizing: border-box;
-  font: inherit;
-
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  ::selection {
-    background: rgba(205, 102, 255, .08);
-    color: #CD66FF;
-  }
 }
 
 body {
@@ -28,6 +18,14 @@ body {
   overflow-x: hidden;
 
   background: $neutral-50;
+    text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  ::selection {
+    background: rgba(205, 102, 255, .08);
+    color: #CD66FF;
+  }
 }
 
 button {
@@ -55,6 +53,18 @@ html, div, h1, h2, h3, h4, h5, h6, ul, ol, li, p, blockquote, pre, form, fieldse
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 .go135427820,
