@@ -59,7 +59,7 @@ FitPlan Connect is a scheduling app that has earned recognition as one of the be
 - [GitHub OAuth](https://docs.github.com/en/apps)
 
 ## License
-[“Commons Clause” License Condition v1.0](https://github.com/rokartur/fitplanconnect/tree/main?tab=License-1-ov-file)
+[“Commons Clause” License Condition v1.0](https://github.com/rokartur/fitplanconnect/?tab=License-1-ov-file)
 
 ## Authors
 - [Artur Rok](https://github.com/rokartur)
