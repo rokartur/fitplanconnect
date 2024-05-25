@@ -70,16 +70,7 @@ export default function Calendar() {
 	const [allGapsPerDay, setAllGapsPerDay] = useState<Date[]>([])
 	const [dayData, setDayData] = useState<DayData | null>(null)
 
-	const changeDayData = (
-		date: Date = new Date(
-			moment().get('year'),
-			moment().get('month'),
-			moment().get('date'),
-			moment().set('hour', 0).get('hour'),
-			moment().set('minute', 0).get('minute'),
-			moment().set('second', 0).get('second'),
-		),
-	) => {
+	const changeDayData = useCallback((date: Date = moment().set('hour', 0).set('minute', 0).set('second', 0).toDate()) => {
 		const displayDate = moment(date).format('ddd. DD MMMM')
 
 		setDayData({ displayDate, selectedDate: date })
@@ -105,19 +96,17 @@ export default function Calendar() {
 		}, [])
 
 		setAllGapsPerDay(allGapsPerDay)
-	}
+	}, [setDayData, setAllHoursPerDay, setAllGapsPerDay, meetings])
 
 	useEffect(() => {
 		changeDayData()
 
-		if (user) {
-			if (isNaN(moment(user.subscription_expiration_date).unix())) {
-				navigate('/app/billing')
-			} else if (moment().unix() > moment(user.subscription_expiration_date).unix()) {
-				navigate('/app/billing')
-			}
+		if (isNaN(moment(user?.subscription_expiration_date).unix())) {
+			navigate('/app/billing')
+		} else if (moment().unix() > moment(user?.subscription_expiration_date).unix()) {
+			navigate('/app/billing')
 		}
-	}, [])
+	}, [user])
 
 	useEffect(() => {
 		const fetchMeetings = async () => {
@@ -135,7 +124,7 @@ export default function Calendar() {
 		}
 
 		fetchMeetings().then()
-	}, [])
+	}, [availableTimeslots])
 
 	const bookMeeting = useCallback(async () => {
 		if (selectedTimeSlot.length === 0) {
