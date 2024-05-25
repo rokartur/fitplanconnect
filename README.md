@@ -43,6 +43,15 @@ FitPlan Connect is a scheduling app that has earned recognition as one of the be
     OAUTH_REDIRECT_URI="http://localhost/api/oauth/callback"
     DB_URL="postgresql://user:password@host:port/database"
     ```
+9. Setup database with the following command:
+    ```bash
+    bun run db:generate
+    bun run db:migrate
+    ```
+10. For the database preview you can use the following command:
+    ```bash
+    bun run db:studio
+    ```
 
 ## Database Schema
 
