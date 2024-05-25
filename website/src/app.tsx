@@ -8,10 +8,10 @@ import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { useScrollTop } from '@/hooks/useScrollTop.ts'
 import { store } from '@/utils/store.ts'
+import Header from '@/components/header/header'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
-const Header = lazy(() => import('@/components/header/header'))
 const Settings = lazy(() => import('@/pages/app/settings'))
 const Calendar = lazy(() => import('@/pages/app/calendar'))
 const NotFound = lazy(() => import('@/pages/notFound'))
