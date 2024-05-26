@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { useScrollTop } from '@/hooks/useScrollTop.ts'
 import { store } from '@/utils/store.ts'
 import Header from '@/components/header/header'
+import SuspenseComponent from '@/pages/suspense'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
@@ -19,7 +20,7 @@ const NotFound = lazy(() => import('@/pages/notFound'))
 const MemoizedRoutes = memo(() => (
 	<BrowserRouter>
 		<Header />
-		<Suspense fallback={<p>loading</p>}>
+		<Suspense fallback={<SuspenseComponent />}>
 			<Routes>
 				<Route path={'/'} element={<h1>landing</h1>} />
 				<Route path={'/app/calendar'} element={<Calendar />} />
@@ -30,7 +31,6 @@ const MemoizedRoutes = memo(() => (
 			</Routes>
 		</Suspense>
 	</BrowserRouter>
-
 ))
 
 export default function App() {
