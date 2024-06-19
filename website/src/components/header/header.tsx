@@ -7,7 +7,7 @@ import { setUser, UserTypes } from '@/utils/slices/userSlice.ts'
 import { useAppDispatch, useAppSelector } from '@/utils/store.ts';
 import { Tooltip } from '@/components/tooltip/tooltip.tsx'
 
-type OAuthResponse = {
+export type OAuthResponse = {
 	error?: string
 	url?: string
 }
