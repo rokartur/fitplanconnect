@@ -5,7 +5,7 @@ import { Button } from '@/components/button/button.tsx'
 import { Paragraph } from '@/components/typography/paragraph.tsx'
 import IconX from '@/assets/icons/IconX.tsx'
 
-type AlertDialogTypes = {
+interface AlertDialogTypes {
 	icon?: JSX.Element
 	title?: string
 	description?: string

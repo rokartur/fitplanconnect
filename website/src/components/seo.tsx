@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Helmet } from 'react-helmet-async'
 
-type SEOProps = {
+interface SEOProps {
 	title: string
 	path: string
 }

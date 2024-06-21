@@ -1,11 +1,11 @@
 import { FC } from 'react'
 
-type ImageTypes = {
-	className?: string;
-	id?: string;
-	source: string;
-	width?: string | number;
-	height?: string | number;
+interface ImageTypes {
+	className?: string
+	id?: string
+	source: string
+	width?: string | number
+	height?: string | number
 }
 
 export const Image: FC<ImageTypes> = ({ className, id, source, width, height }) => (

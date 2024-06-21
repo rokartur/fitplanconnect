@@ -19,29 +19,29 @@ const metaData = {
 	path: '/app/calendar',
 }
 
-type Timeslot = {
-	id: number
-	startTime: Date
-	endTime: Date
+interface Timeslot {
+	id: number;
+	startTime: Date;
+	endTime: Date;
 }
 
-type Meetings = {
-	available: Timeslot[]
-	unavailable: Timeslot[]
+interface Meetings {
+	available: Timeslot[];
+	unavailable: Timeslot[];
 }
 
-type DayData = {
-	displayDate: string
-	selectedDate: Date
+interface DayData {
+	displayDate: string;
+	selectedDate: Date;
 }
 
-type AllMeetings = {
-	id: string
-	userId: string
-	trainerID: string
-	startTime: string
-	endTime: string
-}[]
+interface AllMeetings {
+	id: string;
+	userId: string;
+	trainerID: string;
+	startTime: string;
+	endTime: string;
+}
 
 export default function Calendar() {
 	const navigate = useNavigate()
@@ -110,7 +110,7 @@ export default function Calendar() {
 
 	useEffect(() => {
 		const fetchMeetings = async () => {
-			const data: AllMeetings = await wretch('/api/meetings').get().json()
+			const data: AllMeetings[] = await wretch('/api/meetings').get().json()
 			if (!data) return
 
 			setMeetings({
@@ -170,7 +170,7 @@ export default function Calendar() {
 					location.reload()
 				})
 			})
-	}, [selectedTimeSlot, user]);
+	}, [selectedTimeSlot, user])
 
 	return (
 		<>
@@ -386,7 +386,8 @@ export default function Calendar() {
 												const meeting = user?.meetings[index]
 												if (meeting && moment(meeting.endTime).unix() < moment().unix()) {
 													return (
-														<div key={index} className={`${styles.meeting} ${view === 'held' ? styles.meetingDisable : ''}`}>
+														<div key={index}
+																 className={`${styles.meeting} ${view === 'held' ? styles.meetingDisable : ''}`}>
 															<div className={styles.leftSide}>
 																<p>Training</p>
 																<p>w/ {trainers?.find(trainer => trainer.id === meeting.trainerID)?.name}</p>

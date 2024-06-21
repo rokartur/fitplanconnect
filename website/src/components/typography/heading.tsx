@@ -1,12 +1,10 @@
 import styles from './heading.module.scss'
 import { ReactNode } from 'react'
 
-type Weight = 'medium' | 'semibold' | 'bold' | 'extrabold'
-
-type HeadingTypes = {
+interface HeadingTypes {
 	className?: string
 	h: number
-	weight: Weight
+	weight: 'medium' | 'semibold' | 'bold' | 'extrabold'
 	children?: ReactNode
 	style?: any
 }

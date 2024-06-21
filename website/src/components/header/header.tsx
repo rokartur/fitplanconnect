@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/utils/store.ts'
 import { Tooltip } from '@/components/tooltip/tooltip.tsx'
 import { setTrainers } from '@/utils/slices/trainersSlice.ts'
 
-type OAuthResponse = {
+interface OAuthResponse {
 	error?: string
 	url?: string
 }

@@ -1,7 +1,7 @@
 import styles from './tooltip.module.scss'
 import { FC, ReactNode } from 'react'
 
-type TooltipProps = {
+interface TooltipProps {
 	title: string
 	children: ReactNode
 	place?: 'bottom' | 'left'

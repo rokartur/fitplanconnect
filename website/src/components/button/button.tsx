@@ -1,8 +1,8 @@
-import { useCallback } from 'react'
+import { CSSProperties, useCallback } from 'react'
 import { Label } from '../typography/label.tsx'
 import styles from './button.module.scss'
 
-type ButtonTypes = {
+interface ButtonTypes {
 	label?: string
 	size?: 'small' | 'medium' | 'large'
 	type?: 'primary' | 'secondary' | 'tertiary' | 'outlined' | 'link'
@@ -11,7 +11,7 @@ type ButtonTypes = {
 	isDisabled?: boolean
 	isDestructive?: boolean
 	onClick?: () => void
-	style?: React.CSSProperties
+	style?: CSSProperties
 }
 
 export const Button = ({
