@@ -158,7 +158,7 @@ jobs:
           password: ${{ secrets.SSH_SERVER_PASS }}
           port: ${{ secrets.SSH_SERVER_PORT }}
           script: |
-            cd ${{ secrets.SSH_SERVER_BACKEND_PATH }}
+            cd ${{ secrets.SSH_SERVER_BACKEND_DOCS_PATH }}
             bun install
             screen -S fitplanconnect-backend-docs -X quit
             screen -S fitplanconnect-backend-docs -d -m bun run dev
