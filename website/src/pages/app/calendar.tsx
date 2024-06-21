@@ -153,7 +153,7 @@ export default function Calendar() {
 				startTime: new Date(selectedTimeSlot[0] * 1000),
 				endTime: new Date(selectedTimeSlot[1] * 1000),
 			})
-			.json(json => console.log(json))
+			.json()
 			.then(() => {
 				Swal.fire({
 					title: 'Meeting scheduled',

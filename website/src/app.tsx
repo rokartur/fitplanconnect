@@ -1,3 +1,4 @@
+import '@stripe/stripe-js'
 import '@/styles/global.scss'
 import { lazy, memo, Suspense } from 'react'
 import { useGSAP } from '@gsap/react'
@@ -15,6 +16,9 @@ gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 const Settings = lazy(() => import('@/pages/app/settings'))
 const Calendar = lazy(() => import('@/pages/app/calendar'))
+const Billing = lazy(() => import('@/pages/app/billing'))
+const BillingComplete = lazy(() => import('@/pages/app/billing.complete'))
+const BillingCancel = lazy(() => import('@/pages/app/billing.cancel'))
 const NotFound = lazy(() => import('@/pages/notFound'))
 
 const MemoizedRoutes = memo(() => (
@@ -25,7 +29,9 @@ const MemoizedRoutes = memo(() => (
 				<Route path={'/'} element={<h1>landing</h1>} />
 				<Route path={'/app/calendar'} element={<Calendar />} />
 				<Route path={'/app/trainers'} element={<h1>trainers</h1>} />
-				<Route path={'/app/billing'} element={<h1>billing</h1>} />
+				<Route path={'/app/billing'} element={<Billing/>} />
+				<Route path={'/app/billing/complete'} element={<BillingComplete/>} />
+				<Route path={'/app/billing/cancel'} element={<BillingCancel/>} />
 				<Route path={'/app/settings'} element={<Settings />} />
 				<Route path={'*'} element={<NotFound />} />
 			</Routes>

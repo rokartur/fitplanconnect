@@ -8,10 +8,10 @@ FitPlan Connect is a scheduling app that has earned recognition as one of the be
 
 ## Features
 
-- Fast create account and login with GitHub OAuth
-- Planning and tracking meetings with personal trainers
-- Choose your personal trainer
-- Preview your plan along with your subscription end date
+- [x]  Fast create account and login with GitHub OAuth
+- [x] Planning and tracking meetings with personal trainers
+- [ ] Choose your personal trainer
+- [x] Preview your plan along with your subscription end date
 
 ## Installation
 
@@ -34,7 +34,7 @@ FitPlan Connect is a scheduling app that has earned recognition as one of the be
     ```bash
     cd backend
     bun install
-    bun run --watch src/app.ts
+    bun run dev
     ```
 8. Environment file should be created in the root of the backend folder with the following content:
     ```dotenv
@@ -42,6 +42,9 @@ FitPlan Connect is a scheduling app that has earned recognition as one of the be
     OAUTH_CLIENT_SECRET=""
     OAUTH_REDIRECT_URI="http://localhost/api/oauth/callback"
     DB_URL="postgresql://user:password@host:port/database"
+    STRIPE_PUBLISHABLE_KEY=""
+    STRIPE_SECRET_KEY=""
+    STRIPE_SUCCESS_KEY=""
     ```
 9. Setup database with the following command:
     ```bash
@@ -66,6 +69,9 @@ FitPlan Connect is a scheduling app that has earned recognition as one of the be
 - [Bun](https://bun.sh/)
 - [Nginx](https://nginx.org/en/)
 - [GitHub OAuth](https://docs.github.com/en/apps)
+
+## 🇵🇱 Summary
+
 
 ## License
 [“Commons Clause” License Condition v1.0](https://github.com/rokartur/fitplanconnect/?tab=License-1-ov-file)
