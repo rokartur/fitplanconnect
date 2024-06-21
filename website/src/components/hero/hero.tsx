@@ -4,9 +4,13 @@ import photoLanding from '@/assets/images/landing_hero.jpg'
 import wretch from 'wretch'
 import { OAuthResponse } from '@/components/header/header.tsx'
 import { useState } from 'react'
+import { useAppSelector } from '@/utils/store.ts'
+import { useNavigate } from 'react-router-dom'
 
 export default function Hero() {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const navigate = useNavigate()
+	const user = useAppSelector(state => state.user.data)
 
 	return (
 		<div className={styles.hero}>
@@ -31,6 +35,10 @@ export default function Hero() {
               <button
                 disabled={isLoading}
                 onClick={async () => {
+									if (user) {
+										navigate('/app/calendar')
+									}
+
                   setIsLoading(true)
                   const response: OAuthResponse = await wretch('/api/oauth').get().json()
                   if (response.error) {
