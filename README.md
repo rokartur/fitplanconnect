@@ -73,6 +73,14 @@ FitPlan Connect is a scheduling app that has earned recognition as one of the be
 ## 🇵🇱 Summary
 
 
+## Resources
+- [Website](https://fitplanconnect.site/)
+- [Documentation](https://fitplanconnect.site/docs)
+- [API](https://fitplanconnect.site/api)
+- [GitHub](https://github.com/rokartur/fitplanconnect)
+- [Figma Design](https://www.figma.com/design/EDRxiPZHsJCeHKlrh08gsY/fitplanconnect?node-id=0-1&t=V9B6evOnen69xHga-1)
+- [Figma Concept](https://www.figma.com/board/RMC8nNxTpV9zmUGCyHQcvy/fitplanconnect?node-id=0-1&t=5IN80e5pnA5W9Tyq-1)
+
 ## License
 [“Commons Clause” License Condition v1.0](https://github.com/rokartur/fitplanconnect/?tab=License-1-ov-file)
 
