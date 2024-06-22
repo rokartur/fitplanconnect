@@ -10,6 +10,7 @@ import { SEO } from '@/components/seo.tsx'
 import { useAppDispatch, useAppSelector } from '@/utils/store.ts'
 import { useNavigate } from 'react-router-dom'
 import { setUser } from '@/utils/slices/userSlice.ts'
+import { User } from '@/models/User.ts'
 
 const metaData = {
 	title: 'Settings',
@@ -18,7 +19,9 @@ const metaData = {
 
 export default function Settings() {
 	const dispatch = useAppDispatch()
-	const user = useAppSelector(state => state.user.data)
+	const userData = useAppSelector(state => state.user.data)
+	let user
+	if (userData) user = new User(userData)
 	const [isOpenConfirmDeleteAccountAlertDialog, setIsOpenConfirmDeleteAccountAlertDialog] = useState(false)
 	const navigate = useNavigate()
 	const handleOpen = useCallback(() => setIsOpenConfirmDeleteAccountAlertDialog(true), []);
@@ -54,11 +57,11 @@ export default function Settings() {
 									<>
 										<label>
 											Name
-											<p>{user.name ? `${user.name} (${user.username})` : user.username}</p>
+											<p>{user.getName() ? `${user.getName()} (${user.getUsername()})` : user.getUsername()}</p>
 										</label>
 										<label>
 											Email address
-											<p>{user.email || <a href='https://github.com/settings/profile' target={'_blank'}>Not selected public email</a>}</p>
+											<p>{user.getEmail() || <a href='https://github.com/settings/profile' target={'_blank'}>Not selected public email</a>}</p>
 										</label>
 									</>
 								) : null}

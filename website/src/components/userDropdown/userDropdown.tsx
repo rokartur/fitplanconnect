@@ -5,11 +5,14 @@ import styles from './userDropdown.module.scss'
 import { setUser } from '@/utils/slices/userSlice'
 import { useAppDispatch, useAppSelector } from '@/utils/store'
 import wretch from 'wretch'
+import { User } from '@/models/User.ts'
 
 export default function UserDropdown() {
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const user = useAppSelector(state => state.user.data)
+	const userData = useAppSelector(state => state.user.data)
+	let user
+	if (userData) user = new User(userData)
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const select = useRef<HTMLButtonElement | null>(null)
 	const { pathname: url } = useLocation()
@@ -18,14 +21,14 @@ export default function UserDropdown() {
 	const dropdownHandlerClick = useCallback(
 		async (event: any) => {
 			if (event.target.value === 'logout') {
-				await wretch('/api/oauth/logout').get().res();
-				dispatch(setUser(null));
-				navigate('/');
+				await wretch('/api/oauth/logout').get().res()
+				dispatch(setUser(null))
+				navigate('/')
 			} else {
-				navigate(event.target.value);
+				navigate(event.target.value)
 			}
 		},
-		[dispatch, navigate]
+		[dispatch, navigate],
 	)
 
 	const memoizedOnClick = useCallback(dropdownHandlerClick, [dropdownHandlerClick])
@@ -77,7 +80,7 @@ export default function UserDropdown() {
 				showOnDesktop: true,
 			},
 		],
-		[]
+		[],
 	)
 
 	return (
@@ -88,8 +91,8 @@ export default function UserDropdown() {
 					onClick={() => setIsOpen(isOpen => !isOpen)}
 					ref={select}
 				>
-					<img src={user?.profile_picture_url} className={styles.selectImage} alt={''} />
-					<span className="sr-only">Profile</span>
+					<img src={user!.getProfilePictureUrl()} className={styles.selectImage} alt={''} />
+					<span className='sr-only'>Profile</span>
 				</button>
 
 				<div className={isOpen ? styles.selectOptionsActive : styles.selectOptions}>
