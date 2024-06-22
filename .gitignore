@@ -11,9 +11,3 @@
 *.sw?
 backend/.env
 backend/.env.exmaple
-Tasks/Task 1/obj
-Tasks/Task 1/bin
-Tasks/Task 2/obj
-Tasks/Task 2/bin
-Tasks/Task 3/obj
-Tasks/Task 3/bin
