@@ -12,7 +12,7 @@ export class User extends Member {
 	}[]
 
 	constructor(data: User | any) {
-		super(data.id, data.name, data.email, data.email, data.profile_picture_url)
+		super(data.id, data.name, data.username, data.email, data.profile_picture_url)
 		this.selected_trainer_id = data.selected_trainer_id
 		this.subscription_expiration_date = data.subscription_expiration_date
 		this.meetings = data.meetings
