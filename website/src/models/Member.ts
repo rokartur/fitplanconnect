@@ -36,4 +36,20 @@ export class Member {
 	getInfo() {
 		return `Member: ${this.name}, ${this.email}`;
 	}
+
+	setName(name: string) {
+		this.name = name
+	}
+
+	setUsername(username: string) {
+		this.username = username
+	}
+
+	setEmail(email: string) {
+		this.email = email
+	}
+
+	setProfilePictureUrl(profile_picture_url: string) {
+		this.profile_picture_url = profile_picture_url
+	}
 }

@@ -7,6 +7,7 @@ import { setUser, UserTypes } from '@/utils/slices/userSlice.ts'
 import { useAppDispatch, useAppSelector } from '@/utils/store.ts'
 import { Tooltip } from '@/components/tooltip/tooltip.tsx'
 import { setTrainers } from '@/utils/slices/trainersSlice.ts'
+import { User } from '@/models/User.ts'
 
 interface OAuthResponse {
 	error?: string
@@ -16,7 +17,9 @@ interface OAuthResponse {
 export default function Header() {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const dispatch = useAppDispatch()
-	const user = useAppSelector(state => state.user.data)
+	const userData = useAppSelector(state => state.user.data)
+	let user
+	if (userData) user = new User(userData)
 	const { pathname: url } = useLocation()
 
 	useEffect(() => {
