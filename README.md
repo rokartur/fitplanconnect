@@ -20,23 +20,31 @@ FitPlan Connect is a scheduling app that has earned recognition as one of the be
     ```bash
     npm i -g yarn
      ```
-3. Click `Code` button on the top right of this page and copy the link under `Clone` tab.
-4. Open project in any IDE of your choice.
-5. Install nginx and configure it with the
+3. Install [bun](https://bun.sh/), run the following command for Linux & macOS:
+    ```bash
+    curl -fsSL https://bun.sh/install | bash
+    ```
+    or for Windows:
+    ```bash
+    powershell -c "irm bun.sh/install.ps1 | iex"
+    ```
+4. Click `Code` button on the top right of this page and copy the link under `Clone` tab.
+5. Open project in any IDE of your choice.
+6. Install nginx and configure it with the
    following [config](https://github.com/rokartur/fitplanconnect/blob/main/nginx.conf)
-6. **Frontend** Open terminal and run the following command:
+7. **Frontend** Open terminal and run the following command:
     ```bash
     cd website
     yarn
     yarn dev
     ```
-7. **Backend** Open another terminal and run the following command:
+8. **Backend** Open another terminal and run the following command:
     ```bash
     cd backend
     bun install
     bun run dev
     ```
-8. Environment file should be created in the root of the backend folder with the following content:
+9. Environment file should be created in the root of the backend folder with the following content:
     ```dotenv
     OAUTH_CLIENT_ID=""
     OAUTH_CLIENT_SECRET=""
@@ -46,12 +54,12 @@ FitPlan Connect is a scheduling app that has earned recognition as one of the be
     STRIPE_SECRET_KEY=""
     STRIPE_SUCCESS_KEY=""
     ```
-9. Setup database with the following command:
+10. Setup database with the following command:
     ```bash
     bun run db:generate
     bun run db:migrate
     ```
-10. For the database preview you can use the following command:
+11. For the database preview you can use the following command:
     ```bash
     bun run db:studio
     ```
