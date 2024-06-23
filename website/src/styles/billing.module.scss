@@ -16,6 +16,7 @@
 
   border-radius: 48px 48px 0 0;
   background: url("../assets/images/billing_background.png") no-repeat center center;
+  background-size: cover;
 
   h1 {
     @include font(700, 96px, 112px);
@@ -55,7 +56,7 @@
       .buyButton {
         padding: 24px 32px;
         border-radius: 24px;
-        background: $branding-gradient;
+        background: rgba(255, 255, 255, 0.16);
         box-shadow: $drop-shadow-medium;
         cursor: pointer;
 
@@ -66,12 +67,13 @@
         text-shadow: 0 8px 24px rgba(16, 24, 40, 0.10), 0 8px 24px rgba(16, 24, 40, 0.15);
 
         &:is(:hover) {
-          transform: scale(.95);
-          background-color: $pink-400;
+          transform: scale(.98);
+          background-color: rgba(252, 231, 244, 1);
         }
 
         &:is(:disabled) {
-          transform: scale(.90);
+          opacity: .2;
+          pointer-events: none;
           background-color: $pink-500;
         }
       }

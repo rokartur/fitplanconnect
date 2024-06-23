@@ -66,11 +66,9 @@ export default (app: ElysiaApp) =>
 				return { message: 'unauthorized' }
 			}
 		})
-		.get('/success', async ({ set, query: { key }, cookie: { auth_session } }) => {
+		.get('/success/:key', async ({ set, params: { key }, cookie: { auth_session } }) => {
 			const userSession = await db.query.sessions.findFirst({ where: eq(sessions.id, auth_session.value) })
 			const { user, session } = await validateRequest(auth_session)
-
-			console.log(123, key)
 
 			if (user && session && userSession) {
 				const userData = await db.query.users.findFirst({ where: eq(users.id, userSession.userId) })
@@ -90,15 +88,11 @@ export default (app: ElysiaApp) =>
 						.set('milliseconds', 0)
 						.toISOString()
 
-					console.log(123, userData.accessToken, subscriptionExpirationDate)
-
 					const updatedUser = await db
 						.update(users)
 						.set({ subscriptionExpirationDate })
 						.where(eq(users.accessToken, userData.accessToken))
 						.returning({ id: users.id })
-
-					console.log([updatedUser])
 
 					if (updatedUser.length === 0) {
 						set.status = 403
@@ -113,7 +107,7 @@ export default (app: ElysiaApp) =>
 				return { message: 'unauthorized' }
 			}
 		}, {
-			query: t.Object({
+			params: t.Object({
 				key: t.String(),
 			}),
 		})

@@ -82,7 +82,13 @@ export default (app: ElysiaApp) =>
 					} else {
 						const updatedOAuthAccountRes = await trx
 							.update(users)
-							.set({ accessToken })
+							.set({
+								accessToken,
+								profilePictureUrl: githubData.avatar_url,
+								name: githubData.name || '',
+								username: githubData.login,
+								email: githubData.email || '',
+							})
 							.where(eq(users.id, githubData.id))
 
 						if (updatedOAuthAccountRes.count === 0) {

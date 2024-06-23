@@ -8,6 +8,7 @@ import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import wretch from 'wretch'
+import { Tooltip } from '@/components/tooltip/tooltip.tsx'
 
 const metaData = {
 	title: 'Billing',
@@ -31,7 +32,7 @@ export default function Billing() {
 		const { error } = await stripe.redirectToCheckout({
 			lineItems: [item],
 			mode: 'payment',
-			successUrl: `${window.location.origin}/api/billing/success?key=${item.price}`,
+			successUrl: `${window.location.origin}/api/billing/success/${item.price}`,
 			cancelUrl: `${window.location.origin}/app/billing/cancel`,
 		})
 
@@ -74,13 +75,15 @@ export default function Billing() {
 									</div>
 
 									<div className={styles.cardFooterRight}>
-										<button
-											disabled={isLoading}
-											className={styles.buyButton}
-											onClick={redirectToCheckout}
-										>
-											{isLoading ? 'Processing...' : 'Update plan'}
-										</button>
+										<Tooltip title={moment(user?.subscription_expiration_date).isBefore(moment()) ? '' : 'You have valid license'} place={'left'}>
+											<button
+												disabled={isLoading || moment(user?.subscription_expiration_date).isAfter(moment())}
+												className={styles.buyButton}
+												onClick={redirectToCheckout}
+											>
+												{isLoading ? 'Processing...' : 'Buy plan'}
+											</button>
+										</Tooltip>
 									</div>
 								</div>
 							</div>

@@ -8,10 +8,10 @@ FitPlan Connect is a scheduling app that has earned recognition as one of the be
 
 ## Features
 
-- [x]  Fast create account and login with GitHub OAuth
-- [x] Planning and tracking meetings with personal trainers
-- [ ] Choose your personal trainer
-- [x] Preview your plan along with your subscription end date
+- Fast create account and login with GitHub OAuth
+- Planning and tracking meetings with personal trainers
+- Choose your personal trainer
+- Preview your plan along with your subscription end date
 
 ## Installation
 
