@@ -79,6 +79,13 @@ FitPlan Connect is a scheduling app that has earned recognition as one of the be
 - [GitHub OAuth](https://docs.github.com/en/apps)
 
 ## 🇵🇱 Summary
+### Concept
+
+### Design
+
+### Technology
+
+### Implementation
 
 
 ## Resources

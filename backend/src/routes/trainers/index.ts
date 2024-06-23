@@ -18,7 +18,7 @@ export default (app: ElysiaApp) =>
 					name: trainers.name,
 					username: trainers.username,
 					email: trainers.email,
-					profilePicture: trainers.profilePictureUrl,
+					profile_picture_url: trainers.profilePictureUrl,
 				}).from(trainers)
 				set.status = 200
 				return data

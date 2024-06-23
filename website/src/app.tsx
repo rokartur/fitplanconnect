@@ -16,6 +16,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 const Settings = lazy(() => import('@/pages/app/settings'))
 const Calendar = lazy(() => import('@/pages/app/calendar'))
+const Trainers = lazy(() => import('@/pages/app/trainers'))
 const Billing = lazy(() => import('@/pages/app/billing'))
 const BillingComplete = lazy(() => import('@/pages/app/billing.complete'))
 const BillingCancel = lazy(() => import('@/pages/app/billing.cancel'))
@@ -28,7 +29,7 @@ const MemoizedRoutes = memo(() => (
 			<Routes>
 				<Route path={'/'} element={<h1>landing</h1>} />
 				<Route path={'/app/calendar'} element={<Calendar />} />
-				<Route path={'/app/trainers'} element={<h1>trainers</h1>} />
+				<Route path={'/app/trainers'} element={<Trainers/>} />
 				<Route path={'/app/billing'} element={<Billing/>} />
 				<Route path={'/app/billing/complete'} element={<BillingComplete/>} />
 				<Route path={'/app/billing/cancel'} element={<BillingCancel/>} />
