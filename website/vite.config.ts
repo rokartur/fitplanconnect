@@ -1,4 +1,3 @@
-import MillionLint from '@million/lint'
 import svgr from '@svgr/rollup'
 import react from '@vitejs/plugin-react-swc'
 import path from 'path'
@@ -16,7 +15,7 @@ export default defineConfig(({ mode }) => {
 	}
 
 	return {
-		plugins: [react(), MillionLint.vite(), svgr({ icon: false, svgo: false })],
+		plugins: [react(), svgr({ icon: false, svgo: false })],
 		publicDir: 'src/public',
 		define: processEnvValues,
 		json: {

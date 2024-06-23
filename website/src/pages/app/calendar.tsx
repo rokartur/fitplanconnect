@@ -1,5 +1,5 @@
 import styles from '@/styles/calendar.module.scss'
-import { useCallback, useEffect, useMemo, useReducer, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
 import { ScheduleMeeting } from 'react-schedule-meeting'
@@ -13,6 +13,7 @@ import { SEO } from '@/components/seo.tsx'
 import { Tooltip } from '@/components/tooltip/tooltip.tsx'
 import { useAppSelector } from '@/utils/store.ts'
 import { Virtuoso } from 'react-virtuoso'
+import { range } from 'lodash-es'
 
 const metaData = {
 	title: 'Calendar',
@@ -23,11 +24,6 @@ interface Timeslot {
 	id: number;
 	startTime: Date;
 	endTime: Date;
-}
-
-interface Meetings {
-	available: Timeslot[];
-	unavailable: Timeslot[];
 }
 
 interface DayData {
@@ -59,10 +55,7 @@ export default function Calendar() {
 			}
 		})
 	}, [])
-	const [meetings, setMeetings] = useReducer((prev: Meetings, next: Meetings) => ({ ...prev, ...next }), {
-		available: availableTimeslots,
-		unavailable: [],
-	})
+	const [unavailableMeetings, setUnavailableMeetings] = useState<Timeslot[]>([])
 	const eventDuration: number = 60
 	const eventGap: number = 0
 	const [selectedTimeSlot, setSelectedTimeSlot] = useState<number[]>([])
@@ -75,28 +68,27 @@ export default function Calendar() {
 
 		setDayData({ displayDate, selectedDate: date })
 
-		const allHoursPerDay = meetings.available.reduce((hours: number[], meet) => {
+		const allHoursPerDay = availableTimeslots.reduce((hours: number[], meet) => {
 			if (moment(meet.startTime).isSame(date, 'day')) {
 				const startDay = Number(moment(meet.startTime).format('HH'))
 				const endDay = Number(moment(meet.endTime).format('HH')) + 1
-				for (let i = startDay; i < endDay; i++) {
-					hours.push(i)
-				}
+				return [...hours, ...range(startDay, endDay)]
 			}
 			return hours
 		}, [])
 
 		setAllHoursPerDay(allHoursPerDay)
 
-		const allGapsPerDay = meetings.unavailable.reduce((gaps: Date[], meet) => {
-			if (moment(meet.startTime).startOf('day').isSame(date)) {
-				return [...gaps, meet.startTime]
+		const allGapsPerDay = unavailableMeetings.reduce((gaps: Date[], meet) => {
+			if (moment(meet.startTime).isSame(date, 'day')) {
+				const startDay = Number(moment(meet.startTime).format('HH'))
+				return [...gaps, moment(date).set('hour', startDay).toDate()]
 			}
 			return gaps
 		}, [])
 
 		setAllGapsPerDay(allGapsPerDay)
-	}, [setDayData, setAllHoursPerDay, setAllGapsPerDay, meetings])
+	}, [setDayData, setAllHoursPerDay, setAllGapsPerDay, unavailableMeetings])
 
 	useEffect(() => {
 		changeDayData()
@@ -113,14 +105,13 @@ export default function Calendar() {
 			const data: AllMeetings[] = await wretch('/api/meetings').get().json()
 			if (!data) return
 
-			setMeetings({
-				available: availableTimeslots,
-				unavailable: data?.map(({ startTime, endTime }, index) => ({
+			setUnavailableMeetings(
+				data?.map(({ startTime, endTime }, index) => ({
 					id: index,
 					startTime: new Date(startTime),
 					endTime: new Date(endTime),
 				})),
-			})
+			)
 		}
 
 		fetchMeetings().then()
@@ -158,17 +149,13 @@ export default function Calendar() {
 				Swal.fire({
 					title: 'Meeting scheduled',
 					icon: 'success',
-				}).then(() => {
-					location.reload()
-				})
+				}).then(() => location.reload())
 			})
 			.catch(() => {
 				Swal.fire({
 					title: 'An error occurred',
 					icon: 'error',
-				}).then(() => {
-					location.reload()
-				})
+				}).then(() => location.reload())
 			})
 	}, [selectedTimeSlot, user])
 
@@ -187,7 +174,7 @@ export default function Calendar() {
 										primaryColor={'#CD66FF'}
 										eventDurationInMinutes={eventDuration}
 										eventStartTimeSpreadInMinutes={eventGap}
-										availableTimeslots={meetings.available}
+										availableTimeslots={availableTimeslots}
 										onSelectedDayChange={(date: Date) => changeDayData(date)}
 										startTimeListStyle={'grid'}
 									/>
