@@ -53,7 +53,7 @@ export default (app: ElysiaApp) =>
 								username: githubData.login,
 								email: githubData.email || '',
 								profilePictureUrl: githubData.avatar_url,
-								subscriptionExpirationDate: moment
+								subscriptionExpirationDate: moment()
 									.utc()
 									.add(3, 'd')
 									.set('hour', 0)
@@ -62,6 +62,7 @@ export default (app: ElysiaApp) =>
 									.set('millisecond', 0)
 									.toDate()
 									.toISOString(),
+								selectedTrainerId: '79342641',
 							})
 							.returning({ id: users.id })
 
