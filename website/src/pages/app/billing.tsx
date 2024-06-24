@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import wretch from 'wretch'
 import { Tooltip } from '@/components/tooltip/tooltip.tsx'
+import { useNavigate } from 'react-router-dom'
 
 const metaData = {
 	title: 'Billing',
@@ -16,6 +17,7 @@ const metaData = {
 }
 
 export default function Billing() {
+	const navigate = useNavigate()
 	const [stripePromise, setStripePromise] = useState<any>(null)
 	const [isLoading, setLoading] = useState(false)
 	const [stripeError, setStripeError] = useState(null)
@@ -52,6 +54,10 @@ export default function Billing() {
 
 		fetchData().then()
 	}, [])
+
+	useEffect(() => {
+		if (!user) navigate('/')
+	}, [user])
 
 	return (
 		<>

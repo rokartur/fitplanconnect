@@ -1,5 +1,5 @@
 import styles from '@/styles/settings.module.scss'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import wretch from 'wretch'
 import { AlertDialog } from '@/components/alertDialog/alertDialog.tsx'
 import { AnimateWrapper } from '@/components/animateWrapper/animateWrapper.tsx'
@@ -35,6 +35,10 @@ export default function Settings() {
 		}
 		setIsOpenConfirmDeleteAccountAlertDialog(false)
 	}, [dispatch, navigate])
+
+	useEffect(() => {
+		if (!userData) navigate('/')
+	}, [userData])
 
 	return (
 		<>

@@ -93,6 +93,10 @@ export default function Calendar() {
 	useEffect(() => {
 		changeDayData()
 
+		if (!user) {
+			navigate('/')
+		}
+
 		if (isNaN(moment(user?.subscription_expiration_date).unix())) {
 			navigate('/app/billing')
 		} else if (moment().unix() > moment(user?.subscription_expiration_date).unix()) {

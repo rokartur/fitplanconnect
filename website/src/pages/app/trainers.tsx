@@ -22,6 +22,8 @@ export default function Trainers() {
 	const trainers = useAppSelector(state => state.trainers.data)
 
 	useEffect(() => {
+		if (!user) navigate('/')
+
 		if (isNaN(moment(user?.subscription_expiration_date).unix())) {
 			navigate('/app/billing')
 		} else if (moment().unix() > moment(user?.subscription_expiration_date).unix()) {
