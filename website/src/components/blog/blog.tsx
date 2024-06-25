@@ -7,6 +7,7 @@ import photoBlog3 from '../../assets/images/blog-3.png'
 export default function Blog() {
     return (
         <section aria-label='blog section' className={styles.blog}>
+            <div className={styles.container}>
             <div className={styles.row}>
                 <div className={styles.card}>
                     <Image source={photoBlog1}/>
@@ -35,6 +36,7 @@ export default function Blog() {
                         </div>
                     </div> 
                 </div>
+            </div>
             </div>
         </section>
     )
