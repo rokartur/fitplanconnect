@@ -13,6 +13,40 @@ export default function Features() {
 					    Unlock your full potential with FitPlan Connect
 				    </h1>
                 </div>
+                <div className={styles.content}>
+                    <div className={styles.feature}>
+                        <div className={styles.icon}>
+
+                        </div>
+                        <div className={styles.text}>
+
+                        </div>
+                    </div>
+                    <div className={styles.feature}>
+                        <div className={styles.icon}>
+
+                        </div>
+                        <div className={styles.text}>
+
+                        </div>
+                    </div>
+                    <div className={styles.feature}>
+                        <div className={styles.icon}>
+
+                        </div>
+                        <div className={styles.text}>
+
+                        </div>
+                    </div>
+                    <div className={styles.feature}>
+                        <div className={styles.icon}>
+
+                        </div>
+                        <div className={styles.text}>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     )
