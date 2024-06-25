@@ -18,7 +18,7 @@ export default function Features() {
                     <div className={styles.row}>
                     <div className={styles.feature}>
                         <div className={styles.icon}>
-
+                            <img src="/src/assets/icons/feature-1.svg" alt="Custom workouts" />
                         </div>
                         <div className={styles.text}>
                             <h2 className={styles.title}>Custom workouts</h2>
