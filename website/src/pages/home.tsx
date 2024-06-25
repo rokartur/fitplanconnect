@@ -3,6 +3,7 @@ import { useScrollTop } from '@/hooks/useScrollTop'
 import Hero from '@/components/hero/hero'
 import Blog from '@/components/blog/blog'
 import Features from '@/components/features/features'
+import Footer from '@/components/footer/footer'
 
 const metaData = {
 	title: 'Welcome to FitPlan Connect!',
@@ -19,6 +20,7 @@ export default function Home() {
 			<Hero/>
 			<Features	/>
 			<Blog/>
+			<Footer/>
     </>
 	)
 }
