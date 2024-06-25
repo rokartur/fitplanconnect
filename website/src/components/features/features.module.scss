@@ -23,7 +23,6 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
-    }
 
         .overline {
           @include font(600, 14px, 20px, left, unset);
@@ -49,7 +48,28 @@
             line-height: 48px;
           }
         }
-      }
     }
 
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 48px;
+      align-self: stretch;
+
+      .row {
+        display: flex;
+        align-items: flex-start;
+        gap: 32px;
+        align-self: stretch;
+
+        @media screen and (max-width: 1160px) {
+          flex-direction: column;
+          gap: 24px;
+            
+        }
+    }   
+    }
+ }
+}
 
