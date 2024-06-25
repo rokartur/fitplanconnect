@@ -23,14 +23,26 @@
             gap: 32px;
             align-self: stretch;
 
+            @media screen and (max-width: 1160px) {
+                flex-direction: column;
+                gap: 24px;
+                  
+              }
+
             .card {
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
                 flex: 1 0 0;
+                height: 434px;
                 border-radius: 12px;
                 background: var(--Generic-White, #FFF);
                 box-shadow: 0px 6px 15px -2px rgba(16, 24, 40, 0.08), 0px 6px 15px -2px rgba(16, 24, 40, 0.08);
+
+                @media screen and (max-width: 1160px) {
+                    height: auto;
+                    border-radius: 12px;
+                  }
 
                 img {
                     display: flex;
@@ -40,6 +52,12 @@
                     border-top-left-radius: 12px;
                     border-top-right-radius: 12px;
                     background: url(<path-to-image>) lightgray 50% / cover no-repeat;
+
+                    @media screen and (max-width: 1160px) {
+                        width: 100%;
+                        border-top-left-radius: 12px;
+                        border-top-right-radius: 12px;
+                      }
                 }
 
                 .content {
@@ -64,6 +82,11 @@
                             max-width: 100%;
                             letter-spacing: -0.4px;
                             align-self: stretch;
+
+                            @media (width <= 460px) {
+                                font-size: 42px;
+                                line-height: 48px;
+                              }
                         }
 
                         span {
@@ -71,6 +94,19 @@
                             background-clip: text;
                             -webkit-background-clip: text;
                             -webkit-text-fill-color: transparent;
+                        }
+
+                        .description {
+                            @include font(400, 16px, 24px, left, unset);
+                            color: var(--Neutral-700, #4B5563);
+                            text-wrap: wrap;
+                            max-width: 100%;
+                            align-self: stretch;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 5;
                         }
                     }
                 }
