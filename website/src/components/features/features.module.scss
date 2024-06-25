@@ -1,0 +1,27 @@
+@import "@/styles/mixins";
+@import "@/styles/variables";
+
+.features {
+    padding: 0 0 0 24px;
+
+    @media (width <= 1160px) {
+        padding: 24px;
+    }
+
+    .container {
+        max-width: 1216px;
+        margin: 0 auto;
+    }
+
+    .content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @media (width <= 1160px) {
+            flex-direction: column;
+            gap: 32px;
+        }
+    }
+
+}
