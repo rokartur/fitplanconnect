@@ -10,9 +10,10 @@ export default function Features() {
 				    </p>
 
 				    <h1 className={styles.heading}>
-					    Unlock your full potential with FitPlan Connect
+					    Unlock Your Full Potential with FitPlan Connect
 				    </h1>
                 </div>
+                
                 <div className={styles.content}>
                     <div className={styles.feature}>
                         <div className={styles.icon}>
