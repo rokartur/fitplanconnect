@@ -12,7 +12,11 @@ export default function Footer() {
                             <img src="/src/assets/icons/logotype.svg" alt="logotype" />
                         </div>
                         <div className={styles.links}>
-
+                            <a href="/overview">Overview</a>
+                            <a href="/teams">Teams</a>
+                            <a href="/jobs">Jobs</a>
+                            <a href="/help">Help</a>
+                            <a href="privacy">Privacy</a>
                         </div>
                     </div>
                     <div className={styles.icons}>
