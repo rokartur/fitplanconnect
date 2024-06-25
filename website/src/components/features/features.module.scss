@@ -84,9 +84,21 @@
                 border-radius: 200px;
                 background: var(--Secondary-Violet-50, #F5F3FF);
             }
+
+            .title {
+                @include font(600, 20px, 28px, left, unset);
+                color: $neutral-900;
+                text-wrap: wrap;
+                letter-spacing: -0.4px;
+            }
+
+            .description {
+                @include font(400, 16px, 24px, left, unset);
+                color: $neutral-500;
+                text-wrap: wrap;
         }
     }   
     }
  }
 }
-
+}
