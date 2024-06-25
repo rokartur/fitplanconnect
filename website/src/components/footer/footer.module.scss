@@ -1,0 +1,56 @@
+@import "@/styles/mixins";
+@import "@/styles/variables";
+
+.footer {
+    padding: 0 0 0 24px;
+
+    @media (width <= 1160px) {
+      padding: 24px;
+    }
+  
+    .container {
+        display: flex;
+        padding: 64px 0px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 64px;
+        align-self: stretch;
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            align-self: stretch;
+
+            .leadingContent {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 24px;
+
+                .media {
+                    display: flex;
+                    align-items: center;
+                    gap: 11px;
+                }
+
+                .links {
+                    @include font(500, 16px, 24px, left, unset);
+                    color: var(--Neutral-900, #1A202C);
+                    display: flex;
+                    justify-content: center;
+                    align-items: flex-start;
+                    gap: 24px;
+                    align-self: stretch;
+                }
+            }
+
+            .icons {
+                display: flex;
+                align-items: flex-start;
+                gap: 24px;
+            }
+        }
+    }
+}
