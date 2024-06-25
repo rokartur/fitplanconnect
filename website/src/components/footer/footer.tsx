@@ -15,7 +15,10 @@ export default function Footer() {
                         </div>
                     </div>
                     <div className={styles.icons}>
-
+                        <img src="/src/assets/icons/fb-icon.svg" alt="Facebook" />
+                        <img src="/src/assets/icons/x-icon.svg" alt="X" />
+                        <img src="/src/assets/icons/ig-icon.svg" alt="Instagram" />
+                        <img src="/src/assets/icons/lnkd-icon.svg" alt="LinkedIn" />
                     </div>
                 </div>
             </div>
