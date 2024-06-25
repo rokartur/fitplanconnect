@@ -1,12 +1,15 @@
 import styles from './blog.module.scss'
 import { Image } from '../image'
+import photoBlog1 from '../../assets/images/blog-1.png'
+import photoBlog2 from '../../assets/images/blog-2.png'
+import photoBlog3 from '../../assets/images/blog-3.png'
 
 export default function Blog() {
     return (
         <section aria-label='blog section' className={styles.blog}>
             <div className={styles.row}>
                 <div className={styles.card}>
-                    {/* Image here*/}
+                    <Image source={photoBlog1}/>
                     <div className={styles.content}>
                         <div className={styles.text}>
                             <h2 className={styles.title}>Introducing <span>Live Workout</span> Sessions on FitPlan Connect</h2>
@@ -15,7 +18,7 @@ export default function Blog() {
                     </div>
                 </div>
                 <div className={styles.card}>
-                    {/* Image here*/}
+                <Image source={photoBlog2}/>
                     <div className={styles.content}>
                         <div className={styles.text}>
                             <h2 className={styles.title}>Get a FitPlan Connect <span>Branded Gym Bag</span> with Annual Membership</h2>
@@ -24,7 +27,7 @@ export default function Blog() {
                     </div>
                 </div>
                 <div className={styles.card}>
-                    {/* Image here*/}
+                <Image source={photoBlog3}/>
                     <div className={styles.content}>
                          <div className={styles.text}>
                             <h2 className={styles.title}><span>Advanced Tracking</span> and Custom Nutrition Plans</h2>
