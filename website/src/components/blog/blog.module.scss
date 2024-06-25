@@ -56,6 +56,22 @@
                         align-items: flex-start;
                         gap: 8px;
                         align-self: stretch;
+
+                        .title {
+                            @include font(600, 20px, 28px, left, unset);
+                            color: var(--Neutral-900, #1A202C);
+                            text-wrap: wrap;
+                            max-width: 100%;
+                            letter-spacing: -0.4px;
+                            align-self: stretch;
+                        }
+
+                        span {
+                            background: var(--brand-gradient, linear-gradient(45deg, #CD66FF 24.42%, #FFB3FF 75.58%));
+                            background-clip: text;
+                            -webkit-background-clip: text;
+                            -webkit-text-fill-color: transparent;
+                        }
                     }
                 }
             }
