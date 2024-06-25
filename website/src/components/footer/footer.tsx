@@ -8,7 +8,8 @@ export default function Footer() {
                 <div className={styles.content}>
                     <div className={styles.leadingContent}>
                         <div className={styles.media}>
-
+                            <img src="/src/assets/icons/logomark.svg" alt="logomark" />
+                            <img src="/src/assets/icons/logotype.svg" alt="logotype" />
                         </div>
                         <div className={styles.links}>
 
