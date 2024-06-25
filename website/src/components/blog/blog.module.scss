@@ -3,6 +3,7 @@
 
 .blog {
   padding: 0 0 0 24px;
+  background: var(--Neutral-50, #F9FAFB);
 
   @media (width <= 1160px) {
     padding: 24px;
