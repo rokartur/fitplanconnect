@@ -1,0 +1,37 @@
+@import "@/styles/mixins";
+@import "@/styles/variables";
+
+.blog {
+  padding: 0 0 0 24px;
+
+  @media (width <= 1160px) {
+    padding: 24px;
+  }
+
+    .container {
+        display: flex;
+        padding: 64px 112px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 64px;
+
+        .row {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            align-self: stretch;
+
+            .card {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                flex: 1 0 0;
+                border-radius: 12px;
+                background: var(--Generic-White, #FFF);
+                box-shadow: 0px 6px 15px -2px rgba(16, 24, 40, 0.08), 0px 6px 15px -2px rgba(16, 24, 40, 0.08);
+
+
+            }
+        }
+    }
+}
