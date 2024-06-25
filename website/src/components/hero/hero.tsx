@@ -13,7 +13,7 @@ export default function Hero() {
 	const user = useAppSelector(state => state.user.data)
 
 	return (
-		<div className={styles.hero}>
+		<section aria-label='hero section' className={styles.hero}>
 			<div className={styles.container}>
 				<div className={styles.content}>
 					<div className={styles.text}>
@@ -82,6 +82,6 @@ export default function Hero() {
           <Image source={photoLanding} />
         </div>
       </div>
-    </div>
+    </section>
   )
 }
