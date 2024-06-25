@@ -15,6 +15,7 @@ export default function Features() {
                 </div>
                 
                 <div className={styles.content}>
+                    <div className={styles.row}>
                     <div className={styles.feature}>
                         <div className={styles.icon}>
 
@@ -50,6 +51,7 @@ export default function Features() {
                             <h2 className={styles.title}>Community Support</h2>
                             <p className={styles.description}>Connect with like-minded individuals and share your fitness journey.</p>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
