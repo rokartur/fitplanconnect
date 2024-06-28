@@ -9,7 +9,7 @@ import { Tooltip } from '@/components/tooltip/tooltip.tsx'
 import { setTrainers } from '@/utils/slices/trainersSlice.ts'
 import { User } from '@/models/User.ts'
 
-interface OAuthResponse {
+export interface OAuthResponse {
 	error?: string
 	url?: string
 }
