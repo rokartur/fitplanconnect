@@ -14,6 +14,7 @@ import SuspenseComponent from '@/pages/suspense'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
+const Home = lazy(() => import('@/pages/home'))
 const Settings = lazy(() => import('@/pages/app/settings'))
 const Calendar = lazy(() => import('@/pages/app/calendar'))
 const Trainers = lazy(() => import('@/pages/app/trainers'))
@@ -27,7 +28,7 @@ const MemoizedRoutes = memo(() => (
 		<Header />
 		<Suspense fallback={<SuspenseComponent />}>
 			<Routes>
-				<Route path={'/'} element={<h1>landing</h1>} />
+				<Route path={'/'} element={<Home/>} />
 				<Route path={'/app/calendar'} element={<Calendar />} />
 				<Route path={'/app/trainers'} element={<Trainers/>} />
 				<Route path={'/app/billing'} element={<Billing/>} />
