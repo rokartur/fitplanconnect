@@ -18,6 +18,11 @@
         align-items: flex-start;
         gap: 64px;
 
+        @media screen and (max-width: 1160px) {
+            padding: 24px;
+          }
+        }
+        
         .row {
             display: flex;
             align-items: flex-start;
@@ -114,4 +119,5 @@
             }
         }
     }
-}
+  
+
