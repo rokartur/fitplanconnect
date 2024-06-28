@@ -10,6 +10,17 @@
     color: $neutral-900;
   }
 
+  h2 {
+    @include font(700, 64px, 100%, center);
+    color: $neutral-900;
+  }
+
+  i {
+    margin: 24px 0;
+    font: 500 18px/24px $font-family;
+    color: $neutral-500
+  }
+
   p {
     margin: 0 0 24px 0;
     font: 500 16px/24px $font-family;

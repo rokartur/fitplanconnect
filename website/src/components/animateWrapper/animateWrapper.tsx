@@ -1,7 +1,7 @@
 import styles from './animateWrapper.module.scss';
 import { FC, ReactNode } from 'react'
 
-type AnimateWrapperProps = {
+interface AnimateWrapperProps {
 	children: ReactNode
 }
 

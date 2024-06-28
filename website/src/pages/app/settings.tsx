@@ -1,5 +1,5 @@
-import styles from '@/styles/app.settings.module.scss'
-import { useState } from 'react'
+import styles from '@/styles/settings.module.scss'
+import { useCallback, useEffect, useState } from 'react'
 import wretch from 'wretch'
 import { AlertDialog } from '@/components/alertDialog/alertDialog.tsx'
 import { AnimateWrapper } from '@/components/animateWrapper/animateWrapper.tsx'
@@ -10,22 +10,39 @@ import { SEO } from '@/components/seo.tsx'
 import { useAppDispatch, useAppSelector } from '@/utils/store.ts'
 import { useNavigate } from 'react-router-dom'
 import { setUser } from '@/utils/slices/userSlice.ts'
+import { User } from '@/models/User.ts'
 
 const metaData = {
 	title: 'Settings',
-	description: '',
 	path: '/app/settings',
 }
 
-const AppSettings = () => {
+export default function Settings() {
 	const dispatch = useAppDispatch()
-	const user = useAppSelector(state => state.user.data)
+	const userData = useAppSelector(state => state.user.data)
+	let user
+	if (userData) user = new User(userData)
 	const [isOpenConfirmDeleteAccountAlertDialog, setIsOpenConfirmDeleteAccountAlertDialog] = useState(false)
 	const navigate = useNavigate()
+	const handleOpen = useCallback(() => setIsOpenConfirmDeleteAccountAlertDialog(true), []);
+	const onClose = useCallback(() => setIsOpenConfirmDeleteAccountAlertDialog(false), [])
+	const onCancel = useCallback(() => setIsOpenConfirmDeleteAccountAlertDialog(false), [])
+	const onConfirm = useCallback(async () => {
+		const response: { status: number } = await wretch('/api/user/delete').get().json()
+		if (response.status === 200) {
+			dispatch(setUser(null))
+			navigate('/')
+		}
+		setIsOpenConfirmDeleteAccountAlertDialog(false)
+	}, [dispatch, navigate])
+
+	useEffect(() => {
+		if (!userData) navigate('/')
+	}, [userData])
 
 	return (
 		<>
-			<SEO title={metaData.title} description={metaData.description} path={metaData.path} />
+			<SEO title={metaData.title} path={metaData.path} />
 
 			<Overlay>
 				<AnimateWrapper>
@@ -44,11 +61,11 @@ const AppSettings = () => {
 									<>
 										<label>
 											Name
-											<p>{user.name ? `${user.name} (${user.username})` : user.username}</p>
+											<p>{user.getName() ? `${user.getName()} (${user.getUsername()})` : user.getUsername()}</p>
 										</label>
 										<label>
 											Email address
-											<p>{user.email || <a href='https://github.com/settings/profile' target={'_blank'}>Not selected public email</a>}</p>
+											<p>{user.getEmail() || <a href='https://github.com/settings/profile' target={'_blank'}>Not selected public email</a>}</p>
 										</label>
 									</>
 								) : null}
@@ -62,7 +79,7 @@ const AppSettings = () => {
 									size={'medium'}
 									label={'Delete account'}
 									isDestructive
-									onClick={() => setIsOpenConfirmDeleteAccountAlertDialog(true)}
+									onClick={handleOpen}
 								/>
 							</div>
 
@@ -91,17 +108,9 @@ const AppSettings = () => {
 
 						<AlertDialog
 							isOpen={isOpenConfirmDeleteAccountAlertDialog}
-							onClose={() => setIsOpenConfirmDeleteAccountAlertDialog(false)}
-							onCancel={() => setIsOpenConfirmDeleteAccountAlertDialog(false)}
-							onConfirm={async () => {
-								const response: { status: number } = await wretch('/api/user/delete').get().json()
-								if (response.status === 200) {
-									dispatch(setUser(null))
-									navigate('/')
-								}
-
-								setIsOpenConfirmDeleteAccountAlertDialog(false)
-							}}
+							onClose={onClose}
+							onCancel={onCancel}
+							onConfirm={onConfirm}
 							closeWhenClickEscape
 							title={'Do you want to delete your account?'}
 							description={'Make sure you definitely want to do this — your account cannot be restored.'}
@@ -112,5 +121,3 @@ const AppSettings = () => {
 		</>
 	)
 }
-
-export default AppSettings

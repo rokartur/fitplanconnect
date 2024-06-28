@@ -1,22 +1,25 @@
-import styles from './header.module.scss';
-import { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import wretch from 'wretch';
-import { UserDropdown } from '@/components/userDropdown/userDropdown.tsx';
+import styles from './header.module.scss'
+import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import wretch from 'wretch'
+import UserDropdown from '@/components/userDropdown/userDropdown.tsx'
 import { setUser, UserTypes } from '@/utils/slices/userSlice.ts'
-import { useAppDispatch, useAppSelector } from '@/utils/store.ts';
+import { useAppDispatch, useAppSelector } from '@/utils/store.ts'
 import { Tooltip } from '@/components/tooltip/tooltip.tsx'
+import { setTrainers } from '@/utils/slices/trainersSlice.ts'
+import { User } from '@/models/User.ts'
 
-export type OAuthResponse = {
+interface OAuthResponse {
 	error?: string
 	url?: string
 }
 
-export const Header = () => {
+export default function Header() {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const dispatch = useAppDispatch()
-	const user = useAppSelector(state => state.user.data)
-	const navigate = useNavigate()
+	const userData = useAppSelector(state => state.user.data)
+	let user
+	if (userData) user = new User(userData)
 	const { pathname: url } = useLocation()
 
 	useEffect(() => {
@@ -24,11 +27,23 @@ export const Header = () => {
 			try {
 				const data: UserTypes = await wretch('/api/user').get().json()
 				dispatch(setUser(data))
-			} catch {}
+				const trainers = await wretch('/api/trainers').get().json()
+				dispatch(setTrainers(trainers))
+			} catch { }
 		}
 
 		fetchUser().then()
 	}, [])
+
+	const githubLoginHandlerClick = async () => {
+		setIsLoading(true)
+		const response: OAuthResponse = await wretch('/api/oauth').get().json()
+		if (response.error) {
+			console.error(response.error)
+		} else {
+			window.location.href = response.url as string
+		}
+	}
 
 	return (
 		<header className={styles.main}>
@@ -74,6 +89,7 @@ export const Header = () => {
 									</linearGradient>
 								</defs>
 							</svg>
+							<span className="sr-only">FitPlan Connect</span>
 						</Link>
 
 						<nav className={styles.navigation}>
@@ -117,6 +133,7 @@ export const Header = () => {
 														<path d='M13.9147 8.48316C13.8127 8.48341 13.7125 8.45666 13.6234 8.40532C13.5342 8.35399 13.4591 8.27983 13.4051 8.18984L12.3067 6.36486C12.0235 5.89279 11.5721 5.55699 11.0515 5.43108C10.531 5.30517 9.98377 5.39943 9.52985 5.69319L5.54025 8.29567C5.43901 8.37007 5.31851 8.41074 5.19464 8.41232C5.03514 8.41232 4.88211 8.34666 4.76896 8.22954C4.6558 8.11245 4.5917 7.95348 4.59065 7.78734C4.59007 7.67547 4.61845 7.56551 4.67279 7.46902C4.72713 7.37252 4.80543 7.29307 4.89945 7.23902L8.89385 4.63318C9.61777 4.16453 10.4905 4.01382 11.3209 4.21407C12.1513 4.4143 12.8716 4.94917 13.3243 5.70152L14.4227 7.52568C14.4794 7.6203 14.5109 7.72902 14.5138 7.84056C14.5167 7.9521 14.4908 8.06241 14.439 8.16007C14.3872 8.25772 14.3112 8.33916 14.2191 8.39599C14.1269 8.45282 14.0218 8.48291 13.9147 8.48316Z' fill='black' />
 														<path d='M17 8.48307H2.6C2.44087 8.48307 2.28826 8.41724 2.17574 8.3C2.06322 8.1828 2 8.02382 2 7.85806C2 7.6923 2.06322 7.53333 2.17574 7.41611C2.28826 7.2989 2.44087 7.23306 2.6 7.23306H17C17.1591 7.23306 17.3118 7.2989 17.4242 7.41611C17.5368 7.53333 17.6 7.6923 17.6 7.85806C17.6 8.02382 17.5368 8.1828 17.4242 8.3C17.3118 8.41724 17.1591 8.48307 17 8.48307Z' fill='black' />
 													</svg>
+													<span className="sr-only">Billing</span>
 												</Link>
 											</Tooltip>
 
@@ -126,70 +143,16 @@ export const Header = () => {
 														<path fillRule='evenodd' clipRule='evenodd' d='M10.2007 8.375C11.0622 8.375 11.7607 9.1025 11.7607 10C11.7607 10.8975 11.0622 11.625 10.2007 11.625C9.33911 11.625 8.64071 10.8975 8.64071 10C8.64071 9.1025 9.33911 8.375 10.2007 8.375ZM12.9607 10C12.9607 8.41217 11.7249 7.125 10.2007 7.125C8.67639 7.125 7.44067 8.41217 7.44067 10C7.44067 11.5878 8.67639 12.875 10.2007 12.875C11.7249 12.875 12.9607 11.5878 12.9607 10Z' fill='black' />
 														<path fillRule='evenodd' clipRule='evenodd' d="M8.28137 2.12288C8.89585 1.9609 9.53889 1.875 10.2003 1.875C10.8618 1.875 11.5048 1.96091 12.1195 2.12292C12.6462 2.26177 12.9147 2.73433 13.0004 3.12043C13.0947 3.54509 13.3505 3.92736 13.7404 4.16186C14.0989 4.37747 14.5041 4.42813 14.878 4.33631C15.2482 4.24539 15.7727 4.28689 16.1256 4.71586C16.7502 5.47517 17.243 6.35644 17.5663 7.32117C17.7691 7.92625 17.4539 8.46633 17.1292 8.745C16.7808 9.04408 16.5603 9.49492 16.5603 10C16.5603 10.5051 16.7808 10.9559 17.1292 11.255C17.4539 11.5337 17.7691 12.0737 17.5663 12.6788C17.243 13.6434 16.7503 14.5247 16.1258 15.2839C15.7729 15.7129 15.2483 15.7544 14.8781 15.6634C14.5041 15.5716 14.0989 15.6223 13.7403 15.8379C13.3504 16.0724 13.0947 16.4547 13.0003 16.8795C12.9147 17.2656 12.6462 17.7382 12.1193 17.8771C11.5047 18.0391 10.8618 18.125 10.2003 18.125C9.53889 18.125 8.89593 18.0391 8.28137 17.8772C7.75456 17.7383 7.48607 17.2656 7.40032 16.8795C7.30603 16.4547 7.0503 16.0724 6.66034 15.8379C6.30177 15.6223 5.89655 15.5716 5.5226 15.6635C5.1524 15.7544 4.62773 15.7129 4.27484 15.2839C3.65033 14.5247 3.15766 13.6435 2.83437 12.6788C2.63159 12.0737 2.94674 11.5337 3.27141 11.255C3.61984 10.956 3.84033 10.5051 3.84033 10C3.84033 9.49492 3.61984 9.044 3.27141 8.745C2.94674 8.46633 2.63159 7.92624 2.83437 7.32116C3.15769 6.35642 3.65044 5.47514 4.27504 4.71583C4.62792 4.28686 5.15252 4.24537 5.5227 4.33629C5.89662 4.42814 6.3018 4.37748 6.66034 4.16186C7.05026 3.92736 7.30597 3.54508 7.4003 3.12042C7.48607 2.73431 7.75455 2.26173 8.28137 2.12288ZM8.59801 3.32884C8.59481 3.33383 8.59073 3.34092 8.58641 3.35041C8.57985 3.36475 8.57385 3.38232 8.56937 3.4022C8.40321 4.15028 7.95013 4.82954 7.26034 5.24439C6.62669 5.62548 5.90691 5.71495 5.24728 5.55292C5.22827 5.54826 5.21053 5.54611 5.19534 5.54585C5.18519 5.54568 5.17724 5.54635 5.1715 5.5472C4.65491 6.17957 4.24661 6.91011 3.9759 7.70773C3.97915 7.71454 3.98426 7.72364 3.99197 7.73436C4.00297 7.74965 4.01736 7.76557 4.03448 7.78027C4.64771 8.30657 5.04033 9.10575 5.04033 10C5.04033 10.8942 4.64771 11.6934 4.03448 12.2197C4.01736 12.2344 4.00296 12.2503 3.99196 12.2657C3.98426 12.2763 3.97915 12.2854 3.9759 12.2922C4.24658 13.0898 4.65482 13.8202 5.17132 14.4526C5.17706 14.4534 5.18501 14.4541 5.19517 14.4539C5.21036 14.4537 5.2281 14.4515 5.24712 14.4468C5.90678 14.2848 6.62664 14.3742 7.26034 14.7553C7.95021 15.1702 8.40337 15.8496 8.56945 16.5978C8.57385 16.6177 8.57993 16.6352 8.58641 16.6496C8.59073 16.6591 8.59481 16.6662 8.59809 16.6712C9.11041 16.8042 9.64705 16.875 10.2003 16.875C10.7536 16.875 11.2903 16.8042 11.8026 16.6712C11.8059 16.6662 11.8099 16.6591 11.8143 16.6496C11.8208 16.6352 11.8268 16.6177 11.8312 16.5977C11.9974 15.8496 12.4505 15.1702 13.1403 14.7553C13.774 14.3742 14.4939 14.2848 15.1535 14.4468C15.1726 14.4515 15.1903 14.4537 15.2055 14.4539C15.2156 14.4541 15.2235 14.4534 15.2293 14.4526C15.7458 13.8202 16.154 13.0897 16.4247 12.2922C16.4215 12.2854 16.4163 12.2763 16.4087 12.2657C16.3977 12.2503 16.3833 12.2344 16.3662 12.2197C15.7529 11.6934 15.3603 10.8942 15.3603 10C15.3603 9.10583 15.7529 8.30658 16.3662 7.78028C16.3833 7.76558 16.3977 7.74967 16.4087 7.73437C16.4163 7.72365 16.4215 7.71455 16.4247 7.70773C16.154 6.91012 15.7457 6.17959 15.2291 5.54722C15.2234 5.54637 15.2155 5.54569 15.2053 5.54587C15.1901 5.54613 15.1724 5.54827 15.1534 5.55295C14.4938 5.71494 13.774 5.62546 13.1404 5.24439C12.4506 4.82955 11.9975 4.1503 11.8313 3.40223C11.8269 3.38234 11.8209 3.36478 11.8143 3.35044C11.81 3.34094 11.8059 3.33385 11.8027 3.32887C11.2903 3.1958 10.7537 3.125 10.2003 3.125C9.64697 3.125 9.11041 3.19578 8.59801 3.32884Z" fill="black" />
 													</svg>
+													<span className="sr-only">Settings</span>
 												</Link>
 											</Tooltip>
 										</div>
 
-										<UserDropdown
-											image={user.profile_picture_url}
-											onClick={async event => {
-												if (event.target.value === 'logout') {
-													await wretch('/api/oauth/logout').get().res()
-													dispatch(setUser(null))
-													navigate('/')
-												} else {
-													navigate(event.target.value)
-												}
-											}}
-											options={[
-												{
-													id: 'calendar',
-													name: 'Calendar',
-													value: '/app/calendar',
-													showOnDesktop: false,
-												},
-												{
-													id: 'trainers',
-													name: 'Trainers',
-													value: '/app/trainers',
-													showOnDesktop: false,
-												},
-												{
-													id: 'billing',
-													name: 'Billing',
-													value: '/app/billing',
-													showOnDesktop: false,
-												},
-												{
-													id: 'settings',
-													name: 'Settings',
-													value: '/app/settings',
-													showOnDesktop: false,
-												},
-												{
-													id: 'logout',
-													name: 'Logout',
-													value: 'logout',
-													showOnDesktop: true,
-												},
-											]}
-										/>
+										<UserDropdown />
 									</div>
 								</>
 							) : (
-								<button
-									className={styles.githubButton}
-									disabled={isLoading}
-									onClick={async () => {
-										setIsLoading(true)
-										const response: OAuthResponse = await wretch('/api/oauth').get().json()
-										if (response.error) {
-											console.error(response.error)
-										} else {
-											window.location.href = response.url as string
-										}
-									}}
-								>
+								<button className={styles.githubButton} disabled={isLoading} onClick={githubLoginHandlerClick}>
 									Login with GitHub
 								</button>
 							)}

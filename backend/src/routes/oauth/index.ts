@@ -7,9 +7,7 @@ export default (app: ElysiaApp) => app
 		try {
 			const state = generateState()
 
-			const authURL = await github.createAuthorizationURL(state, {
-				scopes: ['user:email'],
-			})
+			const authURL = await github.createAuthorizationURL(state, { scopes: ['user:email'] })
 
 			github_oauth_state.set({
 				value: state,

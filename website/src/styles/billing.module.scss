@@ -1,0 +1,82 @@
+@import 'variables';
+@import 'mixins';
+
+.content {
+  padding: 0 16px;
+  position: relative;
+  @include flex(column, center, center);
+}
+
+.billingCard {
+  padding: 64px;
+  width: 100%;
+  height: calc(100vh - 64px - 73px);
+
+  @include flex(column, space-between, start);
+
+  border-radius: 48px 48px 0 0;
+  background: url("../assets/images/billing_background.png") no-repeat center center;
+  background-size: cover;
+
+  h1 {
+    @include font(700, 96px, 112px);
+    color: $white;
+    text-shadow: 0 8px 24px rgba(16, 24, 40, 0.10), 0 8px 24px rgba(16, 24, 40, 0.15);
+  }
+
+  .cardFooter {
+    width: 100%;
+    @include flex(row, space-between, end);
+
+    .cardFooterLeft {
+      @include flex(column, left, start);
+      gap: 24px;
+
+      p:nth-child(1) {
+        @include font(600, 42px, 46px);
+        color: $white;
+        text-shadow: 0 8px 24px rgba(16, 24, 40, 0.10), 0 8px 24px rgba(16, 24, 40, 0.15);
+      }
+
+      p:nth-child(2) {
+        padding: 24px 32px;
+
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.16);
+
+        @include font(700, 64px, 75px);
+        color: $white;
+        text-shadow: 0 8px 24px rgba(16, 24, 40, 0.10), 0 8px 24px rgba(16, 24, 40, 0.15);
+      }
+    }
+
+    .cardFooterRight {
+      @include flex(column, left, center);
+
+      .buyButton {
+        padding: 24px 32px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.16);
+        box-shadow: $drop-shadow-medium;
+        cursor: pointer;
+
+        transition: background .2s, transform .2s;
+
+        @include font(700, 64px, 75px);
+        color: $white;
+        text-shadow: 0 8px 24px rgba(16, 24, 40, 0.10), 0 8px 24px rgba(16, 24, 40, 0.15);
+
+        &:is(:hover) {
+          transform: scale(.98);
+          background-color: rgba(252, 231, 244, 1);
+        }
+
+        &:is(:disabled) {
+          opacity: .2;
+          pointer-events: none;
+          background-color: $pink-500;
+        }
+      }
+    }
+  }
+}

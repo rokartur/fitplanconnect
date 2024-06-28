@@ -6,6 +6,7 @@ import { eq } from 'drizzle-orm'
 import { users } from '@/db/schema'
 import { lucia } from '@/utils/lucia'
 import { t } from 'elysia'
+import moment from 'moment'
 
 export default (app: ElysiaApp) =>
 	app.get(
@@ -52,6 +53,16 @@ export default (app: ElysiaApp) =>
 								username: githubData.login,
 								email: githubData.email || '',
 								profilePictureUrl: githubData.avatar_url,
+								subscriptionExpirationDate: moment()
+									.utc()
+									.add(3, 'd')
+									.set('hour', 0)
+									.set('minute', 0)
+									.set('second', 0)
+									.set('millisecond', 0)
+									.toDate()
+									.toISOString(),
+								selectedTrainerId: '79342641',
 							})
 							.returning({ id: users.id })
 
@@ -72,7 +83,13 @@ export default (app: ElysiaApp) =>
 					} else {
 						const updatedOAuthAccountRes = await trx
 							.update(users)
-							.set({ accessToken })
+							.set({
+								accessToken,
+								profilePictureUrl: githubData.avatar_url,
+								name: githubData.name || '',
+								username: githubData.login,
+								email: githubData.email || '',
+							})
 							.where(eq(users.id, githubData.id))
 
 						if (updatedOAuthAccountRes.count === 0) {

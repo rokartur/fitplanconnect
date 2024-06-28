@@ -1,7 +1,8 @@
+import { CSSProperties, useCallback } from 'react'
 import { Label } from '../typography/label.tsx'
 import styles from './button.module.scss'
 
-type ButtonTypes = {
+interface ButtonTypes {
 	label?: string
 	size?: 'small' | 'medium' | 'large'
 	type?: 'primary' | 'secondary' | 'tertiary' | 'outlined' | 'link'
@@ -10,7 +11,7 @@ type ButtonTypes = {
 	isDisabled?: boolean
 	isDestructive?: boolean
 	onClick?: () => void
-	style?: any
+	style?: CSSProperties
 }
 
 export const Button = ({
@@ -24,18 +25,22 @@ export const Button = ({
 	onClick,
 	style,
 }: ButtonTypes) => {
+	const handleClick = useCallback(() => {
+		if (onClick) {
+			onClick()
+		}
+	}, [onClick])
+
 	return (
 		<button
-			className={`${styles.button} ${styles[type]} ${isDestructive ? styles.isDestructive : styles.isNotDestructive} ${
-				styles[size]
-			}`}
+			className={`${styles.button} ${styles[type]} ${isDestructive ? styles.isDestructive : styles.isNotDestructive} ${styles[size]}`}
 			disabled={isDisabled}
-			onClick={onClick}
+			onClick={handleClick}
 			style={style}
 		>
-			{iconLeft ? <span className={styles.buttonIcon}>{iconLeft}</span> : null}
-			<Label size={size} weight={'medium-weight'} children={label}></Label>
-			{iconRight ? <span className={styles.buttonIcon}>{iconRight}</span> : null}
+			{iconLeft && <span className={styles.buttonIcon}>{iconLeft}</span>}
+			<Label size={size} weight="medium-weight">{label}</Label>
+			{iconRight && <span className={styles.buttonIcon}>{iconRight}</span>}
 		</button>
 	)
 }

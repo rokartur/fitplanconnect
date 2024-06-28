@@ -5,7 +5,7 @@ import { Button } from '@/components/button/button.tsx'
 import { Paragraph } from '@/components/typography/paragraph.tsx'
 import IconX from '@/assets/icons/IconX.tsx'
 
-type AlertDialogTypes = {
+interface AlertDialogTypes {
 	icon?: JSX.Element
 	title?: string
 	description?: string
@@ -18,6 +18,7 @@ type AlertDialogTypes = {
 	closeWhenClickEscape?: boolean
 	labelOnCancel?: string
 	labelOnConfirm?: string
+	showButtons?: boolean
 }
 
 export const AlertDialog = ({
@@ -31,6 +32,7 @@ export const AlertDialog = ({
 	closeWhenClickEscape = false,
 	labelOnCancel = 'Cancel',
 	labelOnConfirm = 'Confirm',
+	showButtons = true,
 }: AlertDialogTypes) => {
 	const [isClose, setIsClose] = useState(false)
 	const body = document.querySelector<HTMLBodyElement>('body')
@@ -104,10 +106,12 @@ export const AlertDialog = ({
 							</div>
 						</div>
 
-						<div className={styles.alertDialogActions}>
-							<Button type={'tertiary'} size={'small'} label={labelOnCancel} onClick={onClose} />
-							<Button type={'secondary'} size={'small'} label={labelOnConfirm} onClick={onConfirm} />
-						</div>
+						{showButtons && (
+							<div className={styles.alertDialogActions}>
+								<Button type={'tertiary'} size={'small'} label={labelOnCancel} onClick={onClose} />
+								<Button type={'secondary'} size={'small'} label={labelOnConfirm} onClick={onConfirm} />
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

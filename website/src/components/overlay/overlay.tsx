@@ -1,7 +1,7 @@
 import styles from './overlay.module.scss'
 import { FC, ReactNode } from 'react'
 
-type OverlayProps = {
+interface OverlayProps {
 	children: ReactNode
 }
 

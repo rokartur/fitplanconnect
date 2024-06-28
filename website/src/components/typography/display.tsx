@@ -1,13 +1,10 @@
 import styles from './display.module.scss'
 import { ReactNode } from 'react'
 
-type Weight = 'medium' | 'semibold' | 'bold' | 'extrabold'
-type Size = 'small' | 'large'
-
-type DisplayTypes = {
+interface DisplayTypes {
 	className?: string
-	weight: Weight
-	size: Size
+	weight: 'medium' | 'semibold' | 'bold' | 'extrabold'
+	size: 'small' | 'large'
 	children?: ReactNode
 	style?: any
 }

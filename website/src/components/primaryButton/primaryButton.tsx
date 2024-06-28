@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import styles from './primaryButton.module.scss'
 
-type PrimaryButtonTypes = {
+interface PrimaryButtonTypes {
 	asLink?: boolean
 	asButton?: boolean
 	href?: string

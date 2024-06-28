@@ -1,0 +1,6 @@
+C:\Users\artur\Developer\fitplanconnect\Tasks\Task 2\bin\Debug\Task_2.exe
+C:\Users\artur\Developer\fitplanconnect\Tasks\Task 2\bin\Debug\Task_2.pdb
+C:\Users\artur\Developer\fitplanconnect\Tasks\Task 2\obj\Debug\Task 2.csproj.AssemblyReference.cache
+C:\Users\artur\Developer\fitplanconnect\Tasks\Task 2\obj\Debug\Task 2.csproj.CoreCompileInputs.cache
+C:\Users\artur\Developer\fitplanconnect\Tasks\Task 2\obj\Debug\Task_2.exe
+C:\Users\artur\Developer\fitplanconnect\Tasks\Task 2\obj\Debug\Task_2.pdb

@@ -10,7 +10,6 @@ import { Image } from '@/components/image'
 
 const metaData = {
 	title: 'Not Found',
-	description: 'Page not found',
 	path: '/404',
 }
 
@@ -19,7 +18,7 @@ export default function NotFound() {
 
 	return (
 		<>
-			<SEO title={metaData.title} description={metaData.description} path={metaData.path} />
+			<SEO title={metaData.title} path={metaData.path} />
 
 			<Overlay>
 				<AnimateWrapper>

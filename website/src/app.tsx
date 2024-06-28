@@ -1,20 +1,44 @@
+import '@stripe/stripe-js'
 import '@/styles/global.scss'
-import { lazy, Suspense } from 'react'
+import { lazy, memo, Suspense } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { HelmetProvider } from 'react-helmet-async'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Header } from '@/components/header/header.tsx'
 import { useScrollTop } from '@/hooks/useScrollTop.ts'
 import { store } from '@/utils/store.ts'
+import Header from '@/components/header/header'
+import SuspenseComponent from '@/pages/suspense'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
-const Home = lazy(() => import('@/pages/home.tsx'))
-const AppSettings = lazy(() => import('@/pages/app/app.settings.tsx'))
+const Settings = lazy(() => import('@/pages/app/settings'))
+const Calendar = lazy(() => import('@/pages/app/calendar'))
+const Trainers = lazy(() => import('@/pages/app/trainers'))
+const Billing = lazy(() => import('@/pages/app/billing'))
+const BillingComplete = lazy(() => import('@/pages/app/billing.complete'))
+const BillingCancel = lazy(() => import('@/pages/app/billing.cancel'))
 const NotFound = lazy(() => import('@/pages/notFound'))
+
+const MemoizedRoutes = memo(() => (
+	<BrowserRouter>
+		<Header />
+		<Suspense fallback={<SuspenseComponent />}>
+			<Routes>
+				<Route path={'/'} element={<h1>landing</h1>} />
+				<Route path={'/app/calendar'} element={<Calendar />} />
+				<Route path={'/app/trainers'} element={<Trainers/>} />
+				<Route path={'/app/billing'} element={<Billing/>} />
+				<Route path={'/app/billing/complete'} element={<BillingComplete/>} />
+				<Route path={'/app/billing/cancel'} element={<BillingCancel/>} />
+				<Route path={'/app/settings'} element={<Settings />} />
+				<Route path={'*'} element={<NotFound />} />
+			</Routes>
+		</Suspense>
+	</BrowserRouter>
+))
 
 export default function App() {
 	useScrollTop()
@@ -22,19 +46,7 @@ export default function App() {
 	return (
 		<Provider store={store}>
 			<HelmetProvider>
-				<BrowserRouter>
-					<Header />
-					<Suspense fallback={<p>loading</p>}>
-						<Routes>
-							<Route path={'/'} element={<Home/>} />
-							<Route path={'/app/calendar'} element={<h1>calendar</h1>} />
-							<Route path={'/app/trainers'} element={<h1>trainers</h1>} />
-							<Route path={'/app/billing'} element={<h1>billing</h1>} />
-							<Route path={'/app/settings'} element={<AppSettings />} />
-							<Route path={'*'} element={<NotFound />} />
-						</Routes>
-					</Suspense>
-				</BrowserRouter>
+				<MemoizedRoutes />
 			</HelmetProvider>
 		</Provider>
 	)

@@ -1,31 +1,21 @@
 import { Elysia } from 'elysia'
 import { cors } from '@elysiajs/cors'
 import { Logestic } from 'logestic'
-import { swagger } from '@elysiajs/swagger'
 import { compression } from 'elysia-compression'
 import { autoload } from 'elysia-autoload'
-import { rateLimit } from 'elysia-rate-limit'
 
 const app = new Elysia()
 	.use(Logestic.preset('common'))
 	.use(cors())
-	.use(swagger({
-		path: '/docs',
-		documentation: {
-			info: {
-				title: 'FitPlan Connect API Documentation',
-				version: '1.0.0'
-			},
-		}
-	}))
+	// .use(swagger({
+	// 	documentation: {
+	// 		info: {
+	// 			title: 'FitPlan Connect API Documentation',
+	// 			version: '1.0.0'
+	// 		},
+	// 	}
+	// }))
 	.use(compression())
-	// .use(
-	// 	rateLimit({
-	// 		max: 20,
-	// 		duration: 300000,
-	// 		responseMessage: 'Too many requests, please try again later.',
-	// 	}),
-	// )
 	.use(
 		autoload({
 			prefix: '/api',
