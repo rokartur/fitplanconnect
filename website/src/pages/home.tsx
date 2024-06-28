@@ -7,7 +7,6 @@ import Footer from '@/components/footer/footer'
 
 const metaData = {
 	title: 'Welcome to FitPlan Connect!',
-	description: 'Landing page',
 	path: '/',
 }
 
@@ -16,7 +15,7 @@ export default function Home() {
 
 	return (
 		<>
-			<SEO title={metaData.title} description={metaData.description} path={metaData.path} />
+			<SEO title={metaData.title} path={metaData.path} />
 			<Hero/>
 			<Features	/>
 			<Blog/>
