@@ -17,6 +17,10 @@
     align-items: stretch;
     gap: 48px;
 
+    @media screen and (max-width: 1160px) {
+      padding: 24px;
+    }
+
     .text {
         max-width: 624px;
         display: flex;
