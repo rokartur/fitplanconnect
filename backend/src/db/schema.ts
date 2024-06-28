@@ -6,7 +6,7 @@ export const users = dbSchema.table('users', {
 	id: text('id').primaryKey(),
 	name: text('name').notNull(),
 	username: text('username').notNull(),
-	email: text('email').unique().notNull(),
+	email: text('email').notNull(),
 	profilePictureUrl: text('profile_picture_url').notNull().default(''),
 	selectedTrainerId: text('selected_trainer_id').notNull().default(''),
 	subscriptionExpirationDate: text('subscription_expiration_date').notNull().default(''),
