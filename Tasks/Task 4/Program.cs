@@ -41,11 +41,11 @@ namespace Task_4
         }
     }
     
-    internal class Program
+    internal abstract class Program
     {
         public static void Main()
         {
-            List<Device> devices = new List<Device>
+            var devices = new List<Device>
             {
                 new Laptop("Apple", "MacBook Pro"),
                 new Desktop("Lenovo", "ThinkCentre"),
